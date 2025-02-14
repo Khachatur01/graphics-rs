@@ -1,8 +1,9 @@
 pub mod point;
 pub mod segment;
-mod rectangle;
-mod circle;
-mod ellipse;
-mod polygon;
-mod mesh;
-mod path;
+pub mod rectangle;
+pub mod circle;
+pub mod ellipse;
+pub mod polygon;
+pub mod mesh;
+pub mod path;
+pub mod polyline;

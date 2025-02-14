@@ -2,12 +2,12 @@ use getter_methods::GetterMethods;
 use crate::model_2d::point::Point;
 
 #[derive(GetterMethods)]
-pub struct Polygon {
+pub struct Polyline {
     vertices: Vec<Point>
 }
 
-impl Polygon {
-    pub fn new(vertices: Vec<Point>) -> Polygon {
-        Polygon { vertices }
+impl Polyline {
+    pub fn new(vertices: Vec<Point>) -> Self {
+        Self { vertices }
     }
 }
