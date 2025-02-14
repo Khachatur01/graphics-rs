@@ -19,13 +19,13 @@ impl Into<Polygon> for Rectangle {
     fn into(self) -> Polygon {
         Polygon::new(vec![
             /* top left */
-            Point::new(self.top_left.x(),                        self.top_left.y()),
+            Point::new(self.top_left.x(),                     self.top_left.y()),
             /* top right */
             Point::new(self.top_left.x() + self.width,        self.top_left.y()),
             /* bottom right */
             Point::new(self.top_left.x() + self.width,        self.top_left.y() + self.height),
             /* bottom left */
-            Point::new(self.top_left.x(),                        self.top_left.y() + self.height),
+            Point::new(self.top_left.x(),                     self.top_left.y() + self.height),
         ])
     }
 }
