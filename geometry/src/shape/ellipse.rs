@@ -1,5 +1,5 @@
 use getter_methods::GetterMethods;
-use crate::model_2d::point::Point;
+use crate::shape::point::Point;
 
 #[derive(GetterMethods)]
 pub struct Ellipse {

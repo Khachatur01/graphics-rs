@@ -1,6 +1,6 @@
 use getter_methods::GetterMethods;
-use crate::model_2d::path::command::positioning::Positioning;
-use crate::model_2d::point::Point;
+use crate::shape::path::command::positioning::Positioning;
+use crate::shape::point::Point;
 
 #[derive(GetterMethods)]
 pub struct MoveTo {

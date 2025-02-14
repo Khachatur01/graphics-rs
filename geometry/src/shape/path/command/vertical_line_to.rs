@@ -1,5 +1,5 @@
 use getter_methods::GetterMethods;
-use crate::model_2d::path::command::positioning::Positioning;
+use crate::shape::path::command::positioning::Positioning;
 
 #[derive(GetterMethods)]
 pub struct VerticalLineTo {

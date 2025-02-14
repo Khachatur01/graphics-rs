@@ -1,1 +1,2 @@
-pub mod model_2d;
+pub mod shape;
+mod traits;

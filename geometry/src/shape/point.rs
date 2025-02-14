@@ -1,4 +1,4 @@
-use std::ops::{Add, Sub};
+use std::ops::{Add, AddAssign, Sub, SubAssign};
 use getter_methods::GetterMethods;
 
 #[derive(Clone, Copy, GetterMethods)]
@@ -30,6 +30,13 @@ impl Add for Point {
     }
 }
 
+impl AddAssign for Point {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
 impl Sub for Point {
     type Output = Self;
 
@@ -38,5 +45,12 @@ impl Sub for Point {
             x: self.x - rhs.x,
             y: self.y - rhs.y,
         }
+    }
+}
+
+impl SubAssign for Point {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
     }
 }
