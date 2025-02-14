@@ -5,3 +5,4 @@ mod circle;
 mod ellipse;
 mod polygon;
 mod mesh;
+mod path;
