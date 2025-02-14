@@ -1,2 +1,2 @@
 pub mod shape;
-mod traits;
+pub mod traits;
