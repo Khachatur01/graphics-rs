@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/rendering/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/view-port/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/web/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/geometry/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

@@ -1,0 +1,4 @@
+services:
+    web-ui:
+        build: .
+        network_mode: "host"

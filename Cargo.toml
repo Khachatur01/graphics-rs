@@ -5,8 +5,9 @@ edition = "2021"
 
 [workspace]
 members = [
-    "geometry", "rendering",
-    "view-port"
+    "geometry",
+    "view-port",
+    "web",
 ]
 
 [dependencies]

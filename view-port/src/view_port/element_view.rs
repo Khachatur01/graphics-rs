@@ -1,8 +1,14 @@
-use geometry::traits::{Drag, Resize};
+use geometry::shape::point::Point;
+use geometry::shape::Shape;
 
-trait Shape: Resize + Drag {}
+struct Rotation {
+    angle: f64,
+    reference_point: Point,
+}
 
 pub struct ElementView<Id> {
     id: Id,
-    shape: Box<dyn Shape>,
+    element: Box<dyn Shape>,
+    style: String,
+    rotation: Rotation,
 }

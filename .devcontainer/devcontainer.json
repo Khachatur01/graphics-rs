@@ -1,0 +1,7 @@
+{
+  name: "Graphics library written on Rust",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "web-ui",
+  "workspaceFolder": "/${localWorkspaceFolderBasename}",
+  postStartCommand: "export NODE_OPTIONS=--openssl-legacy-provider"
+}

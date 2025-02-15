@@ -14,6 +14,10 @@ impl Rectangle {
     pub fn new(top_left: Point, width: f64, height: f64) -> Rectangle {
         Rectangle { top_left, width, height }
     }
+
+    pub fn zero_sized(top_left: Point) -> Rectangle {
+        Rectangle { top_left, width: 0.0, height: 0.0 }
+    }
 }
 
 impl Into<Polygon> for Rectangle {
@@ -39,7 +43,7 @@ impl Resize for Rectangle {
 }
 
 impl Drag for Rectangle {
-    fn drag(&mut self, delta: Point) {
+    fn drag(&mut self, delta: &Point) {
         self.top_left += delta;
     }
 }

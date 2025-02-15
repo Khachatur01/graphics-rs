@@ -1,5 +1,7 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
 use getter_methods::GetterMethods;
+use impl_ops::impl_op_ex;
+use std::ops;
+use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy, GetterMethods)]
 pub struct Point {
@@ -19,37 +21,29 @@ impl Default for Point {
     }
 }
 
-impl Add for Point {
-    type Output = Self;
-
-    fn add(self, rhs: Self) -> Self::Output {
-        Point {
-            x: self.x + rhs.x,
-            y: self.y + rhs.y,
-        }
+impl_op_ex!(+ |lhs: &Point, rhs: &Point| -> Point {
+    Point {
+        x: lhs.x + rhs.x,
+        y: lhs.y + rhs.y
     }
-}
+});
 
-impl AddAssign for Point {
-    fn add_assign(&mut self, rhs: Self) {
+impl_op_ex!(- |lhs: &Point, rhs: &Point| -> Point {
+    Point {
+        x: lhs.x + rhs.x,
+        y: lhs.y + rhs.y
+    }
+});
+
+impl AddAssign<&Point> for Point {
+    fn add_assign(&mut self, rhs: &Point) {
         self.x += rhs.x;
         self.y += rhs.y;
     }
 }
 
-impl Sub for Point {
-    type Output = Self;
-
-    fn sub(self, rhs: Self) -> Self::Output {
-        Point {
-            x: self.x - rhs.x,
-            y: self.y - rhs.y,
-        }
-    }
-}
-
-impl SubAssign for Point {
-    fn sub_assign(&mut self, rhs: Self) {
+impl SubAssign<&Point> for Point {
+    fn sub_assign(&mut self, rhs: &Point) {
         self.x -= rhs.x;
         self.y -= rhs.y;
     }

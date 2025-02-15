@@ -15,15 +15,15 @@ impl ClickDrawTool {
 }
 
 impl MouseEvents for ClickDrawTool {
-    fn make_mouse_down(&mut self, point: &Point) {
+    fn mouse_down(&mut self, point: &Point) {
         todo!()
     }
 
-    fn make_mouse_move(&mut self, point: &Point) {
+    fn mouse_move(&mut self, point: &Point) {
         todo!()
     }
 
-    fn make_mouse_up(&mut self, point: &Point) {
+    fn mouse_up(&mut self, point: &Point) {
         todo!()
     }
 }

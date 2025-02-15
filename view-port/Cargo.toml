@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 geometry = { path = "../geometry" }
+getter-methods = "1.1.0"
