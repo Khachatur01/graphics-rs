@@ -46,12 +46,23 @@ dependencies = [
 [[package]]
 name = "graphics-rs"
 version = "0.1.0"
+dependencies = [
+ "interactivity",
+]
 
 [[package]]
 name = "impl_ops"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90f97a5f38dd3ccfbe7aa80f4a0c00930f21b922c74195be0201c51028f22dcf"
+
+[[package]]
+name = "interactivity"
+version = "0.1.0"
+dependencies = [
+ "geometry",
+ "view-port",
+]
 
 [[package]]
 name = "log"
@@ -81,6 +92,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e4dccaaaf89514f546c693ddc140f729f958c247918a13380cccc6078391acc"
 dependencies = [
  "proc-macro2",
+]
+
+[[package]]
+name = "rendering"
+version = "0.1.0"
+dependencies = [
+ "view-port",
 ]
 
 [[package]]

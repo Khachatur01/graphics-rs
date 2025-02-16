@@ -1,4 +1,4 @@
-use crate::tool::mouse_events::MouseEvents;
+use crate::tool::{MouseEvents, Tool};
 use geometry::shape::point::Point;
 use geometry::shape::rectangle::Rectangle;
 use geometry::traits::{Resize, Selectable};
@@ -37,3 +37,4 @@ impl MouseEvents for SelectTool {
         self.selection = None;
     }
 }
+impl Tool for SelectTool {}
