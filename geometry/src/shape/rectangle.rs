@@ -3,7 +3,7 @@ use crate::shape::polygon::Polygon;
 use crate::traits::{Drag, Resize};
 use getter_methods::GetterMethods;
 
-#[derive(GetterMethods)]
+#[derive(GetterMethods, Copy, Clone)]
 pub struct Rectangle {
     top_left: Point,
     width: f64,

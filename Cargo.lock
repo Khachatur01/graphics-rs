@@ -98,6 +98,7 @@ dependencies = [
 name = "rendering"
 version = "0.1.0"
 dependencies = [
+ "geometry",
  "view-port",
 ]
 
@@ -195,5 +196,6 @@ name = "web"
 version = "0.1.0"
 dependencies = [
  "console_error_panic_hook",
+ "view-port",
  "wasm-bindgen",
 ]

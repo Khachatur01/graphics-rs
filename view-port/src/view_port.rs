@@ -1,10 +1,13 @@
 use crate::view_port::element_id::ElementId;
 use crate::view_port::element_view::ElementView;
+use getter_methods::GetterMethods;
 
 pub mod element_view;
 pub mod element_id;
 pub mod traits;
 
+
+#[derive(GetterMethods)]
 pub struct ViewPort {
     elements: Vec<ElementView<ElementId>>,
 }

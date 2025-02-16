@@ -1,4 +1,7 @@
-use crate::traits::{Drag, Resize};
+use crate::shape::circle::Circle;
+use crate::shape::point::Point;
+use crate::shape::rectangle::Rectangle;
+use crate::shape::segment::Segment;
 
 pub mod point;
 pub mod segment;
@@ -10,5 +13,9 @@ pub mod polyline;
 pub mod mesh;
 pub mod path;
 
-
-pub trait Shape: Resize + Drag {}
+pub enum Shape {
+    Point(Point),
+    Segment(Segment),
+    Rectangle(Rectangle),
+    Circle(Circle),
+}

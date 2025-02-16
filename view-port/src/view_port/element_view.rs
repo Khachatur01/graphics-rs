@@ -1,24 +1,26 @@
 use geometry::shape::point::Point;
 use geometry::shape::Shape;
+use getter_methods::GetterMethods;
 
-#[derive(Default)]
+#[derive(GetterMethods, Default)]
 struct Rotation {
     angle: f64,
     reference_point: Point,
 }
 
+#[derive(GetterMethods)]
 pub struct ElementView<Id> {
     id: Id,
-    element: Box<dyn Shape>,
+    shape: Shape,
     style: String,
     rotation: Rotation,
 }
 
 impl<Id> ElementView<Id> {
-    pub fn new(id: Id, element: Box<dyn Shape>) -> Self {
+    pub fn from_shape(id: Id, element: Shape) -> Self {
         Self {
             id,
-            element,
+            shape: element,
             style: String::from(""),
             rotation: Default::default(),
         }
