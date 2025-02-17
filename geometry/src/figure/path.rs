@@ -1,5 +1,5 @@
+use crate::figure::path::command::Command;
 use getter_methods::GetterMethods;
-use crate::shape::path::command::Command;
 
 pub mod command;
 

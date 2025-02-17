@@ -1,6 +1,6 @@
+use crate::figure::path::command::positioning::Positioning;
+use crate::figure::point::Point;
 use getter_methods::GetterMethods;
-use crate::shape::path::command::positioning::Positioning;
-use crate::shape::point::Point;
 
 #[derive(GetterMethods)]
 pub struct BezierTo {

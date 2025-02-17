@@ -1,7 +1,7 @@
 use crate::tool::{MouseEvents, Tool};
-use geometry::shape::point::Point;
-use geometry::shape::rectangle::Rectangle;
-use geometry::traits::{Resize, Selectable};
+use geometry::figure::point::Point;
+use geometry::figure::rectangle::Rectangle;
+use geometry::math::{Resize, Selectable};
 
 pub struct SelectTool {
     selected_elements: Vec<Box<dyn Selectable>>,
@@ -37,4 +37,5 @@ impl MouseEvents for SelectTool {
         self.selection = None;
     }
 }
+
 impl Tool for SelectTool {}

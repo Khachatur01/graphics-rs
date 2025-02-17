@@ -1,5 +1,5 @@
+use crate::figure::path::command::Command as PathCommand;
 use getter_methods::GetterMethods;
-use crate::shape::path::command::Command as PathCommand;
 
 #[derive(GetterMethods)]
 pub struct Edge {

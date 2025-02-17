@@ -1,6 +1,6 @@
+use crate::figure::mesh::edge::Edge;
+use crate::figure::point::Point;
 use getter_methods::GetterMethods;
-use crate::shape::mesh::edge::Edge;
-use crate::shape::point::Point;
 
 pub mod edge;
 

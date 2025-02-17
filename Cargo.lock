@@ -97,10 +97,6 @@ dependencies = [
 [[package]]
 name = "rendering"
 version = "0.1.0"
-dependencies = [
- "geometry",
- "view-port",
-]
 
 [[package]]
 name = "rustversion"
@@ -131,6 +127,7 @@ version = "0.1.0"
 dependencies = [
  "geometry",
  "getter-methods",
+ "rendering",
 ]
 
 [[package]]

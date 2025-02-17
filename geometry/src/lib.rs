@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate impl_ops;
 
-pub mod shape;
-pub mod traits;
+pub mod figure;
+pub mod math;
+mod transformation;

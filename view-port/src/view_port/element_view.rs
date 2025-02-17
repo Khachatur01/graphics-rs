@@ -1,28 +1,32 @@
-use geometry::shape::point::Point;
-use geometry::shape::Shape;
+use crate::view_port::element::Element;
 use getter_methods::GetterMethods;
 
-#[derive(GetterMethods, Default)]
-struct Rotation {
-    angle: f64,
-    reference_point: Point,
+#[derive(GetterMethods)]
+pub struct ElementId {
+    owner_id: usize,
+    index: usize,
 }
+
+impl ElementId {
+    pub fn new(owner_id: usize, index: usize) -> Self {
+        Self { owner_id, index }
+    }
+}
+
 
 #[derive(GetterMethods)]
-pub struct ElementView<Id> {
-    id: Id,
-    shape: Shape,
+pub struct ElementView {
+    id: ElementId,
+    element: Element,
     style: String,
-    rotation: Rotation,
 }
 
-impl<Id> ElementView<Id> {
-    pub fn from_shape(id: Id, element: Shape) -> Self {
+impl ElementView {
+    pub fn new(id: ElementId, element: Element) -> Self {
         Self {
             id,
-            shape: element,
+            element,
             style: String::from(""),
-            rotation: Default::default(),
         }
     }
 }

@@ -3,7 +3,7 @@ use impl_ops::impl_op_ex;
 use std::ops;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
-#[derive(Clone, Copy, GetterMethods)]
+#[derive(GetterMethods, Copy, Clone)]
 pub struct Point {
     x: f64,
     y: f64,

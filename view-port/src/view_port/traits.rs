@@ -1,4 +1,4 @@
-use geometry::shape::point::Point;
+use geometry::figure::point::Point;
 
 pub trait MouseEvents {
     fn mouse_down(&mut self, point: &Point);

@@ -5,11 +5,16 @@ edition = "2021"
 
 [workspace]
 members = [
+    # layer 0
     "geometry",
+    # layer 1
     "view-port",
+    # layer 2
     "interactivity",
-    "rendering",
+    # layer 3
     "web",
+
+    "rendering",
 ]
 
 [dependencies]

@@ -1,4 +1,4 @@
-use crate::shape::point::Point;
+use crate::figure::point::Point;
 use getter_methods::GetterMethods;
 
 #[derive(GetterMethods, Copy, Clone)]

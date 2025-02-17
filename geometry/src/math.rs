@@ -1,5 +1,5 @@
-use crate::shape::point::Point;
-use crate::shape::rectangle::Rectangle;
+use crate::figure::point::Point;
+use crate::figure::rectangle::Rectangle;
 
 pub trait Resize {
     fn resize(&mut self, new_width: f64, new_height: f64);
