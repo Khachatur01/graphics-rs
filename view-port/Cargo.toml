@@ -1,9 +1,0 @@
-[package]
-name = "view-port"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-geometry = { path = "../geometry" }
-rendering = { path = "../rendering" }
-getter-methods = "1.1.0"

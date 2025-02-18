@@ -6,16 +6,17 @@ edition = "2021"
 [workspace]
 members = [
     # layer 0
-    "geometry",
+    "lib/geometry",
     # layer 1
-    "view-port",
+    "lib/rendering",
     # layer 2
-    "interactivity",
+    "lib/interactivity",
     # layer 3
+    "lib/view-port",
+    # layer 4
     "web",
 
-    "rendering",
 ]
 
 [dependencies]
-interactivity = { path = "interactivity" }
+view-port = { path = "lib/view-port" }

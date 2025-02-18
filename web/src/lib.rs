@@ -1,11 +1,11 @@
 mod utils;
 
-use view_port::view_port::ViewPort;
+use view_port::ViewPort;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct WebViewPort {
-    view_port: ViewPort
+    view_port: ViewPort<String>,
 }
 
 #[wasm_bindgen]

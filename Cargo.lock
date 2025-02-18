@@ -47,7 +47,7 @@ dependencies = [
 name = "graphics-rs"
 version = "0.1.0"
 dependencies = [
- "interactivity",
+ "view-port",
 ]
 
 [[package]]
@@ -61,7 +61,7 @@ name = "interactivity"
 version = "0.1.0"
 dependencies = [
  "geometry",
- "view-port",
+ "rendering",
 ]
 
 [[package]]
@@ -97,6 +97,9 @@ dependencies = [
 [[package]]
 name = "rendering"
 version = "0.1.0"
+dependencies = [
+ "geometry",
+]
 
 [[package]]
 name = "rustversion"
@@ -127,6 +130,7 @@ version = "0.1.0"
 dependencies = [
  "geometry",
  "getter-methods",
+ "interactivity",
  "rendering",
 ]
 

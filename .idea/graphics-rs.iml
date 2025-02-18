@@ -2,15 +2,15 @@
 <module type="EMPTY_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/geometry/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/rendering/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/view-port/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/interactivity/src" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/geometry/target" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/geometry/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/interactivity/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/rendering/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/view-port/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/geometry/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
