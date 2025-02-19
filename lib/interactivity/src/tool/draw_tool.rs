@@ -35,10 +35,10 @@ impl MouseEvents for DrawTool {
         match &mut self.draw_mode {
             DrawMode::Move { start, drawable } => {
                 start.replace(point.clone());
-                drawable.mouse_down(point, point);
+                drawable.mouse_down(point);
             }
             DrawMode::Click { points, drawable } => {
-
+                todo!()
             }
         }
     }
@@ -50,7 +50,7 @@ impl MouseEvents for DrawTool {
                 drawable.mouse_move(start, point);
             }
             DrawMode::Click { points, drawable } => {
-
+                todo!()
             }
         }
     }
@@ -65,7 +65,7 @@ impl MouseEvents for DrawTool {
                 self.end_drawing();
             }
             DrawMode::Click { points, drawable } => {
-
+                todo!()
             }
         }
     }
