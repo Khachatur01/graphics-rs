@@ -1,7 +1,7 @@
-use crate::element::text_element::TextElement;
+use crate::element::geometric::mesh_element::MeshElement;
 use rendering::{Render, Renderer};
 
-impl<Id> Render for TextElement<Id> {
+impl<Id> Render for MeshElement<Id> {
     fn render(&mut self, renderer: &mut impl Renderer) {
         todo!()
     }

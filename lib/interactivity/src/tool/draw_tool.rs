@@ -1,47 +1,74 @@
-pub mod draw;
+pub mod draw_mode;
 
-use crate::tool::draw_tool::draw::Draw;
+use crate::tool::draw_tool::draw_mode::DrawMode;
 use crate::tool::Tool;
 use crate::MouseEvents;
 use geometry::figure::point::Point;
 
-pub struct DrawTool<Drawable>
-where Drawable: Draw {
-    points: Vec<Point>,
-    drawable: Drawable,
+pub struct DrawTool {
+    draw_mode: DrawMode,
 }
 
-impl<Drawable> DrawTool<Drawable>
-where Drawable: Draw {
-    pub fn new(drawable: Drawable) -> Self {
+impl DrawTool {
+    pub fn new(draw_mode: DrawMode) -> Self {
         Self {
-            points: vec![],
-            drawable,
+            draw_mode,
         }
     }
 
     pub fn end_drawing(&mut self) {
-        self.points.clear();
+        match &mut self.draw_mode {
+            DrawMode::Move { start, .. } => {
+                start.take();
+            }
+            DrawMode::Click { points, .. } => {
+                points.clear();
+            }
+        };
+
         /* todo: add copy of drawn element to viewport */
     }
 }
 
-impl<Drawable> MouseEvents for DrawTool<Drawable>
-where Drawable: Draw {
+impl MouseEvents for DrawTool {
     fn mouse_down(&mut self, point: &Point) {
-        self.points.push(*point);
+        match &mut self.draw_mode {
+            DrawMode::Move { start, drawable } => {
+                start.replace(point.clone());
+                drawable.mouse_down(point, point);
+            }
+            DrawMode::Click { points, drawable } => {
 
-        self.drawable.mouse_down(&self.points, point);
+            }
+        }
     }
 
     fn mouse_move(&mut self, point: &Point) {
-        self.drawable.mouse_down(&self.points, point);
+        match &mut self.draw_mode {
+            DrawMode::Move { start, drawable } => {
+                let Some(start) = start else { return; };
+                drawable.mouse_move(start, point);
+            }
+            DrawMode::Click { points, drawable } => {
+
+            }
+        }
     }
 
     fn mouse_up(&mut self, point: &Point) {
-        self.drawable.mouse_up(&self.points, point);
+        match &mut self.draw_mode {
+            DrawMode::Move { start, drawable } => {
+                /* Take value from start point to make sure after mouse up action start point is None */
+                let Some(start) = start.take() else { return; };
+                drawable.mouse_up(&start, point);
+
+                self.end_drawing();
+            }
+            DrawMode::Click { points, drawable } => {
+
+            }
+        }
     }
 }
 
-impl<Drawable> Tool for DrawTool<Drawable>
-where Drawable: Draw {}
+impl Tool for DrawTool {}

@@ -1,4 +1,4 @@
-pub mod geometric_element;
+pub mod geometric;
 mod text_element;
 
 pub trait ViewPortElement<Id> {

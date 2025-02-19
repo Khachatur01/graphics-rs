@@ -4,8 +4,8 @@ use geometry::figure::path::Path;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
 
-pub trait Render<RendererImpl: Renderer> {
-    fn render(&mut self, renderer: &mut RendererImpl);
+pub trait Render {
+    fn render(&mut self, renderer: &mut impl Renderer);
 }
 
 pub trait Renderer {
