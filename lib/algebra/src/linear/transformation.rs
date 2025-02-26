@@ -26,9 +26,15 @@ pub struct Scale {
     reference_point: ReferencePoint,
 }
 
+#[derive(GetterMethods, Copy, Clone)]
+pub struct Matrix {
+    /* todo */
+}
+
 #[derive(Copy, Clone)]
 pub enum Transformation {
     Rotation(Rotation),
     Skew(Skew),
     Scale(Scale),
+    Matrix(Matrix),
 }

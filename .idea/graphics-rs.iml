@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/interactivity/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/rendering/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/view-port/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/algebra/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/lib/geometry/target" />
     </content>

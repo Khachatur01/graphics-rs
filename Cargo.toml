@@ -6,15 +6,17 @@ edition = "2021"
 [workspace]
 members = [
     # layer 0
-    "lib/geometry",
+    "lib/algebra",
     # layer 1
-    "lib/rendering",
+    "lib/geometry",
     # layer 2
-    "lib/interactivity",
+    "lib/rendering",
     # layer 3
-    "lib/view-port",
+    "lib/interactivity",
     # layer 4
-    "web",
+    "lib/view-port",
+    # layer 5
+    "web", "lib/algebra",
 
 ]
 
