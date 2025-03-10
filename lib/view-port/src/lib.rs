@@ -12,7 +12,7 @@ pub fn new_atomic_vec<T>() -> AtomicVec<T> {
 
 #[derive(GetterMethods)]
 pub struct ViewPort<Id> {
-    elements: AtomicVec<Box<dyn ViewPortElement<Id>>>,
+    elements: AtomicVec<Box<dyn ViewPortElement<Id>>>, 
 }
 
 impl<Id> ViewPort<Id> {
@@ -22,12 +22,12 @@ impl<Id> ViewPort<Id> {
         }
     }
 
-    pub fn add_element(&self, element: Box<dyn ViewPortElement<Id>>) -> Result<(), ()> {
+    pub fn add_element(&self, element: impl ViewPortElement<Id> + 'static) -> Result<(), ()> {
         let Ok(mut elements) = self.elements.write() else {
             return Err(());
         };
 
-        elements.push(element);
+        elements.push(Box::new(element));
 
         Ok(())
     }

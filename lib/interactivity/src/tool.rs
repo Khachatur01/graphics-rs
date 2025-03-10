@@ -1,6 +1,6 @@
-use crate::MouseEvents;
+use crate::Interactive;
 
 pub mod select_tool;
 pub mod draw_tool;
 
-pub trait Tool: MouseEvents {}
+pub trait Tool: Interactive {}

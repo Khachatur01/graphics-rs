@@ -15,9 +15,9 @@ members = [
     "lib/interactivity",
     # layer 4
     "lib/view-port",
-    # layer 5
-    "web", "lib/algebra",
 
+    "web",
+    "whiteboard",
 ]
 
 [dependencies]
