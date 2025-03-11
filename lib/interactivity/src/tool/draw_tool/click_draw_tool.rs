@@ -9,6 +9,10 @@ pub struct ClickDrawTool<Drawable> {
 }
 
 impl<Drawable> ClickDrawTool<Drawable> {
+    pub fn new(drawable: Drawable) -> ClickDrawTool<Drawable> {
+        Self { points: Vec::new(), drawable }
+    }
+
     pub fn end_drawing(&mut self) {
         self.points.clear();
 
