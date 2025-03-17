@@ -1,4 +1,4 @@
-mod point_element;
-mod segment_element;
-mod mesh_element;
-mod rectangle_element;
+pub mod point_element;
+pub mod segment_element;
+pub mod mesh_element;
+pub mod rectangle_element;

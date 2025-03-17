@@ -16,7 +16,6 @@ members = [
     # layer 4
     "lib/view-port",
 
-    "web",
     "whiteboard",
 ]
 

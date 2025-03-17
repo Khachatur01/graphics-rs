@@ -1,5 +1,6 @@
 use crate::element::ViewPortElement;
 use getter_methods::GetterMethods;
+use rendering::{Render, Renderer};
 use std::sync::{Arc, RwLock};
 
 pub mod element;
@@ -12,7 +13,7 @@ pub fn new_atomic_vec<T>() -> AtomicVec<T> {
 
 #[derive(GetterMethods)]
 pub struct ViewPort<Id> {
-    elements: AtomicVec<Box<dyn ViewPortElement<Id>>>, 
+    elements: AtomicVec<Box<dyn ViewPortElement<Id>>>,
 }
 
 impl<Id> ViewPort<Id> {
@@ -30,5 +31,17 @@ impl<Id> ViewPort<Id> {
         elements.push(Box::new(element));
 
         Ok(())
+    }
+}
+
+impl<Id> Render for ViewPort<Id> {
+    fn render(&self, renderer: &mut dyn Renderer) {
+        let Ok(elements) = self.elements.read() else {
+            return; /* todo: add proper error propagation */
+        };
+
+        for element in elements.iter() {
+            element.render(renderer);
+        }
     }
 }

@@ -2,10 +2,11 @@ mod render;
 mod draw;
 
 use crate::element::ViewPortElement;
+use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
 
-#[derive(GetterMethods)]
+#[derive(GetterMethods, Clone)]
 pub struct RectangleElement<Id> {
     id: Id,
     rectangle: Rectangle,
@@ -25,5 +26,15 @@ impl<Id> RectangleElement<Id> {
 impl<Id> ViewPortElement<Id> for RectangleElement<Id> {
     fn id(&self) -> &Id {
         &self.id
+    }
+}
+
+impl<Id> RectangleElement<Id> {
+    pub fn zero_sized(id: Id) -> Self {
+        Self {
+            id,
+            rectangle: Rectangle::zero_sized(Point::default()),
+            style: String::from(""),
+        }
     }
 }

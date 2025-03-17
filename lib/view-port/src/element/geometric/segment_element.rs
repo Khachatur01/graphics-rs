@@ -4,6 +4,7 @@ mod render;
 use crate::element::ViewPortElement;
 use geometry::figure::segment::Segment;
 use getter_methods::GetterMethods;
+use rendering::{Render, Renderer};
 
 #[derive(GetterMethods)]
 pub struct SegmentElement<Id> {

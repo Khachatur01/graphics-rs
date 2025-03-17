@@ -5,7 +5,7 @@ use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
 
 pub trait Render {
-    fn render(&mut self, renderer: &mut impl Renderer);
+    fn render(&self, renderer: &mut dyn Renderer);
 }
 
 pub trait Renderer {
