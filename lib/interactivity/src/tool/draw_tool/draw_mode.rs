@@ -1,13 +1,13 @@
 use geometry::figure::point::Point;
 use rendering::Render;
 
-pub trait MoveDraw: Render {
+pub trait MoveDraw: Render + Clone {
     fn mouse_down(&mut self, current_point: &Point);
     fn mouse_move(&mut self, start: &Point, current_point: &Point);
     fn mouse_up(&mut self, start: &Point, current_point: &Point);
 }
 
-pub trait ClickDraw: Render {
+pub trait ClickDraw: Render + Clone {
     fn mouse_down(&mut self, points: &Vec<Point>, current_point: &Point);
     fn mouse_move(&mut self, points: &Vec<Point>, current_point: &Point);
     fn mouse_up(&mut self, points: &Vec<Point>, current_point: &Point);

@@ -3,19 +3,20 @@ import * as wasm from "graphics-rs";
 const whiteboard = wasm.Whiteboard.new();
 
 (function () {
-    let element = document.getElementById('container');
+    let container = document.getElementById('container');
+    const canvasRenderer = wasm.CanvasRenderer.new(container);
 
-    element.addEventListener('mousedown', (event) => {
+    container.addEventListener('mousedown', (event) => {
         whiteboard.mouse_down(event.offsetX, event.offsetY);
     })
-    element.addEventListener('mousemove', (event) => {
+    container.addEventListener('mousemove', (event) => {
         whiteboard.mouse_move(event.offsetX, event.offsetY);
     })
-    element.addEventListener('mouseup', (event) => {
+    container.addEventListener('mouseup', (event) => {
         whiteboard.mouse_up(event.offsetX, event.offsetY);
     })
 
     setInterval(() => {
-        console.log('rendering');
-    }, 2000);
+        whiteboard.render(canvasRenderer);
+    }, 10);
 })()

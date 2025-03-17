@@ -9,6 +9,7 @@ pub trait Render {
 }
 
 pub trait Renderer {
+    fn clear(&mut self);
     fn segment(&mut self, segment: &Segment);
     fn rectangle(&mut self, rectangle: &Rectangle);
     fn circle(&mut self, circle: &Circle);

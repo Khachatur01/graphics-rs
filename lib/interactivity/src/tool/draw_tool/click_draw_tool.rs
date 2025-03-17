@@ -1,14 +1,17 @@
+mod render;
+
 use crate::tool::draw_tool::draw_mode::ClickDraw;
 use crate::tool::Tool;
 use crate::Interactive;
 use geometry::figure::point::Point;
+use rendering::{Render, Renderer};
 
-pub struct ClickDrawTool<Drawable> {
+pub struct ClickDrawTool<Drawable: ClickDraw> {
     points: Vec<Point>,
     drawable: Drawable
 }
 
-impl<Drawable> ClickDrawTool<Drawable> {
+impl<Drawable: ClickDraw> ClickDrawTool<Drawable> {
     pub fn new(drawable: Drawable) -> ClickDrawTool<Drawable> {
         Self { points: Vec::new(), drawable }
     }

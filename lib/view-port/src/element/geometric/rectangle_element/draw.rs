@@ -3,7 +3,7 @@ use geometry::figure::point::Point;
 use geometry::math::{Drag, Resize};
 use interactivity::tool::draw_tool::draw_mode::MoveDraw;
 
-impl<Id> MoveDraw for RectangleElement<Id> {
+impl<Id: Clone> MoveDraw for RectangleElement<Id> {
     fn mouse_down(&mut self, current_point: &Point) {
         self.rectangle.drag(current_point)
     }

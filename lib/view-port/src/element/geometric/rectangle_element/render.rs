@@ -3,6 +3,6 @@ use rendering::{Render, Renderer};
 
 impl<Id> Render for RectangleElement<Id> {
     fn render(&self, renderer: &mut dyn Renderer) {
-        todo!()
+        renderer.rectangle(self.rectangle());
     }
 }

@@ -1,7 +1,10 @@
+mod render;
+
 use crate::tool::{Interactive, Tool};
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::{Resize, Selectable};
+use rendering::{Render, Renderer};
 
 pub struct SelectTool {
     selected_elements: Vec<Box<dyn Selectable>>,

@@ -5,14 +5,15 @@ use crate::Interactive;
 use geometry::figure::point::Point;
 
 pub mod event_channel;
+mod render;
 
-pub struct MoveDrawTool<Drawable: Clone> {
+pub struct MoveDrawTool<Drawable: MoveDraw> {
     start: Option<Point>,
     drawable: Drawable,
     pub event_channel: EventChannel<Drawable>
 }
 
-impl<Drawable: Clone> MoveDrawTool<Drawable> {
+impl<Drawable: MoveDraw> MoveDrawTool<Drawable> {
     pub fn new(drawable: Drawable) -> MoveDrawTool<Drawable> {
         Self {
             start: None,
@@ -28,7 +29,7 @@ impl<Drawable: Clone> MoveDrawTool<Drawable> {
     }
 }
 
-impl<Drawable: MoveDraw + Clone> Interactive for MoveDrawTool<Drawable> {
+impl<Drawable: MoveDraw> Interactive for MoveDrawTool<Drawable> {
     fn mouse_down(&mut self, point: &Point) {
         self.start.replace(point.clone());
         self.drawable.mouse_down(point);
@@ -54,4 +55,4 @@ impl<Drawable: MoveDraw + Clone> Interactive for MoveDrawTool<Drawable> {
     }
 }
 
-impl<Drawable: MoveDraw + Clone> Tool for MoveDrawTool<Drawable> {}
+impl<Drawable: MoveDraw> Tool for MoveDrawTool<Drawable> {}

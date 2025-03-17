@@ -1,6 +1,10 @@
+mod canvas_renderer;
+
+use crate::canvas_renderer::CanvasRenderer;
 use geometry::figure::point::Point;
 use interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
 use interactivity::tool::Tool;
+use rendering::{Render, Renderer};
 use std::rc::Rc;
 use view_port::element::geometric::rectangle_element::RectangleElement;
 use view_port::ViewPort;
@@ -73,5 +77,11 @@ impl Whiteboard {
 
     pub fn mouse_up(&mut self, x: f64, y: f64) {
         self.active_tool.mouse_up(&Point::new(x, y));
+    }
+
+    pub fn render(&self, renderer: &mut CanvasRenderer) {
+        renderer.clear();
+        self.view_port.render(renderer);
+        self.active_tool.render(renderer);
     }
 }
