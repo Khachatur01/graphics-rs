@@ -6,7 +6,7 @@ use geometry::figure::segment::Segment;
 use rendering::Renderer;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsCast;
-use web_sys::{Node, SvgElement, SvgRectElement};
+use web_sys::{Node, SvgElement, SvgLineElement, SvgRectElement};
 
 #[wasm_bindgen]
 pub struct SVGRenderer {
@@ -26,7 +26,36 @@ impl Renderer for SVGRenderer {
     }
 
     fn segment(&mut self, id: &str, segment: &Segment) {
-        todo!()
+        let window = web_sys::window().expect("global window does not exists");
+        let document = window.document().expect("global document does not exists");
+
+        if let None = document.get_element_by_id(id) {
+            let svg_line = document
+                .create_element_ns(Some("http://www.w3.org/2000/svg"), "line")
+                .expect("can't create svg line element")
+                .dyn_into::<SvgLineElement>()
+                .expect("can't create svg line element");
+
+            svg_line.set_id(id);
+            svg_line.set_attribute("stroke", "black").expect("TODO: panic message");
+            svg_line.set_attribute("stroke-dasharray", "4 1").expect("TODO: panic message");
+
+            self.svg.append_child(&svg_line.dyn_into::<Node>().expect("")).expect("");
+        }
+
+        let svg_line = if let Some(element) = document.get_element_by_id(id) {
+            element
+                .dyn_into::<SvgLineElement>()
+                .expect("can't create svg line element")
+        } else {
+            return;
+        };
+
+        svg_line.set_attribute("x1", &format!("{}", segment.start().x())).expect("TODO: panic message");
+        svg_line.set_attribute("y1", &format!("{}", segment.start().y())).expect("TODO: panic message");
+
+        svg_line.set_attribute("x2", &format!("{}", segment.end().x())).expect("TODO: panic message");
+        svg_line.set_attribute("y2", &format!("{}", segment.end().y())).expect("TODO: panic message");
     }
 
     fn rectangle(&mut self, id: &str, rectangle: &Rectangle) {

@@ -8,6 +8,7 @@ use crate::svg_renderer::SVGRenderer;
 use geometry::figure::point::Point;
 use interactivity::tool::draw_tool::draw_mode::MoveDraw;
 use interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
+use interactivity::tool::select_tool::{SelectTool, Selectable};
 use interactivity::tool::Tool;
 use rendering::{Render, Renderer};
 use std::rc::Rc;
@@ -35,10 +36,11 @@ impl Whiteboard {
         let view_port = Rc::new(ViewPort::<ElementId>::new());
 
         let move_draw_tool = Self::create_move_draw_tool::<RectangleElement<ElementId>>(Rc::clone(&view_port));
+        let select_tool = Self::create_select_tool();
 
         Self {
             view_port,
-            active_tool: Box::new(move_draw_tool),
+            active_tool: Box::new(select_tool),
         }
     }
 
@@ -65,7 +67,9 @@ impl Whiteboard {
         self.active_tool.render(renderer);
     }
 
-    fn create_move_draw_tool<Element: ElementView<ElementId> + MoveDraw + 'static>(view_port: Rc<ViewPort<ElementId>>) -> MoveDrawTool<Element> {
+    fn create_move_draw_tool<Element>(view_port: Rc<ViewPort<ElementId>>) -> MoveDrawTool<Element>
+    where Element: ElementView<ElementId> + MoveDraw + 'static {
+
         let mut move_draw_tool: MoveDrawTool<Element> = MoveDrawTool::new();
 
         move_draw_tool.event_channel.mouse_down.subscribe(move |mouse_down| {
@@ -88,5 +92,11 @@ impl Whiteboard {
         });
 
         move_draw_tool
+    }
+
+    fn create_select_tool() -> SelectTool {
+        let select_tool: SelectTool = SelectTool::new();
+
+        select_tool
     }
 }

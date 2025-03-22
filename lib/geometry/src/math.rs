@@ -9,10 +9,6 @@ pub trait Drag {
     fn drag(&mut self, delta: &Point);
 }
 
-pub trait Selectable {
-    fn select(&mut self, selection: Rectangle) -> bool;
-}
-
 pub trait BoundingBox {
     fn bounding_box(&self) -> Rectangle;
 }

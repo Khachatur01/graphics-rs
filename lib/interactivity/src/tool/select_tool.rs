@@ -2,7 +2,10 @@ mod render;
 mod tool;
 
 use geometry::figure::rectangle::Rectangle;
-use geometry::math::Selectable;
+
+pub trait Selectable {
+    fn select(&mut self, selection: Rectangle) -> bool;
+}
 
 pub struct SelectTool {
     selected_elements: Vec<Box<dyn Selectable>>,

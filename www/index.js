@@ -30,7 +30,7 @@ const whiteboard = wasm.Whiteboard.new();
     });
 
     setInterval(() => {
-        whiteboard.render_canvas(canvasRenderer);
+        // whiteboard.render_canvas(canvasRenderer);
         whiteboard.render_svg(svgRenderer);
     });
 })()

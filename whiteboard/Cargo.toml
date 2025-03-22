@@ -23,7 +23,7 @@ interactivity = { path="../lib/interactivity" }
 geometry = { path="../lib/geometry" }
 rendering = { path="../lib/rendering" }
 wasm-bindgen = "0.2.100"
-web-sys = { version = "0.3.77", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "SvgsvgElement", "SvgRectElement", "Window", "Document"] }
+web-sys = { version = "0.3.77", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "SvgsvgElement", "SvgRectElement", "SvgLineElement", "Window", "Document"] }
 js-sys = "0.3.77"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
