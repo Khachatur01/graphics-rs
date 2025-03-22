@@ -1,7 +1,7 @@
 mod render;
 mod draw;
 
-use crate::element::ViewPortElement;
+use crate::element_view::ElementView;
 use geometry::figure::point::Point;
 use getter_methods::GetterMethods;
 
@@ -22,7 +22,7 @@ impl<Id> PointElement<Id> {
     }
 }
 
-impl<Id> ViewPortElement<Id> for PointElement<Id> {
+impl<Id> ElementView<Id> for PointElement<Id> {
     fn id(&self) -> &Id {
         &self.id
     }

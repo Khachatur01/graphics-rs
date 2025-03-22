@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/rustwasm/create-wasm-app#readme",
   "dependencies": {
-    "graphics-rs": "file:../whiteboard/pkg"
+    "whiteboard-rs": "file:../whiteboard/pkg"
   },
   "devDependencies": {
     "webpack": "^5.98.0",

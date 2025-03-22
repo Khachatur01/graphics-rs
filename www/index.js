@@ -1,4 +1,4 @@
-import * as wasm from "graphics-rs";
+import * as wasm from "whiteboard-rs";
 
 const whiteboard = wasm.Whiteboard.new();
 

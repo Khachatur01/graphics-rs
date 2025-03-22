@@ -1,7 +1,7 @@
 mod draw;
 mod render;
 
-use crate::element::ViewPortElement;
+use crate::element_view::ElementView;
 use geometry::figure::mesh::Mesh;
 use getter_methods::GetterMethods;
 
@@ -22,7 +22,7 @@ impl<Id> MeshElement<Id> {
     }
 }
 
-impl<Id> ViewPortElement<Id> for MeshElement<Id> {
+impl<Id> ElementView<Id> for MeshElement<Id> {
     fn id(&self) -> &Id {
         self.id()
     }

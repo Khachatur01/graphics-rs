@@ -1,19 +1,19 @@
 mod draw;
 mod render;
 
-use crate::element::ViewPortElement;
+use crate::element_view::ElementView;
 use geometry::figure::segment::Segment;
 use getter_methods::GetterMethods;
 use rendering::{Render, Renderer};
 
 #[derive(GetterMethods)]
-pub struct SegmentElement<Id> {
+pub struct SegmentView<Id> {
     id: Id,
     segment: Segment,
     style: String,
 }
 
-impl<Id> SegmentElement<Id> {
+impl<Id> SegmentView<Id> {
     pub fn new(id: Id, segment: Segment) -> Self {
         Self {
             id,
@@ -23,7 +23,7 @@ impl<Id> SegmentElement<Id> {
     }
 }
 
-impl<Id> ViewPortElement<Id> for SegmentElement<Id> {
+impl<Id> ElementView<Id> for SegmentView<Id> {
     fn id(&self) -> &Id {
         &self.id
     }

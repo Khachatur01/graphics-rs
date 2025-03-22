@@ -19,7 +19,7 @@ impl<Drawable: ClickDraw> ClickDrawTool<Drawable> {
     pub fn end_drawing(&mut self) {
         self.points.clear();
 
-        /* todo: add copy of drawn element to viewport */
+        /* todo: add copy of drawn element_view to viewport */
     }
 }
 

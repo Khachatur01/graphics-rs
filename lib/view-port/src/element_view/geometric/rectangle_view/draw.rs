@@ -1,4 +1,4 @@
-use crate::element::geometric::rectangle_element::RectangleElement;
+use crate::element_view::geometric::rectangle_view::RectangleElement;
 use geometry::figure::point::Point;
 use geometry::math::{Drag, Resize};
 use interactivity::tool::draw_tool::draw_mode::MoveDraw;

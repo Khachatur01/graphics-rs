@@ -1,4 +1,4 @@
-use crate::element::geometric::rectangle_element::RectangleElement;
+use crate::element_view::geometric::rectangle_view::RectangleElement;
 use rendering::{Render, Renderer};
 
 impl<Id> Render for RectangleElement<Id> {

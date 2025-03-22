@@ -1,7 +1,7 @@
 mod render;
 mod draw;
 
-use crate::element::ViewPortElement;
+use crate::element_view::ElementView;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
@@ -23,7 +23,7 @@ impl<Id> RectangleElement<Id> {
     }
 }
 
-impl<Id> ViewPortElement<Id> for RectangleElement<Id> {
+impl<Id> ElementView<Id> for RectangleElement<Id> {
     fn id(&self) -> &Id {
         &self.id
     }

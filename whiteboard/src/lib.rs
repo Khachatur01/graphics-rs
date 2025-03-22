@@ -6,7 +6,7 @@ use interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
 use interactivity::tool::Tool;
 use rendering::{Render, Renderer};
 use std::rc::Rc;
-use view_port::element::geometric::rectangle_element::RectangleElement;
+use view_port::element_view::geometric::rectangle_view::RectangleElement;
 use view_port::ViewPort;
 use wasm_bindgen::prelude::wasm_bindgen;
 

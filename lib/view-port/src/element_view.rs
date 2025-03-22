@@ -1,8 +1,8 @@
 use rendering::Render;
 
 pub mod geometric;
-mod text_element;
+mod text_view;
 
-pub trait ViewPortElement<Id>: Render {
+pub trait ElementView<Id>: Render {
     fn id(&self) -> &Id;
 }
