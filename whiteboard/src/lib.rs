@@ -1,18 +1,18 @@
 mod canvas_renderer;
 mod svg_renderer;
+mod element_id;
 
 use crate::canvas_renderer::CanvasRenderer;
+use crate::element_id::ElementId;
 use crate::svg_renderer::SVGRenderer;
 use geometry::figure::point::Point;
 use interactivity::tool::draw_tool::draw_mode::MoveDraw;
 use interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
 use interactivity::tool::Tool;
 use rendering::{Render, Renderer};
-use std::fmt::Display;
 use std::rc::Rc;
 use view_port::element_view::geometric::rectangle_view::RectangleElement;
 use view_port::element_view::ElementView;
-use view_port::identifier::Identifier;
 use view_port::ViewPort;
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -22,27 +22,6 @@ extern "C" {
     fn log(s: &str);
 }
 
-#[wasm_bindgen]
-#[derive(Clone)]
-pub struct ElementId {
-    owner_id: String,
-    index: usize,
-}
-
-impl Display for ElementId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", format!("{}_{}", self.owner_id, self.index))
-    }
-}
-
-impl Identifier for ElementId {
-    fn generate() -> Self {
-        ElementId {
-            owner_id: "asdasd".to_string(),
-            index: js_sys::Date::new_0().get_milliseconds() as usize,
-        }
-    }
-}
 
 #[wasm_bindgen]
 pub struct Whiteboard {
