@@ -9,47 +9,63 @@ mod render;
 
 pub struct MoveDrawTool<Drawable: MoveDraw> {
     start: Option<Point>,
-    drawable: Drawable,
+    drawable: Option<Drawable>,
     pub event_channel: EventChannel<Drawable>
 }
 
 impl<Drawable: MoveDraw> MoveDrawTool<Drawable> {
-    pub fn new(drawable: Drawable) -> MoveDrawTool<Drawable> {
+    pub fn new() -> MoveDrawTool<Drawable> {
         Self {
             start: None,
-            drawable,
+            drawable: None,
             event_channel: Default::default()
         }
     }
 
     pub fn end_drawing(&mut self) {
+        let Some(drawable) = &self.drawable else {
+            return;
+        };
+
         self.start.take();
 
-        let _ = self.event_channel.end_drawing.send(EndDrawing { drawable: self.drawable.clone() });
+        let _ = self.event_channel.end_drawing.send(EndDrawing { drawable: drawable.clone() });
     }
 }
 
 impl<Drawable: MoveDraw> Interactive for MoveDrawTool<Drawable> {
     fn mouse_down(&mut self, point: &Point) {
-        self.start.replace(point.clone());
-        self.drawable.mouse_down(point);
+        let mut drawable: Drawable = Drawable::default();
 
-        let _ = self.event_channel.mouse_down.send(MouseDown { drawable: self.drawable.clone(), point: point.clone() });
+        self.start.replace(point.clone());
+        drawable.mouse_down(point);
+
+        let _ = self.event_channel.mouse_down.send(MouseDown { drawable: drawable.clone(), point: point.clone() });
+
+        self.drawable = Some(drawable);
     }
 
     fn mouse_move(&mut self, point: &Point) {
-        let Some(start) = self.start else { return; };
-        self.drawable.mouse_move(&start, point);
+        let Some(drawable) = &mut self.drawable else {
+            return;
+        };
 
-        let _ = self.event_channel.mouse_move.send(MouseMove { drawable: self.drawable.clone(), point: point.clone() });
+        let Some(start) = self.start else { return; };
+        drawable.mouse_move(&start, point);
+
+        let _ = self.event_channel.mouse_move.send(MouseMove { drawable: drawable.clone(), point: point.clone() });
     }
 
     fn mouse_up(&mut self, point: &Point) {
+        let Some(drawable) = &mut self.drawable else {
+            return;
+        };
+
         /* Take value from start point to make sure after mouse up action start point is None */
         let Some(start) = self.start.take() else { return; };
-        self.drawable.mouse_up(&start, point);
+        drawable.mouse_up(&start, point);
 
-        let _ = self.event_channel.mouse_up.send(MouseUp { drawable: self.drawable.clone(), point: point.clone() });
+        let _ = self.event_channel.mouse_up.send(MouseUp { drawable: drawable.clone(), point: point.clone() });
 
         self.end_drawing();
     }

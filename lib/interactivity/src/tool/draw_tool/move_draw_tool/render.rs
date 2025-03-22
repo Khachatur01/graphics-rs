@@ -4,6 +4,10 @@ use rendering::{Render, Renderer};
 
 impl<Drawable: MoveDraw> Render for MoveDrawTool<Drawable> {
     fn render(&self, renderer: &mut dyn Renderer) {
-        self.drawable.render(renderer);
+        let Some(drawable) = &self.drawable else {
+            return;
+        };
+
+        drawable.render(renderer);
     }
 }

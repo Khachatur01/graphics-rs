@@ -244,6 +244,7 @@ dependencies = [
  "console_error_panic_hook",
  "geometry",
  "interactivity",
+ "js-sys",
  "rendering",
  "view-port",
  "wasm-bindgen",

@@ -9,12 +9,6 @@ use wasm_bindgen::JsCast;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
 #[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
-
-#[wasm_bindgen]
 pub struct CanvasRenderer {
     canvas: HtmlCanvasElement,
     context: CanvasRenderingContext2d
@@ -39,14 +33,14 @@ impl Renderer for CanvasRenderer {
         self.context.clear_rect(0.0, 0.0, self.canvas.width() as f64, self.canvas.height() as f64);
     }
 
-    fn segment(&mut self, segment: &Segment) {
+    fn segment(&mut self, id: &str, segment: &Segment) {
         self.context.move_to(segment.start().x(), segment.start().y());
         self.context.line_to(segment.end().x(), segment.end().y());
 
         self.context.stroke();
     }
 
-    fn rectangle(&mut self, rectangle: &Rectangle) {
+    fn rectangle(&mut self, id: &str, rectangle: &Rectangle) {
         self.context.fill_rect(
             rectangle.top_left().x(),
             rectangle.top_left().y(),
@@ -57,15 +51,15 @@ impl Renderer for CanvasRenderer {
         self.context.stroke();
     }
 
-    fn circle(&mut self, circle: &Circle) {
+    fn circle(&mut self, id: &str, circle: &Circle) {
         todo!()
     }
 
-    fn ellipse(&mut self, ellipse: &Ellipse) {
+    fn ellipse(&mut self, id: &str, ellipse: &Ellipse) {
         todo!()
     }
 
-    fn path(&mut self, path: &Path) {
+    fn path(&mut self, id: &str, path: &Path) {
         todo!()
     }
 }

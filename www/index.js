@@ -3,20 +3,34 @@ import * as wasm from "whiteboard-rs";
 const whiteboard = wasm.Whiteboard.new();
 
 (function () {
-    let container = document.getElementById('container');
-    const canvasRenderer = wasm.CanvasRenderer.new(container);
+    let canvas = document.querySelector('#canvas');
+    const canvasRenderer = wasm.CanvasRenderer.new(canvas);
 
-    container.addEventListener('mousedown', (event) => {
+    let svg = document.querySelector('#svg');
+    const svgRenderer = wasm.SVGRenderer.new(svg);
+
+    canvas.addEventListener('mousedown', (event) => {
         whiteboard.mouse_down(event.offsetX, event.offsetY);
-    })
-    container.addEventListener('mousemove', (event) => {
+    });
+    canvas.addEventListener('mousemove', (event) => {
         whiteboard.mouse_move(event.offsetX, event.offsetY);
-    })
-    container.addEventListener('mouseup', (event) => {
+    });
+    canvas.addEventListener('mouseup', (event) => {
         whiteboard.mouse_up(event.offsetX, event.offsetY);
-    })
+    });
+
+    svg.addEventListener('mousedown', (event) => {
+        whiteboard.mouse_down(event.offsetX, event.offsetY);
+    });
+    svg.addEventListener('mousemove', (event) => {
+        whiteboard.mouse_move(event.offsetX, event.offsetY);
+    });
+    svg.addEventListener('mouseup', (event) => {
+        whiteboard.mouse_up(event.offsetX, event.offsetY);
+    });
 
     setInterval(() => {
-        whiteboard.render(canvasRenderer);
-    }, 10);
+        whiteboard.render_canvas(canvasRenderer);
+        whiteboard.render_svg(svgRenderer);
+    });
 })()

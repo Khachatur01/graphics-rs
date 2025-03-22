@@ -10,9 +10,9 @@ pub trait Render {
 
 pub trait Renderer {
     fn clear(&mut self);
-    fn segment(&mut self, segment: &Segment);
-    fn rectangle(&mut self, rectangle: &Rectangle);
-    fn circle(&mut self, circle: &Circle);
-    fn ellipse(&mut self, ellipse: &Ellipse);
-    fn path(&mut self, path: &Path);
+    fn segment(&mut self, id: &str, segment: &Segment);
+    fn rectangle(&mut self, id: &str, rectangle: &Rectangle);
+    fn circle(&mut self, id: &str, circle: &Circle);
+    fn ellipse(&mut self, id: &str, ellipse: &Ellipse);
+    fn path(&mut self, id: &str, path: &Path);
 }

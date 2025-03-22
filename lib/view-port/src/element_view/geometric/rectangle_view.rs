@@ -2,6 +2,7 @@ mod render;
 mod draw;
 
 use crate::element_view::ElementView;
+use crate::identifier::Identifier;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
@@ -23,16 +24,16 @@ impl<Id> RectangleElement<Id> {
     }
 }
 
-impl<Id> ElementView<Id> for RectangleElement<Id> {
+impl<Id: Identifier> ElementView<Id> for RectangleElement<Id> {
     fn id(&self) -> &Id {
         &self.id
     }
 }
 
-impl<Id> RectangleElement<Id> {
-    pub fn zero_sized(id: Id) -> Self {
+impl<Id: Identifier> Default for RectangleElement<Id> {
+    fn default() -> Self {
         Self {
-            id,
+            id: Id::generate(),
             rectangle: Rectangle::zero_sized(Point::default()),
             style: String::from(""),
         }
