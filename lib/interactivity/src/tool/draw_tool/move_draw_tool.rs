@@ -14,17 +14,18 @@ pub struct MoveDrawTool<Drawable: MoveDraw> {
 }
 
 impl<Drawable: MoveDraw> MoveDrawTool<Drawable> {
-    pub fn new(build_drawable: Box<dyn Fn() -> Drawable>) -> MoveDrawTool<Drawable> {
+    pub fn new<BuildDrawable>(build_drawable: BuildDrawable) -> MoveDrawTool<Drawable>
+    where BuildDrawable: Fn() -> Drawable + 'static {
         Self {
             start: None,
             drawable: None,
-            build_drawable,
+            build_drawable: Box::new(build_drawable),
             event_channel: Default::default()
         }
     }
 
     pub fn end_drawing(&mut self) {
-        let Some(drawable) = &self.drawable else {
+        let Some(drawable) = self.drawable.take() else {
             return;
         };
 

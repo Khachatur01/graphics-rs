@@ -40,7 +40,7 @@ impl Whiteboard {
 
         Self {
             view_port,
-            active_tool: Box::new(move_draw_tool),
+            active_tool: Box::new(select_tool),
         }
     }
 
@@ -72,10 +72,10 @@ impl Whiteboard {
     where Element: ElementView<ElementId> + MoveDraw + 'static {
 
         let a = 4;
-        let mut move_draw_tool: MoveDrawTool<Element> = MoveDrawTool::new(Box::new(move || {
+        let mut move_draw_tool: MoveDrawTool<Element> = MoveDrawTool::new(move || {
             let b = a + 2;
             Element::default()
-        }));
+        });
 
         move_draw_tool.event_channel.mouse_down.subscribe(move |mouse_down| {
             log(&format!("Mouse down: {}, {}", mouse_down.point.x(), mouse_down.point.y()));

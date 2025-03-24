@@ -63,6 +63,9 @@ impl Renderer for SVGRenderer {
         svg_rectangle.set_attribute("width", &format!("{}", rectangle.width())).expect("TODO: panic message");
         svg_rectangle.set_attribute("height", &format!("{}", rectangle.height())).expect("TODO: panic message");
 
+        svg_rectangle.set_attribute("fill", "none").expect("TODO: panic message");
+        svg_rectangle.set_attribute("stroke", "black").expect("TODO: panic message");
+
         self.svg.append_child(&svg_rectangle.dyn_into::<Node>().expect("")).expect("");
     }
 

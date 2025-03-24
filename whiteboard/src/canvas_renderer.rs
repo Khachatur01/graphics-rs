@@ -43,7 +43,7 @@ impl Renderer for CanvasRenderer {
     }
 
     fn rectangle(&mut self, rectangle: &Rectangle) {
-        self.context.fill_rect(
+        self.context.rect(
             rectangle.top_left().x(),
             rectangle.top_left().y(),
             rectangle.width(),
