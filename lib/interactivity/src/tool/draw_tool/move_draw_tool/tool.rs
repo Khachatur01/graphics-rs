@@ -7,7 +7,7 @@ use geometry::figure::point::Point;
 
 impl<Drawable: MoveDraw> Interactive for MoveDrawTool<Drawable> {
     fn mouse_down(&mut self, point: &Point) {
-        let mut drawable: Drawable = Drawable::default();
+        let mut drawable: Drawable = (self.build_drawable)();
 
         self.start.replace(point.clone());
         drawable.mouse_down(point);

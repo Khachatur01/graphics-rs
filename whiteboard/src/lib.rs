@@ -8,7 +8,7 @@ use crate::svg_renderer::SVGRenderer;
 use geometry::figure::point::Point;
 use interactivity::tool::draw_tool::draw_mode::MoveDraw;
 use interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
-use interactivity::tool::select_tool::{SelectTool, Selectable};
+use interactivity::tool::select_tool::SelectTool;
 use interactivity::tool::Tool;
 use rendering::{Render, Renderer};
 use std::rc::Rc;
@@ -40,7 +40,7 @@ impl Whiteboard {
 
         Self {
             view_port,
-            active_tool: Box::new(select_tool),
+            active_tool: Box::new(move_draw_tool),
         }
     }
 
@@ -63,6 +63,7 @@ impl Whiteboard {
     }
 
     pub fn render_svg(&self, renderer: &mut SVGRenderer) {
+        renderer.clear();
         self.view_port.render(renderer);
         self.active_tool.render(renderer);
     }
@@ -70,7 +71,11 @@ impl Whiteboard {
     fn create_move_draw_tool<Element>(view_port: Rc<ViewPort<ElementId>>) -> MoveDrawTool<Element>
     where Element: ElementView<ElementId> + MoveDraw + 'static {
 
-        let mut move_draw_tool: MoveDrawTool<Element> = MoveDrawTool::new();
+        let a = 4;
+        let mut move_draw_tool: MoveDrawTool<Element> = MoveDrawTool::new(Box::new(move || {
+            let b = a + 2;
+            Element::default()
+        }));
 
         move_draw_tool.event_channel.mouse_down.subscribe(move |mouse_down| {
             log(&format!("Mouse down: {}, {}", mouse_down.point.x(), mouse_down.point.y()));

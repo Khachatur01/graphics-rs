@@ -29,8 +29,11 @@ const whiteboard = wasm.Whiteboard.new();
         whiteboard.mouse_up(event.offsetX, event.offsetY);
     });
 
-    setInterval(() => {
-        // whiteboard.render_canvas(canvasRenderer);
+    function render() {
+        whiteboard.render_canvas(canvasRenderer);
         whiteboard.render_svg(svgRenderer);
-    });
+        window.requestAnimationFrame(render);
+    }
+
+    window.requestAnimationFrame(render);
 })()

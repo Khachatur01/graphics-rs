@@ -9,14 +9,16 @@ mod tool;
 pub struct MoveDrawTool<Drawable: MoveDraw> {
     start: Option<Point>,
     drawable: Option<Drawable>,
+    build_drawable: Box<dyn Fn() -> Drawable>,
     pub event_channel: EventChannel<Drawable>
 }
 
 impl<Drawable: MoveDraw> MoveDrawTool<Drawable> {
-    pub fn new() -> MoveDrawTool<Drawable> {
+    pub fn new(build_drawable: Box<dyn Fn() -> Drawable>) -> MoveDrawTool<Drawable> {
         Self {
             start: None,
             drawable: None,
+            build_drawable,
             event_channel: Default::default()
         }
     }

@@ -14,9 +14,9 @@ impl Render for SelectTool {
         let width = selection.width();
         let height = selection.height();
 
-        renderer.segment("t", &Segment::new(Point::new(x, y), Point::new(x + width, y)));
-        renderer.segment("r", &Segment::new(Point::new(x + width, y), Point::new(x + width, y + height)));
-        renderer.segment("b", &Segment::new(Point::new(x + width, y + height), Point::new(x, y + height)));
-        renderer.segment("l", &Segment::new(Point::new(x, y + height), Point::new(x, y)));
+        renderer.segment(&Segment::new(Point::new(x, y), Point::new(x + width, y)));
+        renderer.segment(&Segment::new(Point::new(x + width, y), Point::new(x + width, y + height)));
+        renderer.segment(&Segment::new(Point::new(x + width, y + height), Point::new(x, y + height)));
+        renderer.segment(&Segment::new(Point::new(x, y + height), Point::new(x, y)));
     }
 }

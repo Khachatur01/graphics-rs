@@ -30,17 +30,19 @@ impl CanvasRenderer {
 
 impl Renderer for CanvasRenderer {
     fn clear(&mut self) {
-        self.context.clear_rect(0.0, 0.0, self.canvas.width() as f64, self.canvas.height() as f64);
+        self.context.reset();
     }
 
-    fn segment(&mut self, id: &str, segment: &Segment) {
+    fn segment(&mut self, segment: &Segment) {
+        self.context.begin_path();
+
         self.context.move_to(segment.start().x(), segment.start().y());
         self.context.line_to(segment.end().x(), segment.end().y());
 
         self.context.stroke();
     }
 
-    fn rectangle(&mut self, id: &str, rectangle: &Rectangle) {
+    fn rectangle(&mut self, rectangle: &Rectangle) {
         self.context.fill_rect(
             rectangle.top_left().x(),
             rectangle.top_left().y(),
@@ -51,15 +53,15 @@ impl Renderer for CanvasRenderer {
         self.context.stroke();
     }
 
-    fn circle(&mut self, id: &str, circle: &Circle) {
+    fn circle(&mut self, circle: &Circle) {
         todo!()
     }
 
-    fn ellipse(&mut self, id: &str, ellipse: &Ellipse) {
+    fn ellipse(&mut self, ellipse: &Ellipse) {
         todo!()
     }
 
-    fn path(&mut self, id: &str, path: &Path) {
+    fn path(&mut self, path: &Path) {
         todo!()
     }
 }
