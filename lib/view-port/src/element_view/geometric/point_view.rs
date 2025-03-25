@@ -4,12 +4,13 @@ mod draw;
 use crate::element_view::ElementView;
 use geometry::figure::point::Point;
 use getter_methods::GetterMethods;
+use rendering::style::shape_style::ShapeStyle;
 
 #[derive(GetterMethods)]
 pub struct PointElement<Id> {
     id: Id,
     point: Point,
-    style: String,
+    style: ShapeStyle,
 }
 
 impl<Id> PointElement<Id> {
@@ -17,7 +18,7 @@ impl<Id> PointElement<Id> {
         Self {
             id,
             point,
-            style: String::from(""),
+            style: ShapeStyle::default(),
         }
     }
 }

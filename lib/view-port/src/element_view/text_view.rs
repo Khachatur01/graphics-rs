@@ -3,17 +3,22 @@ mod render;
 
 use crate::element_view::ElementView;
 use getter_methods::GetterMethods;
+use rendering::style::text_style::TextStyle;
 
 #[derive(GetterMethods)]
 pub struct TextView<Id> {
     id: Id,
     text: String,
-    style: String,
+    style: TextStyle,
 }
 
 impl<Id> TextView<Id> {
-    pub fn new(id: Id, text: String, style: String) -> Self {
-        Self { id, text, style }
+    pub fn new(id: Id, text: String) -> Self {
+        Self {
+            id,
+            text,
+            style: TextStyle::default(),
+        }
     }
 }
 

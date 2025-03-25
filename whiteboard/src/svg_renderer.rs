@@ -1,8 +1,8 @@
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
-use geometry::figure::path::Path;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
+use rendering::style::shape_style::ShapeStyle;
 use rendering::Renderer;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsCast;
@@ -25,7 +25,7 @@ impl Renderer for SVGRenderer {
         self.svg.set_inner_html("");
     }
 
-    fn segment(&mut self, segment: &Segment) {
+    fn segment(&mut self, segment: &Segment, style: &ShapeStyle) {
         let window = web_sys::window().expect("global window does not exists");
         let document = window.document().expect("global document does not exists");
 
@@ -47,7 +47,7 @@ impl Renderer for SVGRenderer {
         self.svg.append_child(&svg_line.dyn_into::<Node>().expect("")).expect("");
     }
 
-    fn rectangle(&mut self, rectangle: &Rectangle) {
+    fn rectangle(&mut self, rectangle: &Rectangle, style: &ShapeStyle) {
         let window = web_sys::window().expect("global window does not exists");
         let document = window.document().expect("global document does not exists");
 
@@ -69,15 +69,11 @@ impl Renderer for SVGRenderer {
         self.svg.append_child(&svg_rectangle.dyn_into::<Node>().expect("")).expect("");
     }
 
-    fn circle(&mut self, circle: &Circle) {
+    fn circle(&mut self, circle: &Circle, style: &ShapeStyle) {
         todo!()
     }
 
-    fn ellipse(&mut self, ellipse: &Ellipse) {
-        todo!()
-    }
-
-    fn path(&mut self, path: &Path) {
+    fn ellipse(&mut self, ellipse: &Ellipse, style: &ShapeStyle) {
         todo!()
     }
 }

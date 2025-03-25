@@ -1,4 +1,5 @@
 use crate::tool::select_tool::SelectTool;
+use rendering::style::shape_style::ShapeStyle;
 use rendering::{Render, Renderer};
 
 impl Render for SelectTool {
@@ -7,6 +8,6 @@ impl Render for SelectTool {
             return;
         };
 
-        renderer.rectangle(&selection);
+        renderer.rectangle(&selection, &ShapeStyle::default());
     }
 }

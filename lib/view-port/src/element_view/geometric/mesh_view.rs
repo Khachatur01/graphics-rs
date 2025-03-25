@@ -9,7 +9,6 @@ use getter_methods::GetterMethods;
 pub struct MeshElement<Id> {
     id: Id,
     mesh: Mesh,
-    style: String,
 }
 
 impl<Id> MeshElement<Id> {
@@ -17,7 +16,6 @@ impl<Id> MeshElement<Id> {
         Self {
             id,
             mesh,
-            style: String::from(""),
         }
     }
 }

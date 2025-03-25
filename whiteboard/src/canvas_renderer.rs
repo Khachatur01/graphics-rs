@@ -1,8 +1,8 @@
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
-use geometry::figure::path::Path;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
+use rendering::style::shape_style::ShapeStyle;
 use rendering::Renderer;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsCast;
@@ -27,12 +27,22 @@ impl CanvasRenderer {
     }
 }
 
+impl CanvasRenderer {
+    fn apply_style(&mut self, style: &ShapeStyle) {
+        self.context.set_fill_style_str(&style.fill_color.to_hex());
+        self.context.set_stroke_style_str(&style.stroke_color.to_hex());
+        self.context.set_line_width(style.stroke_width);
+    }
+}
+
 impl Renderer for CanvasRenderer {
     fn clear(&mut self) {
         self.context.reset();
     }
 
-    fn segment(&mut self, segment: &Segment) {
+    fn segment(&mut self, segment: &Segment, style: &ShapeStyle) {
+        self.apply_style(style);
+
         self.context.begin_path();
 
         self.context.move_to(segment.start().x(), segment.start().y());
@@ -41,9 +51,17 @@ impl Renderer for CanvasRenderer {
         self.context.stroke();
     }
 
-    fn rectangle(&mut self, rectangle: &Rectangle) {
+    fn rectangle(&mut self, rectangle: &Rectangle, style: &ShapeStyle) {
+        self.apply_style(style);
+
         self.context.begin_path();
 
+        self.context.fill_rect(
+            rectangle.top_left().x(),
+            rectangle.top_left().y(),
+            rectangle.width(),
+            rectangle.height(),
+        );
         self.context.rect(
             rectangle.top_left().x(),
             rectangle.top_left().y(),
@@ -54,15 +72,15 @@ impl Renderer for CanvasRenderer {
         self.context.stroke();
     }
 
-    fn circle(&mut self, circle: &Circle) {
+    fn circle(&mut self, circle: &Circle, style: &ShapeStyle) {
+        self.apply_style(style);
+
         todo!()
     }
 
-    fn ellipse(&mut self, ellipse: &Ellipse) {
-        todo!()
-    }
+    fn ellipse(&mut self, ellipse: &Ellipse, style: &ShapeStyle) {
+        self.apply_style(style);
 
-    fn path(&mut self, path: &Path) {
         todo!()
     }
 }

@@ -4,13 +4,13 @@ mod render;
 use crate::element_view::ElementView;
 use geometry::figure::segment::Segment;
 use getter_methods::GetterMethods;
-use rendering::{Render, Renderer};
+use rendering::style::shape_style::ShapeStyle;
 
 #[derive(GetterMethods)]
 pub struct SegmentView<Id> {
     id: Id,
     segment: Segment,
-    style: String,
+    style: ShapeStyle,
 }
 
 impl<Id> SegmentView<Id> {
@@ -18,7 +18,7 @@ impl<Id> SegmentView<Id> {
         Self {
             id,
             segment,
-            style: String::from(""),
+            style: ShapeStyle::default(),
         }
     }
 }

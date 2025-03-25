@@ -5,12 +5,13 @@ use crate::element_view::{DefaultWithId, ElementView};
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
+use rendering::style::shape_style::ShapeStyle;
 
 #[derive(GetterMethods, Clone)]
 pub struct RectangleElement<Id> {
     id: Id,
     rectangle: Rectangle,
-    style: String,
+    style: ShapeStyle,
 }
 
 impl<Id> RectangleElement<Id> {
@@ -18,7 +19,7 @@ impl<Id> RectangleElement<Id> {
         Self {
             id,
             rectangle,
-            style: String::from(""),
+            style: ShapeStyle::default(),
         }
     }
 }
