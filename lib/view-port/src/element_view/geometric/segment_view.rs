@@ -14,11 +14,11 @@ pub struct SegmentView<Id> {
 }
 
 impl<Id> SegmentView<Id> {
-    pub fn new(id: Id, segment: Segment) -> Self {
+    pub fn new(id: Id, segment: Segment, style: ShapeStyle) -> Self {
         Self {
             id,
             segment,
-            style: ShapeStyle::default(),
+            style,
         }
     }
 }

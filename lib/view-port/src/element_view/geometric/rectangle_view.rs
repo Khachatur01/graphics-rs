@@ -15,11 +15,11 @@ pub struct RectangleElement<Id> {
 }
 
 impl<Id> RectangleElement<Id> {
-    pub fn new(id: Id, rectangle: Rectangle) -> Self {
+    pub fn new(id: Id, rectangle: Rectangle, style: ShapeStyle) -> Self {
         Self {
             id,
             rectangle,
-            style: ShapeStyle::default(),
+            style,
         }
     }
 }
@@ -34,7 +34,8 @@ impl<Id> DefaultWithId<Id> for RectangleElement<Id> {
     fn default_with_id(id: Id) -> Self {
         Self::new(
             id,
-            Rectangle::zero_sized(Point::default())
+            Rectangle::zero_sized(Point::default()),
+            ShapeStyle::default(),
         )
     }
 }

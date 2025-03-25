@@ -14,11 +14,11 @@ pub struct PointElement<Id> {
 }
 
 impl<Id> PointElement<Id> {
-    pub fn new(id: Id, point: Point) -> Self {
+    pub fn new(id: Id, point: Point, style: ShapeStyle) -> Self {
         Self {
             id,
             point,
-            style: ShapeStyle::default(),
+            style,
         }
     }
 }
