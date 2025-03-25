@@ -10,7 +10,6 @@ use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
 #[wasm_bindgen]
 pub struct CanvasRenderer {
-    canvas: HtmlCanvasElement,
     context: CanvasRenderingContext2d
 }
 
@@ -24,7 +23,7 @@ impl CanvasRenderer {
             .dyn_into::<CanvasRenderingContext2d>()
             .unwrap();
 
-        Self { canvas, context }
+        Self { context }
     }
 }
 
@@ -43,6 +42,8 @@ impl Renderer for CanvasRenderer {
     }
 
     fn rectangle(&mut self, rectangle: &Rectangle) {
+        self.context.begin_path();
+
         self.context.rect(
             rectangle.top_left().x(),
             rectangle.top_left().y(),

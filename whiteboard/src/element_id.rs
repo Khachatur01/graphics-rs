@@ -1,5 +1,4 @@
 use std::fmt::Display;
-use view_port::identifier::Identifier;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 #[wasm_bindgen]
@@ -9,17 +8,25 @@ pub struct ElementId {
     index: usize,
 }
 
-impl Display for ElementId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", format!("{}_{}", self.owner_id, self.index))
+impl ElementId {
+    pub fn with_owner_id(id: &str) -> Self {
+        Self {
+            owner_id: id.to_string(),
+            index: js_sys::Date::new_0().get_milliseconds() as usize,
+        }
+    }
+
+    pub fn owner_id(&self) -> &str {
+        self.owner_id.as_str()
+    }
+
+    pub fn index(&self) -> usize {
+        self.index
     }
 }
 
-impl Identifier for ElementId {
-    fn generate() -> Self {
-        ElementId {
-            owner_id: "asdasd".to_string(),
-            index: js_sys::Date::new_0().get_milliseconds() as usize,
-        }
+impl Display for ElementId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", format!("{}_{}", self.owner_id, self.index))
     }
 }

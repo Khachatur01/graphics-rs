@@ -1,7 +1,7 @@
 use geometry::figure::point::Point;
 use rendering::Render;
 
-pub trait MoveDraw: Render + Clone + Default {
+pub trait MoveDraw: Render + Clone {
     fn mouse_down(&mut self, current_point: &Point);
     fn mouse_move(&mut self, start: &Point, current_point: &Point);
     fn mouse_up(&mut self, start: &Point, current_point: &Point);

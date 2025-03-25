@@ -13,7 +13,7 @@ use interactivity::tool::Tool;
 use rendering::{Render, Renderer};
 use std::rc::Rc;
 use view_port::element_view::geometric::rectangle_view::RectangleElement;
-use view_port::element_view::ElementView;
+use view_port::element_view::{DefaultWithId, ElementView};
 use view_port::ViewPort;
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -24,24 +24,41 @@ extern "C" {
 }
 
 
+type SharedViewPort = Rc<ViewPort<ElementId>>;
+
 #[wasm_bindgen]
 pub struct Whiteboard {
-    view_port: Rc<ViewPort<ElementId>>,
+    view_port: SharedViewPort,
     active_tool: Box<dyn Tool>,
 }
 
 #[wasm_bindgen]
 impl Whiteboard {
     pub fn new() -> Self {
-        let view_port = Rc::new(ViewPort::<ElementId>::new());
+        let owner_id = "asdasd";
+        let view_port = Rc::new(ViewPort::<ElementId>::new(ElementId::with_owner_id(owner_id)));
 
-        let move_draw_tool = Self::create_move_draw_tool::<RectangleElement<ElementId>>(Rc::clone(&view_port));
-        let select_tool = Self::create_select_tool();
+        let select_tool: SelectTool = Self::create_select_tool();
 
         Self {
             view_port,
             active_tool: Box::new(select_tool),
         }
+    }
+
+    pub fn activate_rectangle_tool(&mut self) {
+        let view_port = Rc::clone(&self.view_port);
+        let owner_id: String = view_port.id().owner_id().to_string();
+
+        let draw_rectangle_tool: MoveDrawTool<RectangleElement<ElementId>> = Self::create_move_draw_tool(view_port, owner_id);
+
+        self.activate_tool(draw_rectangle_tool);
+    }
+
+    pub fn activate_select_tool(&mut self) {
+        let select_tool: SelectTool = Self::create_select_tool();
+
+        self.activate_tool(select_tool);
     }
 
     pub fn mouse_down(&mut self, x: f64, y: f64) {
@@ -68,13 +85,11 @@ impl Whiteboard {
         self.active_tool.render(renderer);
     }
 
-    fn create_move_draw_tool<Element>(view_port: Rc<ViewPort<ElementId>>) -> MoveDrawTool<Element>
-    where Element: ElementView<ElementId> + MoveDraw + 'static {
+    fn create_move_draw_tool<Element>(view_port: Rc<ViewPort<ElementId>>, owner_id: String) -> MoveDrawTool<Element>
+    where Element: ElementView<ElementId> + MoveDraw + DefaultWithId<ElementId> + 'static {
 
-        let a = 4;
         let mut move_draw_tool: MoveDrawTool<Element> = MoveDrawTool::new(move || {
-            let b = a + 2;
-            Element::default()
+            Element::default_with_id(ElementId::with_owner_id(owner_id.as_str()))
         });
 
         move_draw_tool.event_channel.mouse_down.subscribe(move |mouse_down| {
@@ -103,5 +118,9 @@ impl Whiteboard {
         let select_tool: SelectTool = SelectTool::new();
 
         select_tool
+    }
+
+    fn activate_tool(&mut self, tool: impl Tool + 'static) {
+        self.active_tool = Box::new(tool);
     }
 }

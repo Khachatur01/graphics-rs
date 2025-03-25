@@ -1,11 +1,9 @@
 use crate::element_view::ElementView;
-use crate::identifier::Identifier;
 use getter_methods::GetterMethods;
 use rendering::{Render, Renderer};
 use std::sync::{Arc, RwLock};
 
 pub mod element_view;
-pub mod identifier;
 
 pub type AtomicVec<T> = Arc<RwLock<Vec<T>>>;
 pub fn new_atomic_vec<T>() -> AtomicVec<T> {
@@ -18,10 +16,10 @@ pub struct ViewPort<Id> {
     elements: AtomicVec<Box<dyn ElementView<Id>>>,
 }
 
-impl<Id: Identifier> ViewPort<Id> {
-    pub fn new() -> Self {
+impl<Id> ViewPort<Id> {
+    pub fn new(id: Id) -> Self {
         Self {
-            id: Id::generate(),
+            id,
             elements: new_atomic_vec(),
         }
     }

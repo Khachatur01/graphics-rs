@@ -29,6 +29,14 @@ const whiteboard = wasm.Whiteboard.new();
         whiteboard.mouse_up(event.offsetX, event.offsetY);
     });
 
+    document.getElementById('rectangle').addEventListener('click', (event) => {
+        whiteboard.activate_rectangle_tool();
+    });
+
+    document.getElementById('select').addEventListener('click', (event) => {
+        whiteboard.activate_select_tool();
+    });
+
     function render() {
         whiteboard.render_canvas(canvasRenderer);
         whiteboard.render_svg(svgRenderer);
