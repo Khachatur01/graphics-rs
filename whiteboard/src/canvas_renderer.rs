@@ -2,10 +2,11 @@ use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
+use js_sys;
 use rendering::style::shape_style::ShapeStyle;
 use rendering::Renderer;
 use wasm_bindgen::prelude::wasm_bindgen;
-use wasm_bindgen::JsCast;
+use wasm_bindgen::{JsCast, JsValue};
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
 #[wasm_bindgen]
@@ -32,6 +33,13 @@ impl CanvasRenderer {
         self.context.set_fill_style_str(&style.fill_color.to_hex());
         self.context.set_stroke_style_str(&style.stroke_color.to_hex());
         self.context.set_line_width(style.stroke_width);
+
+        let array: js_sys::Array = style.stroke_dash_array
+            .iter()
+            .map(|x| JsValue::from_f64(*x as f64))
+            .collect::<js_sys::Array>();
+
+        let _ = self.context.set_line_dash(&array);
     }
 }
 
