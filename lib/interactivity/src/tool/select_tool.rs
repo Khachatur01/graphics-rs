@@ -3,16 +3,21 @@ mod tool;
 
 use geometry::figure::rectangle::Rectangle;
 
+pub enum Selection {
+    Full,
+    Intersecting,
+}
+
 pub trait Selectable {
     fn select(&mut self, selection: Rectangle) -> bool;
 }
 
-pub struct SelectTool {
-    selected_elements: Vec<Box<dyn Selectable>>,
+pub struct SelectTool<Id> {
+    selected_elements: Vec<Id>,
     selection: Option<Rectangle>,
 }
 
-impl SelectTool {
+impl<Id> SelectTool<Id> {
     pub fn new() -> Self {
         Self {
             selected_elements: vec![],

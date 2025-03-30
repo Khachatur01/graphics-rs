@@ -5,7 +5,7 @@ use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::Resize;
 
-impl Interactive for SelectTool {
+impl<Id> Interactive for SelectTool<Id> {
     fn mouse_down(&mut self, point: &Point) {
         self.selection = Some(
             Rectangle::zero_sized(point.clone())
@@ -26,4 +26,4 @@ impl Interactive for SelectTool {
     }
 }
 
-impl Tool for SelectTool {}
+impl<Id> Tool for SelectTool<Id> {}
