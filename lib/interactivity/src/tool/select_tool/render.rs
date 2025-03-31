@@ -1,4 +1,5 @@
 use crate::tool::select_tool::SelectTool;
+use rendering::style::color::Color;
 use rendering::style::shape_style::ShapeStyle;
 use rendering::{Render, Renderer};
 
@@ -8,6 +9,18 @@ impl<Id> Render for SelectTool<Id> {
             return;
         };
 
-        renderer.rectangle(&selection, &ShapeStyle::default());
+        let selection_color: Color =
+            if selection.width() < 0.0 {
+                Color(0x00, 0x80, 0x00, 0xFF)
+            } else {
+                Color(0x00, 0x00, 0xFF, 0xFF)
+            };
+
+        renderer.rectangle(&selection, &ShapeStyle {
+            fill_color: Color::transparent(),
+            stroke_color: selection_color,
+            stroke_width: 1.0,
+            stroke_dash_array: vec![4, 4],
+        });
     }
 }

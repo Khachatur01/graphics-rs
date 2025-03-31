@@ -1,15 +1,14 @@
-mod canvas_renderer;
-mod svg_renderer;
 mod element_id;
+mod renderer;
 
-use crate::canvas_renderer::CanvasRenderer;
 use crate::element_id::ElementId;
-use crate::svg_renderer::SVGRenderer;
 use geometry::figure::point::Point;
 use interactivity::tool::draw_tool::draw_mode::MoveDraw;
 use interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
 use interactivity::tool::select_tool::SelectTool;
 use interactivity::tool::Tool;
+use renderer::canvas_renderer::CanvasRenderer;
+use renderer::svg_renderer::SVGRenderer;
 use rendering::{Render, Renderer};
 use std::rc::Rc;
 use view_port::element_view::container_view::ContainerView;
@@ -24,11 +23,11 @@ extern "C" {
 }
 
 
-type SharedViewPort = Rc<ContainerView<ElementId>>;
+type SharedContainer = Rc<ContainerView<ElementId>>;
 
 #[wasm_bindgen]
 pub struct Whiteboard {
-    view_port: SharedViewPort,
+    container: SharedContainer,
     active_tool: Box<dyn Tool>,
 }
 
@@ -36,25 +35,30 @@ pub struct Whiteboard {
 impl Whiteboard {
     pub fn new() -> Self {
         let owner_id = "asdasd";
-        let view_port = Rc::new(ContainerView::<ElementId>::new(ElementId::with_owner_id(owner_id)));
+        let container = Rc::new(ContainerView::<ElementId>::new(ElementId::with_owner_id(owner_id)));
 
         let select_tool: SelectTool<ElementId> = Self::create_select_tool();
 
         Self {
-            view_port,
+            container,
             active_tool: Box::new(select_tool),
         }
     }
 
     pub fn activate_rectangle_tool(&mut self) {
-        let view_port = Rc::clone(&self.view_port);
+        let container = Rc::clone(&self.container);
 
-        let draw_rectangle_tool: MoveDrawTool<RectangleElement<ElementId>> = Self::create_move_draw_tool(view_port);
+        let draw_rectangle_tool: MoveDrawTool<RectangleElement<ElementId>> = Self::create_move_draw_tool(container);
 
         self.activate_tool(draw_rectangle_tool);
     }
 
     pub fn activate_select_tool(&mut self) {
+        let container = Rc::clone(&self.container);
+        container.elements().read().unwrap().iter().for_each(|element| {
+
+        });
+
         let select_tool: SelectTool<ElementId> = Self::create_select_tool();
 
         self.activate_tool(select_tool);
@@ -74,13 +78,13 @@ impl Whiteboard {
 
     pub fn render_canvas(&self, renderer: &mut CanvasRenderer) {
         renderer.clear();
-        self.view_port.render(renderer);
+        self.container.render(renderer);
         self.active_tool.render(renderer);
     }
 
     pub fn render_svg(&self, renderer: &mut SVGRenderer) {
         renderer.clear();
-        self.view_port.render(renderer);
+        self.container.render(renderer);
         self.active_tool.render(renderer);
     }
 
@@ -115,7 +119,7 @@ impl Whiteboard {
     }
 
     fn create_select_tool() -> SelectTool<ElementId> {
-        let select_tool: SelectTool<ElementId> = SelectTool::new();
+        let select_tool: SelectTool<ElementId> = SelectTool::new(|| vec![]);
 
         select_tool
     }
