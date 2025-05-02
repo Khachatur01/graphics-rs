@@ -1,26 +1,25 @@
-use crate::tool::draw_tool::draw_mode::MoveDraw;
-use crate::tool::draw_tool::move_draw_tool::event_channel::{EndDrawing, EventChannel};
+use element_view::ElementView;
 use geometry::figure::point::Point;
 
-pub mod event_channel;
 mod render;
 mod tool;
 
-pub struct MoveDrawTool<Drawable: MoveDraw> {
+pub struct MoveDrawTool<Id> {
     start: Option<Point>,
-    drawable: Option<Drawable>,
-    build_drawable: Box<dyn Fn() -> Drawable>,
-    pub event_channel: EventChannel<Drawable>
+    // drawable: Option<Box<dyn ElementView<Id>>>,
+    drawable: Option<Box<dyn ElementView<Id>>>,
+    // build_drawable: Box<dyn Fn() -> dyn ElementView<Id>>,
+    // pub event_channel: EventChannel<Drawable>
 }
 
-impl<Drawable: MoveDraw> MoveDrawTool<Drawable> {
-    pub fn new<BuildDrawable>(build_drawable: BuildDrawable) -> MoveDrawTool<Drawable>
-    where BuildDrawable: Fn() -> Drawable + 'static {
+impl<Id> MoveDrawTool<Id> {
+    pub fn new() -> MoveDrawTool<Id> {
         Self {
             start: None,
             drawable: None,
-            build_drawable: Box::new(build_drawable),
-            event_channel: Default::default()
+            // build_drawable: Box::new(|| {
+            // }),
+            // event_channel: Default::default()
         }
     }
 
@@ -31,6 +30,6 @@ impl<Drawable: MoveDraw> MoveDrawTool<Drawable> {
 
         self.start.take();
 
-        let _ = self.event_channel.end_drawing.send(EndDrawing { drawable: drawable.clone() });
+        // let _ = self.event_channel.end_drawing.send(EndDrawing { drawable: drawable.clone() });
     }
 }

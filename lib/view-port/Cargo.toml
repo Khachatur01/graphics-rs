@@ -7,4 +7,6 @@ edition = "2021"
 geometry = { path = "../geometry" }
 rendering = { path = "../rendering" }
 interactivity = { path = "../interactivity" }
+element-view = { path = "../element-view" }
+
 getter-methods = "1.1.0"

@@ -1,4 +1,3 @@
-use crate::element_view::ElementView;
-use rendering::{Render, Renderer};
-
-pub mod element_view;
+pub mod container_view;
+pub mod geometric;
+pub mod text_view;

@@ -1,17 +1,17 @@
 mod render;
 mod tool;
 
-use crate::tool::draw_tool::draw_mode::ClickDraw;
+use element_view::ElementView;
 use geometry::figure::point::Point;
 
-pub struct ClickDrawTool<Drawable: ClickDraw> {
+pub struct ClickDrawTool<Id> {
     points: Vec<Point>,
-    drawable: Drawable
+    drawable: Option<Box<dyn ElementView<Id>>>
 }
 
-impl<Drawable: ClickDraw> ClickDrawTool<Drawable> {
-    pub fn new(drawable: Drawable) -> ClickDrawTool<Drawable> {
-        Self { points: Vec::new(), drawable }
+impl<Id> ClickDrawTool<Id> {
+    pub fn new() -> ClickDrawTool<Id> {
+        Self { points: Vec::new(), drawable: None }
     }
 
     pub fn end_drawing(&mut self) {

@@ -14,6 +14,8 @@ members = [
     # layer 3
     "lib/interactivity",
     # layer 4
+    "lib/element-view",
+    # layer 5
     "lib/view-port",
 
     "whiteboard",

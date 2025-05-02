@@ -8,3 +8,4 @@ getter-methods = "1.1.0"
 crossbeam-channel = "0.5.14"
 geometry = { path = "../geometry" }
 rendering = { path = "../rendering" }
+element-view = { path = "../element-view" }

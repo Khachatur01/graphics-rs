@@ -1,14 +1,14 @@
 use geometry::figure::point::Point;
-use rendering::Render;
+use std::any::Any;
 
-pub trait MoveDraw: Render + Clone {
-    fn mouse_down(&mut self, current_point: &Point);
-    fn mouse_move(&mut self, start: &Point, current_point: &Point);
-    fn mouse_up(&mut self, start: &Point, current_point: &Point);
+pub struct MoveDraw {
+    pub mouse_down: fn(element: &mut dyn Any, current_point: &Point),
+    pub mouse_move: fn(element: &mut dyn Any, start: &Point, current_point: &Point),
+    pub mouse_up: fn(element: &mut dyn Any, start: &Point, current_point: &Point),
 }
 
-pub trait ClickDraw: Render + Clone {
-    fn mouse_down(&mut self, points: &Vec<Point>, current_point: &Point);
-    fn mouse_move(&mut self, points: &Vec<Point>, current_point: &Point);
-    fn mouse_up(&mut self, points: &Vec<Point>, current_point: &Point);
+pub struct ClickDraw {
+    pub mouse_down: fn(element: &mut dyn Any, points: &Vec<Point>, current_point: &Point),
+    pub mouse_move: fn(element: &mut dyn Any, points: &Vec<Point>, current_point: &Point),
+    pub mouse_up: fn(element: &mut dyn Any, points: &Vec<Point>, current_point: &Point),
 }

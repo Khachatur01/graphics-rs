@@ -1,7 +1,8 @@
 mod render;
 
-use crate::element_view::ElementView;
+use element_view::ElementView;
 use getter_methods::GetterMethods;
+use std::any::Any;
 use std::sync::{Arc, RwLock};
 
 pub type AtomicVec<T> = Arc<RwLock<Vec<T>>>;
@@ -13,24 +14,16 @@ pub fn new_atomic_vec<T>() -> AtomicVec<T> {
 pub struct ContainerView<Id> {
     id: Id,
     elements: AtomicVec<Box<dyn ElementView<Id>>>,
+    behaviors: Vec<Box<dyn Any>>,
 }
 
-impl<Id> ContainerView<Id> {
+impl<Id: 'static> ContainerView<Id> {
     pub fn new(id: Id) -> Self {
         Self {
             id,
             elements: new_atomic_vec(),
+            behaviors: vec![],
         }
-    }
-
-    pub fn add_element(&self, element: impl ElementView<Id> + 'static) -> Result<(), ()> {
-        let Ok(mut elements) = self.elements.write() else {
-            return Err(());
-        };
-
-        elements.push(Box::new(element));
-
-        Ok(())
     }
 }
 

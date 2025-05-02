@@ -1,10 +1,9 @@
 use crate::tool::draw_tool::click_draw_tool::ClickDrawTool;
-use crate::tool::draw_tool::draw_mode::ClickDraw;
 use crate::tool::Tool;
 use crate::Interactive;
 use geometry::figure::point::Point;
 
-impl<Drawable: ClickDraw> Interactive for ClickDrawTool<Drawable> {
+impl<Id> Interactive for ClickDrawTool<Id> {
     fn mouse_down(&mut self, point: &Point) {
         todo!()
     }
@@ -18,4 +17,4 @@ impl<Drawable: ClickDraw> Interactive for ClickDrawTool<Drawable> {
     }
 }
 
-impl<Drawable: ClickDraw> Tool for ClickDrawTool<Drawable> {}
+impl<Id> Tool for ClickDrawTool<Id> {}

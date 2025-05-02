@@ -1,16 +1,18 @@
 mod draw;
 mod render;
 
-use crate::element_view::ElementView;
+use element_view::ElementView;
 use geometry::figure::segment::Segment;
 use getter_methods::GetterMethods;
 use rendering::style::shape_style::ShapeStyle;
+use std::any::Any;
 
 #[derive(GetterMethods)]
 pub struct SegmentView<Id> {
     id: Id,
     segment: Segment,
     style: ShapeStyle,
+    behaviors: Vec<Box<dyn Any>>,
 }
 
 impl<Id> SegmentView<Id> {
@@ -19,6 +21,7 @@ impl<Id> SegmentView<Id> {
             id,
             segment,
             style,
+            behaviors: vec![],
         }
     }
 }

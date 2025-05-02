@@ -47,6 +47,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
+name = "element-view"
+version = "0.1.0"
+
+[[package]]
 name = "geometry"
 version = "0.1.0"
 dependencies = [
@@ -84,6 +88,7 @@ name = "interactivity"
 version = "0.1.0"
 dependencies = [
  "crossbeam-channel",
+ "element-view",
  "geometry",
  "getter-methods",
  "rendering",
@@ -163,6 +168,7 @@ checksum = "a210d160f08b701c8721ba1c726c11662f877ea6b7094007e1ca9a1041945034"
 name = "view-port"
 version = "0.1.0"
 dependencies = [
+ "element-view",
  "geometry",
  "getter-methods",
  "interactivity",

@@ -1,14 +1,16 @@
 mod draw;
 mod render;
 
-use crate::element_view::ElementView;
+use element_view::ElementView;
 use geometry::figure::mesh::Mesh;
 use getter_methods::GetterMethods;
+use std::any::Any;
 
 #[derive(GetterMethods)]
 pub struct MeshElement<Id> {
     id: Id,
     mesh: Mesh,
+    behaviors: Vec<Box<dyn Any>>,
 }
 
 impl<Id> MeshElement<Id> {
@@ -16,6 +18,7 @@ impl<Id> MeshElement<Id> {
         Self {
             id,
             mesh,
+            behaviors: vec![],
         }
     }
 }
