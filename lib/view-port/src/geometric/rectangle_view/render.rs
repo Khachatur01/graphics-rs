@@ -3,7 +3,7 @@ use rendering::Renderer;
 use std::any::Any;
 
 pub fn render<Id: 'static>(element: &dyn Any, renderer: &mut dyn Renderer) {
-    let rectangle: &RectangleElement<Id> = element.downcast_ref().unwrap();
+    let rectangle: &RectangleElement = element.downcast_ref().unwrap();
 
     renderer.rectangle(rectangle.rectangle(), &rectangle.style);
 }

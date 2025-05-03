@@ -1,19 +1,19 @@
-use element_view::ElementView;
+use element_view::{Element, ElementView};
 use geometry::figure::point::Point;
 
 mod render;
 mod tool;
 
-pub struct MoveDrawTool<Id> {
+pub struct MoveDrawTool<Id: 'static, El: 'static> {
     start: Option<Point>,
     // drawable: Option<Box<dyn ElementView<Id>>>,
-    drawable: Option<Box<dyn ElementView<Id>>>,
+    drawable: Option<Element<Id, El>>,
     // build_drawable: Box<dyn Fn() -> dyn ElementView<Id>>,
     // pub event_channel: EventChannel<Drawable>
 }
 
-impl<Id> MoveDrawTool<Id> {
-    pub fn new() -> MoveDrawTool<Id> {
+impl<Id, El> MoveDrawTool<Id, El> {
+    pub fn new() -> MoveDrawTool<Id, El> {
         Self {
             start: None,
             drawable: None,
