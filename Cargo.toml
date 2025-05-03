@@ -10,11 +10,11 @@ members = [
     # layer 1
     "lib/geometry",
     # layer 2
-    "lib/rendering",
+    "lib/plugin-rendering",
     # layer 3
     "lib/core",
 
-    "whiteboard", "lib/standard-plugin",
+    "whiteboard", "lib/plugin-standard",
 ]
 
 [dependencies]

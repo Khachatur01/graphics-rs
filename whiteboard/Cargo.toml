@@ -19,9 +19,9 @@ codegen-units = 1
 
 [dependencies]
 core = { path= "../lib/core" }
-standard-plugin = { path="../lib/standard-plugin" }
 geometry = { path = "../lib/geometry" }
-rendering = { path = "../lib/rendering" }
+plugin-standard = { path= "../lib/plugin-standard" }
+plugin-rendering = { path = "../lib/plugin-rendering" }
 wasm-bindgen = "0.2.100"
 web-sys = { version = "0.3.77", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "SvgsvgElement", "SvgRectElement", "SvgLineElement", "Window", "Document"] }
 js-sys = "0.3.77"

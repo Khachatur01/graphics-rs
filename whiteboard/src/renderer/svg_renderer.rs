@@ -2,8 +2,8 @@ use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
-use rendering::style::shape_style::ShapeStyle;
-use rendering::Renderer;
+use plugin_rendering::style::shape_style::ShapeStyle;
+use plugin_rendering::Renderer;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsCast;
 use web_sys::{Node, SvgElement, SvgLineElement, SvgRectElement};
@@ -57,11 +57,12 @@ impl Renderer for SVGRenderer {
             .dyn_into::<SvgRectElement>()
             .expect("can't create svg rectangle element");
 
-        svg_rectangle.set_attribute("x", &format!("{}", rectangle.top_left().x())).expect("TODO: panic message");
-        svg_rectangle.set_attribute("y", &format!("{}", rectangle.top_left().y())).expect("TODO: panic message");
+        let absolute_sized_rectangle: Rectangle = rectangle.absolute_sized();
+        svg_rectangle.set_attribute("x", &format!("{}", absolute_sized_rectangle.top_left().x())).expect("TODO: panic message");
+        svg_rectangle.set_attribute("y", &format!("{}", absolute_sized_rectangle.top_left().y())).expect("TODO: panic message");
 
-        svg_rectangle.set_attribute("width", &format!("{}", rectangle.width())).expect("TODO: panic message");
-        svg_rectangle.set_attribute("height", &format!("{}", rectangle.height())).expect("TODO: panic message");
+        svg_rectangle.set_attribute("width", &format!("{}", absolute_sized_rectangle.width())).expect("TODO: panic message");
+        svg_rectangle.set_attribute("height", &format!("{}", absolute_sized_rectangle.height())).expect("TODO: panic message");
 
         svg_rectangle.set_attribute("fill", "none").expect("TODO: panic message");
         svg_rectangle.set_attribute("stroke", "black").expect("TODO: panic message");

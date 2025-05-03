@@ -16,7 +16,7 @@ pub struct Entity {
 }
 
 impl Entity {
-    pub fn new<M: Model + 'static>(id: impl Id + 'static, model: M) -> Self {
+    pub fn new(id: impl Id + 'static, model: impl Model + 'static) -> Self {
         Self {
             id: Box::new(id),
             model: Box::new(model),
@@ -28,6 +28,20 @@ impl Entity {
         self.id.as_ref()
     }
 
+    pub fn add_behaviour<M: Behaviour + 'static>(&mut self, behaviour: M) {
+        self.behaviours.insert(TypeId::of::<M>(), Box::new(behaviour));
+    }
+
+    pub fn model_ref<M: Model + 'static>(&self) -> &M {
+        self.model.downcast_ref().expect("Can't downcast model to specified type reference!")
+    }
+
+    pub fn model_ref_mut<M: Model + 'static>(&mut self) -> &mut M {
+        self.model.downcast_mut().expect("Can't downcast model to specified type mutable reference!")
+    }
+}
+
+impl Entity {
     pub fn query<B: Behaviour + 'static>(&self) -> Option<&B> {
         let behaviour_type_id: TypeId = TypeId::of::<B>();
 
@@ -35,16 +49,5 @@ impl Entity {
             .behaviours
             .get(&behaviour_type_id)
             .and_then(|behaviour| behaviour.downcast_ref::<B>())
-    }
-
-    pub fn add_behaviour<M: Behaviour + 'static>(&mut self, behaviour: M) {
-        self.behaviours.insert(TypeId::of::<M>(), Box::new(behaviour));
-    }
-
-    pub fn model_ref<M: Model + 'static>(&self) -> &M {
-        self.model.downcast_ref().expect("Can't downcast model to specified type!")
-    }
-    pub fn model_ref_mut<M: Model + 'static>(&mut self) -> &mut M {
-        self.model.downcast_mut().expect("Can't downcast model to specified type!")
     }
 }
