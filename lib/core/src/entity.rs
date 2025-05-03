@@ -2,23 +2,30 @@ use behaviour::Behaviour;
 pub use model::Model;
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
+use std::fmt::Display;
 
 pub mod behaviour;
 pub mod model;
 
-pub struct Entity<Id> {
-    id: Id,
+pub trait Id: Display {}
+
+pub struct Entity {
+    id: Box<dyn Id>,
     model: Box<dyn Any>,
     behaviours: HashMap<TypeId, Box<dyn Any>>,
 }
 
-impl<Id> Entity<Id> {
-    pub fn new<M: Model + 'static>(id: Id, model: M) -> Self {
+impl Entity {
+    pub fn new<M: Model + 'static>(id: impl Id + 'static, model: M) -> Self {
         Self {
-            id,
+            id: Box::new(id),
             model: Box::new(model),
             behaviours: HashMap::new()
         }
+    }
+
+    pub fn id(&self) -> &dyn Id {
+        self.id.as_ref()
     }
 
     pub fn query<B: Behaviour + 'static>(&self) -> Option<&B> {

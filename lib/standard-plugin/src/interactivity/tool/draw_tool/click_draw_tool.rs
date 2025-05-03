@@ -7,15 +7,15 @@ use core::interactivity::Interactive;
 use geometry::figure::point::Point;
 use rendering::{Renderable, Renderer};
 
-pub struct ClickDrawTool<Id> {
+pub struct ClickDrawTool {
     points: Vec<Point>,
-    drawable: Option<Entity<Id>>,
+    drawable: Option<Entity>,
 }
 
-impl<Id> Model for ClickDrawTool<Id> {}
+impl Model for ClickDrawTool {}
 
-impl<Id: 'static> ClickDrawTool<Id> {
-    pub fn new() -> ClickDrawTool<Id> {
+impl ClickDrawTool {
+    pub fn new() -> ClickDrawTool {
         Self { points: Vec::new(), drawable: None }
     }
 
@@ -26,7 +26,7 @@ impl<Id: 'static> ClickDrawTool<Id> {
     }
 }
 
-impl<Id> Interactive for ClickDrawTool<Id> {
+impl Interactive for ClickDrawTool {
     fn mouse_down(&mut self, point: &Point) {
         todo!()
     }
@@ -40,4 +40,4 @@ impl<Id> Interactive for ClickDrawTool<Id> {
     }
 }
 
-impl<Id> Tool for ClickDrawTool<Id> {}
+impl Tool for ClickDrawTool {}

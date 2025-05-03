@@ -3,18 +3,17 @@ use crate::interactivity::tool::Tool;
 use core::entity::Entity;
 use core::interactivity::Interactive;
 use geometry::figure::point::Point;
-use rendering::{Renderable, Renderer};
 
 mod render;
 
-pub struct MoveDrawTool<Id> {
+pub struct MoveDrawTool {
     start: Option<Point>,
-    drawable: Option<Entity<Id>>,
-    build_drawable: Box<dyn Fn() -> Entity<Id>>,
+    drawable: Option<Entity>,
+    build_drawable: Box<dyn Fn() -> Entity>,
 }
 
-impl<Id> MoveDrawTool<Id> {
-    pub fn new(build_drawable: impl Fn() -> Entity<Id> + 'static) -> MoveDrawTool<Id> {
+impl MoveDrawTool {
+    pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> MoveDrawTool {
         Self {
             start: None,
             drawable: None,
@@ -28,12 +27,12 @@ impl<Id> MoveDrawTool<Id> {
     }
 }
 
-impl<Id: 'static> Interactive for MoveDrawTool<Id> {
+impl Interactive for MoveDrawTool {
     fn mouse_down(&mut self, point: &Point) {
-        let mut drawable: Entity<Id> = (self.build_drawable)();
+        let mut drawable: Entity = (self.build_drawable)();
         self.start.replace(point.clone());
 
-        let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
+        let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
         (move_draw.mouse_down)(&mut drawable, point);
 
         self.drawable = Some(drawable);
@@ -46,7 +45,7 @@ impl<Id: 'static> Interactive for MoveDrawTool<Id> {
 
         let Some(start) = self.start else { return; };
 
-        let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
+        let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
         (move_draw.mouse_move)(drawable, &start, point);
     }
 
@@ -58,11 +57,11 @@ impl<Id: 'static> Interactive for MoveDrawTool<Id> {
         /* Take value from start point to make sure after mouse up action start point is None */
         let Some(start) = self.start.take() else { return; };
 
-        let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
+        let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
         (move_draw.mouse_up)(drawable, &start, point);
 
         self.end_drawing();
     }
 }
 
-impl<Id: 'static> Tool for MoveDrawTool<Id> {}
+impl Tool for MoveDrawTool {}

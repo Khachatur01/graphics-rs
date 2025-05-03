@@ -1,3 +1,4 @@
+use core::entity::Id;
 use std::fmt::Display;
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -30,3 +31,5 @@ impl Display for ElementId {
         write!(f, "{}", format!("{}_{}", self.owner_id, self.index))
     }
 }
+
+impl Id for ElementId {}
