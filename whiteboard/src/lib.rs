@@ -2,14 +2,16 @@ mod element_id;
 mod renderer;
 
 use crate::element_id::ElementId;
+use core::entity::Entity;
 use geometry::figure::point::Point;
-use interactivity::tool::select_tool::SelectTool;
-use interactivity::tool::Tool;
 use renderer::canvas_renderer::CanvasRenderer;
 use renderer::svg_renderer::SVGRenderer;
+use rendering::behaviour::Render;
 use rendering::Renderer;
+use standard_plugin::entity::container_entity::ContainerEntity;
+use standard_plugin::interactivity::tool::select_tool::SelectTool;
+use standard_plugin::interactivity::tool::Tool;
 use std::rc::Rc;
-use view_port::container_view::ContainerView;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 #[wasm_bindgen]
@@ -19,7 +21,7 @@ extern "C" {
 }
 
 
-type SharedContainer = Rc<ContainerView<ElementId>>;
+type SharedContainer = Rc<Entity<ElementId>>;
 
 #[wasm_bindgen]
 pub struct Whiteboard {
@@ -31,7 +33,7 @@ pub struct Whiteboard {
 impl Whiteboard {
     pub fn new() -> Self {
         let owner_id = "asdasd";
-        let container = Rc::new(ContainerView::<ElementId>::new(ElementId::with_owner_id(owner_id)));
+        let container: SharedContainer = Rc::new(ContainerEntity::new(ElementId::with_owner_id(owner_id)));
 
         let select_tool: SelectTool<ElementId> = Self::create_select_tool();
 
@@ -44,17 +46,12 @@ impl Whiteboard {
     pub fn activate_rectangle_tool(&mut self) {
         let container = Rc::clone(&self.container);
 
-        // let draw_rectangle_tool: MoveDrawTool<RectangleElement<ElementId>> = Self::create_move_draw_tool(container);
-        //
+        // let draw_rectangle_tool: MoveDrawTool<ElementId> = Self::create_move_draw_tool(container);
+
         // self.activate_tool(draw_rectangle_tool);
     }
 
     pub fn activate_select_tool(&mut self) {
-        let container = Rc::clone(&self.container);
-        container.elements().read().unwrap().iter().for_each(|element| {
-
-        });
-
         let select_tool: SelectTool<ElementId> = Self::create_select_tool();
 
         self.activate_tool(select_tool);
@@ -74,8 +71,14 @@ impl Whiteboard {
 
     pub fn render_canvas(&self, renderer: &mut CanvasRenderer) {
         renderer.clear();
+
+        let Some(render) = self.container.query::<Render<ElementId>>() else {
+            return;
+        };
+
         // self.container.render(renderer);
-        // self.active_tool.render(renderer);
+        (render.render)(&*self.container, renderer);
+        self.active_tool.render(renderer);
     }
 
     pub fn render_svg(&self, renderer: &mut SVGRenderer) {
@@ -115,7 +118,7 @@ impl Whiteboard {
     // }
 
     fn create_select_tool() -> SelectTool<ElementId> {
-        let select_tool: SelectTool<ElementId> = SelectTool::new(|| vec![]);
+        let select_tool: SelectTool<ElementId> = SelectTool::new();
 
         select_tool
     }

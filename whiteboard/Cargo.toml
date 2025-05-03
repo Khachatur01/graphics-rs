@@ -18,10 +18,10 @@ lto = true
 codegen-units = 1
 
 [dependencies]
-view-port = { path="../lib/view-port" }
-interactivity = { path="../lib/interactivity" }
-geometry = { path="../lib/geometry" }
-rendering = { path="../lib/rendering" }
+core = { path= "../lib/core" }
+standard-plugin = { path="../lib/standard-plugin" }
+geometry = { path = "../lib/geometry" }
+rendering = { path = "../lib/rendering" }
 wasm-bindgen = "0.2.100"
 web-sys = { version = "0.3.77", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "SvgsvgElement", "SvgRectElement", "SvgLineElement", "Window", "Document"] }
 js-sys = "0.3.77"

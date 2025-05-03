@@ -1,0 +1,10 @@
+[package]
+name = "standard-plugin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+core = { path = "../core" }
+geometry = { path = "../geometry" }
+rendering = { path = "../rendering" }
+getter-methods = "1.1.0"

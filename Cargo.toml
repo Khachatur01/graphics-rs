@@ -12,14 +12,9 @@ members = [
     # layer 2
     "lib/rendering",
     # layer 3
-    "lib/interactivity",
-    # layer 4
-    "lib/element-view",
-    # layer 5
-    "lib/view-port",
+    "lib/core",
 
-    "whiteboard",
+    "whiteboard", "lib/standard-plugin",
 ]
 
 [dependencies]
-view-port = { path = "lib/view-port" }
