@@ -3,10 +3,13 @@ mod renderer;
 
 use crate::element_id::ElementId;
 use geometry::figure::point::Point;
+use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use plugin_rendering::style::shape_style::ShapeStyle;
 use plugin_rendering::{Renderable, Renderer};
+use plugin_standard::entity::geometric::polygon_entity::PolygonEntity;
 use plugin_standard::entity::geometric::rectangle_entity::RectangleEntity;
+use plugin_standard::interactivity::tool::draw_tool::click_draw_tool::ClickDrawTool;
 use plugin_standard::interactivity::tool::draw_tool::move_draw_tool::MoveDrawTool;
 use plugin_standard::interactivity::tool::select_tool::SelectTool;
 use plugin_standard::interactivity::tool::Tool;
@@ -52,6 +55,18 @@ impl Whiteboard {
         );
 
         self.activate_tool(draw_rectangle_tool);
+    }
+
+    pub fn activate_polygon_tool(&mut self) {
+        let draw_polygon_tool = ClickDrawTool::new(
+            self.view_port.clone(),
+            move || {
+                let id: ElementId = ElementId::with_owner_id("weuif");
+                PolygonEntity::new(id, Polygon::new(&[]), ShapeStyle::default())
+            }
+        );
+
+        self.activate_tool(draw_polygon_tool);
     }
 
     pub fn activate_select_tool(&mut self) {

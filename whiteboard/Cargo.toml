@@ -23,7 +23,16 @@ geometry = { path = "../lib/geometry" }
 plugin-standard = { path= "../lib/plugin-standard" }
 plugin-rendering = { path = "../lib/plugin-rendering" }
 wasm-bindgen = "0.2.100"
-web-sys = { version = "0.3.77", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "SvgsvgElement", "SvgRectElement", "SvgLineElement", "Window", "Document"] }
+web-sys = { version = "0.3.77", features = [
+    "HtmlCanvasElement",
+    "CanvasRenderingContext2d",
+    "SvgsvgElement",
+    "SvgRectElement",
+    "SvgLineElement",
+    "SvgPolygonElement",
+    "Window",
+    "Document"
+] }
 js-sys = "0.3.77"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by

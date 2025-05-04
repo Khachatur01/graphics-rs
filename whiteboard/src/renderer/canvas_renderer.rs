@@ -1,5 +1,6 @@
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
+use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
 use js_sys;
@@ -55,6 +56,24 @@ impl Renderer for CanvasRenderer {
 
         self.context.move_to(segment.start().x(), segment.start().y());
         self.context.line_to(segment.end().x(), segment.end().y());
+
+        self.context.stroke();
+    }
+
+    fn polygon(&mut self, polygon: &Polygon, style: &ShapeStyle) {
+        self.apply_style(style);
+
+        self.context.begin_path();
+
+        if let Some((first, rest)) = polygon.vertices().split_first() {
+            self.context.move_to(first.x(), first.y());
+
+            for point in rest {
+                self.context.line_to(point.x(), point.y());
+            }
+        }
+
+        self.context.close_path();
 
         self.context.stroke();
     }

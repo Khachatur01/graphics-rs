@@ -1,6 +1,3 @@
-mod draw;
-mod render;
-
 use geometry::figure::segment::Segment;
 use getter_methods::GetterMethods;
 use plugin_rendering::style::shape_style::ShapeStyle;

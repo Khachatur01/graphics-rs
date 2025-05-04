@@ -1,6 +1,3 @@
-mod draw;
-mod render;
-
 use geometry::figure::mesh::Mesh;
 use getter_methods::GetterMethods;
 

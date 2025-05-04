@@ -10,9 +10,9 @@ pub struct MoveDraw {
 impl Behaviour for MoveDraw {}
 
 pub struct ClickDraw {
-    pub mouse_down: fn(entity: &mut Entity, points: &Vec<Point>, current_point: &Point),
-    pub mouse_move: fn(entity: &mut Entity, points: &Vec<Point>, current_point: &Point),
-    pub mouse_up: fn(entity: &mut Entity, points: &Vec<Point>, current_point: &Point),
+    pub mouse_down: fn(entity: &mut Entity, current_point: &Point),
+    pub mouse_move: fn(entity: &mut Entity, current_point: &Point),
+    pub mouse_up: fn(entity: &mut Entity, current_point: &Point),
 }
 impl Behaviour for ClickDraw {}
 

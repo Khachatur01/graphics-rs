@@ -1,6 +1,3 @@
-mod render;
-mod draw;
-
 use geometry::figure::point::Point;
 use getter_methods::GetterMethods;
 use plugin_rendering::style::shape_style::ShapeStyle;

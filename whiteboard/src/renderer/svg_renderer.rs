@@ -1,12 +1,20 @@
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
+use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
 use plugin_rendering::style::shape_style::ShapeStyle;
 use plugin_rendering::Renderer;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsCast;
-use web_sys::{Node, SvgElement, SvgLineElement, SvgRectElement};
+use web_sys::{Node, SvgElement, SvgLineElement, SvgPolygonElement, SvgRectElement};
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
+
 
 #[wasm_bindgen]
 pub struct SVGRenderer {
@@ -45,6 +53,33 @@ impl Renderer for SVGRenderer {
         svg_line.set_attribute("y2", &format!("{}", segment.end().y())).expect("TODO: panic message");
 
         self.svg.append_child(&svg_line.dyn_into::<Node>().expect("")).expect("");
+    }
+
+    fn polygon(&mut self, polygon: &Polygon, shape_style: &ShapeStyle) {
+        let window = web_sys::window().expect("global window does not exists");
+        let document = window.document().expect("global document does not exists");
+
+        let svg_polygon = document
+            .create_element_ns(Some("http://www.w3.org/2000/svg"), "polygon")
+            .expect("can't create svg polygon element")
+            .dyn_into::<SvgPolygonElement>()
+            .expect("can't create svg polygon element");
+
+        svg_polygon.set_attribute("stroke", "black").expect("TODO: panic message");
+        svg_polygon.set_attribute("fill", "none").expect("TODO: panic message");
+
+        let points = polygon
+            .vertices()
+            .iter()
+            .map(|vertex| format!("{},{}", vertex.x, vertex.y))
+            .collect::<Vec<String>>()
+            .join(" ");
+
+        log(points.as_str());
+
+        svg_polygon.set_attribute("points", &points).expect("");
+
+        self.svg.append_child(&svg_polygon.dyn_into::<Node>().expect("")).expect("");
     }
 
     fn rectangle(&mut self, rectangle: &Rectangle, style: &ShapeStyle) {

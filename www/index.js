@@ -33,6 +33,10 @@ const whiteboard = wasm.Whiteboard.new();
         whiteboard.activate_rectangle_tool();
     });
 
+    document.getElementById('polygon').addEventListener('click', (event) => {
+        whiteboard.activate_polygon_tool();
+    });
+
     document.getElementById('select').addEventListener('click', (event) => {
         whiteboard.activate_select_tool();
     });
