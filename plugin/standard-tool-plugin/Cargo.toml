@@ -1,0 +1,10 @@
+[package]
+name = "standard-tool-plugin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+geometry = { path = "../../lib/geometry" }
+core = { path = "../../lib/core" }
+core-derive = { path = "../../lib/core-derive" }
+standard-rendering-plugin = { path = "../standard-rendering-plugin" }

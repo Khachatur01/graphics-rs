@@ -1,11 +1,7 @@
-use feature::Feature;
-pub use model::Model;
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::fmt::Display;
-
-pub mod feature;
-pub mod model;
+use crate::{Feature, Model};
 
 pub trait Id: Display {}
 

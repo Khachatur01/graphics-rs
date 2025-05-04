@@ -11,10 +11,14 @@ members = [
     "lib/geometry",
     # layer 2
     "lib/core",
-
-    "lib/plugin/rendering-plugin",
-
-    "whiteboard", "lib/plugin/plugin-standard",
+    "plugin/standard-rendering-plugin",
+    "plugin/standard-entity-plugin",
+    "plugin/standard-tool-plugin", "lib/core-derive",
 ]
 
 [dependencies]
+geometry = { path = "lib/geometry" }
+core = { path = "lib/core" }
+standard-rendering-plugin = { path = "plugin/standard-rendering-plugin" }
+standard-entity-plugin = { path = "plugin/standard-entity-plugin" }
+standard-tool-plugin = { path = "plugin/standard-tool-plugin" }

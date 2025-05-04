@@ -1,0 +1,9 @@
+[package]
+name = "standard-rendering-plugin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+core = { path = "../../lib/core" }
+core-derive = { path = "../../lib/core-derive" }
+geometry = { path = "../../lib/geometry" }
