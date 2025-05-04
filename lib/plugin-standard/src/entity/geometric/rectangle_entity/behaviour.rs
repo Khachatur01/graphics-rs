@@ -1,39 +1,40 @@
-pub mod move_draw {
-    use crate::entity::geometric::rectangle_entity::RectangleEntity;
-    use core::entity::Entity;
-    use geometry::figure::point::Point;
-    use geometry::math::{Drag, Resize};
+use crate::behaviour::MoveDraw;
+use crate::entity::geometric::rectangle_entity::RectangleEntity;
+use core::entity::Entity;
+use geometry::figure::point::Point;
+use geometry::math::{Drag, Resize};
+use plugin_rendering::behaviour::Render;
+use plugin_rendering::Renderer;
 
-    pub fn mouse_down(entity: &mut Entity, current_point: &Point) {
-        let rectangle: &mut RectangleEntity = entity.model_ref_mut();
-        rectangle.rectangle.drag(current_point)
-    }
-    
-    pub fn mouse_move(entity: &mut Entity, start: &Point, current_point: &Point) {
-        let rectangle: &mut RectangleEntity = entity.model_ref_mut();
-    
-        let delta: Point = current_point - start;
-    
-        rectangle.rectangle.resize(delta.x(), delta.y());
-    }
-    
-    pub fn mouse_up(entity: &mut Entity, start: &Point, current_point: &Point) {
-        let rectangle: &mut RectangleEntity = entity.model_ref_mut();
-    
-        let delta: Point = current_point - start;
-    
-        rectangle.rectangle.resize(delta.x(), delta.y());
+#[inline]
+pub fn move_draw_rectangle() -> MoveDraw {
+    MoveDraw {
+        mouse_down: |entity, current_point| {
+            let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+            rectangle.rectangle.drag(current_point)
+        },
+        mouse_move: |entity, start, current_point| {
+            let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+
+            let delta: Point = current_point - start;
+            rectangle.rectangle.resize(delta.x(), delta.y());
+        },
+        mouse_up: |entity, start, current_point| {
+            let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+
+            let delta: Point = current_point - start;
+            rectangle.rectangle.resize(delta.x(), delta.y());
+        },
     }
 }
 
-pub mod render {
-    use crate::entity::geometric::rectangle_entity::Entity;
-    use crate::entity::geometric::rectangle_entity::RectangleEntity;
-    use plugin_rendering::Renderer;
+#[inline]
+pub fn render_rectangle() -> Render {
+    Render {
+        render: |entity: &Entity, renderer: &mut dyn Renderer| {
+            let rectangle: &RectangleEntity = entity.model_ref();
 
-    pub fn render(entity: &Entity, renderer: &mut dyn Renderer) {
-        let rectangle: &RectangleEntity = entity.model_ref();
-
-        renderer.rectangle(rectangle.rectangle(), &rectangle.style);
+            renderer.rectangle(rectangle.rectangle(), &rectangle.style);
+        },
     }
 }

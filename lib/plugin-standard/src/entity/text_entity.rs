@@ -1,6 +1,3 @@
-mod draw;
-mod render;
-
 use getter_methods::GetterMethods;
 use plugin_rendering::style::text_style::TextStyle;
 
