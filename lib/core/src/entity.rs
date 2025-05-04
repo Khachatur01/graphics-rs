@@ -1,10 +1,10 @@
-use behaviour::Behaviour;
+use feature::Feature;
 pub use model::Model;
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::fmt::Display;
 
-pub mod behaviour;
+pub mod feature;
 pub mod model;
 
 pub trait Id: Display {}
@@ -12,7 +12,7 @@ pub trait Id: Display {}
 pub struct Entity {
     id: Box<dyn Id>,
     model: Box<dyn Any>,
-    behaviours: HashMap<TypeId, Box<dyn Any>>,
+    features: HashMap<TypeId, Box<dyn Any>>,
 }
 
 impl Entity {
@@ -20,7 +20,7 @@ impl Entity {
         Self {
             id: Box::new(id),
             model: Box::new(model),
-            behaviours: HashMap::new()
+            features: HashMap::new()
         }
     }
 
@@ -28,8 +28,8 @@ impl Entity {
         self.id.as_ref()
     }
 
-    pub fn add_behaviour<M: Behaviour + 'static>(&mut self, behaviour: M) {
-        self.behaviours.insert(TypeId::of::<M>(), Box::new(behaviour));
+    pub fn add_feature<M: Feature + 'static>(&mut self, feature: M) {
+        self.features.insert(TypeId::of::<M>(), Box::new(feature));
     }
 
     pub fn model_ref<M: Model + 'static>(&self) -> &M {
@@ -42,12 +42,12 @@ impl Entity {
 }
 
 impl Entity {
-    pub fn query<B: Behaviour + 'static>(&self) -> Option<&B> {
-        let behaviour_type_id: TypeId = TypeId::of::<B>();
+    pub fn query<B: Feature + 'static>(&self) -> Option<&B> {
+        let feature_type_id: TypeId = TypeId::of::<B>();
 
         self
-            .behaviours
-            .get(&behaviour_type_id)
-            .and_then(|behaviour| behaviour.downcast_ref::<B>())
+            .features
+            .get(&feature_type_id)
+            .and_then(|feature| feature.downcast_ref::<B>())
     }
 }

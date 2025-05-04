@@ -1,5 +1,4 @@
 [package]
-#name = "entity-behaviour-tool"
 name = "core"
 version = "0.1.0"
 edition = "2021"

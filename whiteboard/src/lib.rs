@@ -5,8 +5,6 @@ use crate::element_id::ElementId;
 use geometry::figure::point::Point;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
-use plugin_rendering::style::shape_style::ShapeStyle;
-use plugin_rendering::{Renderable, Renderer};
 use plugin_standard::entity::geometric::polygon_entity::PolygonEntity;
 use plugin_standard::entity::geometric::rectangle_entity::RectangleEntity;
 use plugin_standard::interactivity::tool::draw_tool::click_draw_tool::ClickDrawTool;
@@ -16,6 +14,8 @@ use plugin_standard::interactivity::tool::Tool;
 use plugin_standard::view_port::ViewPort;
 use renderer::canvas_renderer::CanvasRenderer;
 use renderer::svg_renderer::SVGRenderer;
+use rendering_plugin::style::shape_style::ShapeStyle;
+use rendering_plugin::{Renderable, Renderer};
 use wasm_bindgen::prelude::wasm_bindgen;
 
 #[wasm_bindgen]
