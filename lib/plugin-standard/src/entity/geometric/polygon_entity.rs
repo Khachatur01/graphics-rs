@@ -1,6 +1,6 @@
 mod behaviour;
 
-use crate::entity::geometric::polygon_entity::behaviour::{click_draw_polygon, render_polygon};
+use crate::entity::geometric::polygon_entity::behaviour::add_behaviours;
 use core::entity::Entity;
 use core::entity::Id;
 use core::entity::Model;
@@ -26,8 +26,7 @@ impl PolygonEntity {
             }
         );
 
-        entity.add_behaviour(render_polygon());
-        entity.add_behaviour(click_draw_polygon());
+        add_behaviours(&mut entity);
 
         entity
     }

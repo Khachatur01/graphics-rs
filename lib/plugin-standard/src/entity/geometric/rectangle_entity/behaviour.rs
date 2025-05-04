@@ -7,34 +7,37 @@ use plugin_rendering::behaviour::Render;
 use plugin_rendering::Renderer;
 
 #[inline]
-pub fn move_draw_rectangle() -> MoveDraw {
-    MoveDraw {
-        mouse_down: |entity, current_point| {
-            let rectangle: &mut RectangleEntity = entity.model_ref_mut();
-            rectangle.rectangle.drag(current_point)
-        },
-        mouse_move: |entity, start, current_point| {
-            let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+pub fn add_behaviours(entity: &mut Entity) {
+    /* move draw */
+    entity.add_behaviour(
+        MoveDraw {
+            mouse_down: |entity, current_point| {
+                let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+                rectangle.rectangle.drag(current_point)
+            },
+            mouse_move: |entity, start, current_point| {
+                let rectangle: &mut RectangleEntity = entity.model_ref_mut();
 
-            let delta: Point = current_point - start;
-            rectangle.rectangle.resize(delta.x(), delta.y());
-        },
-        mouse_up: |entity, start, current_point| {
-            let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+                let delta: Point = current_point - start;
+                rectangle.rectangle.resize(delta.x(), delta.y());
+            },
+            mouse_up: |entity, start, current_point| {
+                let rectangle: &mut RectangleEntity = entity.model_ref_mut();
 
-            let delta: Point = current_point - start;
-            rectangle.rectangle.resize(delta.x(), delta.y());
-        },
-    }
-}
+                let delta: Point = current_point - start;
+                rectangle.rectangle.resize(delta.x(), delta.y());
+            },
+        }
+    );
 
-#[inline]
-pub fn render_rectangle() -> Render {
-    Render {
-        render: |entity: &Entity, renderer: &mut dyn Renderer| {
-            let rectangle: &RectangleEntity = entity.model_ref();
+    /* render */
+    entity.add_behaviour(
+        Render {
+            render: |entity: &Entity, renderer: &mut dyn Renderer| {
+                let rectangle: &RectangleEntity = entity.model_ref();
 
-            renderer.rectangle(rectangle.rectangle(), &rectangle.style);
-        },
-    }
+                renderer.rectangle(rectangle.rectangle(), &rectangle.style);
+            },
+        }
+    );
 }

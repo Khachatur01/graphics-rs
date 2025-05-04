@@ -1,6 +1,6 @@
 mod behaviour;
 
-use crate::entity::geometric::rectangle_entity::behaviour::{move_draw_rectangle, render_rectangle};
+use crate::entity::geometric::rectangle_entity::behaviour::add_behaviours;
 use core::entity::Entity;
 use core::entity::Id;
 use core::entity::Model;
@@ -26,8 +26,7 @@ impl RectangleEntity {
             }
         );
 
-        entity.add_behaviour(render_rectangle());
-        entity.add_behaviour(move_draw_rectangle());
+        add_behaviours(&mut entity);
 
         entity
     }
