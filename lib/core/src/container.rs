@@ -17,7 +17,7 @@ impl Container {
         self.entities.push(entity);
     }
 
-    pub fn entities(&self) -> &[Entity] {
+    pub fn entities(&self) -> &Vec<Entity> {
         &self.entities
     }
 }

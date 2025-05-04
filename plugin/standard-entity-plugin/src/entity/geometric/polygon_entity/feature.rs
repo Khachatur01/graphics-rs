@@ -1,7 +1,9 @@
 use crate::entity::geometric::polygon_entity::PolygonEntity;
 use core::entity::Entity;
+use geometry::figure::rectangle::Rectangle;
 use standard_rendering_plugin::Render;
-use standard_tool_plugin::ClickDraw;
+use standard_tool_plugin::tool::select_tool::Selection;
+use standard_tool_plugin::{ClickDraw, Select};
 
 #[inline]
 pub fn add_features(entity: &mut Entity) {
@@ -21,6 +23,20 @@ pub fn add_features(entity: &mut Entity) {
             mouse_up: |_, _| {
 
             },
+        }
+    );
+
+    entity.add_feature(
+        Select {
+            select: |entity: &Entity, selection: &Rectangle| {
+                let polygon: &PolygonEntity = entity.model_ref();
+
+                false
+                // match *selection {
+                //     Selection::FullInclusion(rectangle) => polygon.polygon.is_inside_rectangle(rectangle),
+                //     Selection::Intersection(rectangle) => polygon.polygon.intersects_rectangle(rectangle) || polygon.polygon.is_inside_rectangle(rectangle),
+                // }
+            }
         }
     );
 

@@ -1,5 +1,6 @@
 use crate::figure::point::Point;
 use getter_methods::GetterMethods;
+use crate::figure::rectangle::Rectangle;
 
 #[derive(GetterMethods)]
 pub struct Segment {
@@ -10,5 +11,9 @@ pub struct Segment {
 impl Segment {
     pub fn new(start: Point, end: Point) -> Self {
         Self { start, end }
+    }
+
+    pub fn intersects_segment(&self, other: &Self) -> bool {
+        todo!();
     }
 }

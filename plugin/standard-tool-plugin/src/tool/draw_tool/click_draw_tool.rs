@@ -4,7 +4,7 @@ use core::entity::Entity;
 use core::interactivity::Interactive;
 use geometry::figure::point::Point;
 use crate::ClickDraw;
-use crate::tool::draw_tool::AddEntity;
+use crate::traits::AddEntity;
 use crate::tool::Tool;
 
 pub struct ClickDrawTool {

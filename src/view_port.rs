@@ -4,7 +4,7 @@ use standard_rendering_plugin::Render;
 use standard_tool_plugin::tool::Tool;
 use std::sync::{Arc, RwLock};
 use standard_rendering_plugin::renderer::{Renderable, Renderer};
-use standard_tool_plugin::tool::draw_tool::AddEntity;
+use standard_tool_plugin::traits::{AddEntity, GetEntities};
 use crate::core::container::Container;
 
 struct ViewPortInternal {
@@ -43,6 +43,14 @@ impl AddEntity for ViewPort {
         internal.container.add_entity(entity);
     }
 }
+
+// impl GetEntities for ViewPort {
+//     fn get_entities(&self) -> &Vec<Entity> {
+//         let mut internal = self.internal.write().expect("Poisoned lock");
+//
+//         &internal.container.entities()
+//     }
+// }
 
 impl Renderable for ViewPort {
     fn render(&self, renderer: &mut dyn Renderer) {

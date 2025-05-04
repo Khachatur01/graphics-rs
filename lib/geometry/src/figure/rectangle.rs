@@ -1,6 +1,7 @@
 use crate::figure::point::Point;
 use crate::math::{Drag, Resize};
 use getter_methods::GetterMethods;
+use crate::figure::segment::Segment;
 
 #[derive(GetterMethods, Copy, Clone)]
 pub struct Rectangle {
@@ -31,6 +32,22 @@ impl Rectangle {
         }
 
         rectangle_clone
+    }
+}
+
+impl From<&Rectangle> for [Segment; 4] {
+    fn from(rectangle: &Rectangle) -> [Segment; 4] {
+        let top_left = rectangle.top_left;
+        let top_right = top_left + Point::new(rectangle.width, 0.0);
+        let bottom_right = top_right + Point::new(0.0, rectangle.height);
+        let bottom_left = bottom_right - Point::new(rectangle.width, 0.0);
+
+        [
+            Segment::new(top_left, top_right),
+            Segment::new(top_right, bottom_right),
+            Segment::new(bottom_right, bottom_left),
+            Segment::new(bottom_left, top_left),
+        ]
     }
 }
 

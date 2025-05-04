@@ -2,7 +2,7 @@ use core::entity::Entity;
 use core::interactivity::Interactive;
 use geometry::figure::point::Point;
 use crate::MoveDraw;
-use crate::tool::draw_tool::AddEntity;
+use crate::traits::AddEntity;
 use crate::tool::Tool;
 
 mod render;

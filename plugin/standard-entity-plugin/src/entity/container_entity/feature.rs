@@ -1,8 +1,11 @@
 use crate::entity::container_entity::ContainerEntity;
 use crate::AddChild;
 use core::entity::Entity;
+use geometry::figure::rectangle::Rectangle;
 use standard_rendering_plugin::Render;
 use standard_rendering_plugin::renderer::Renderer;
+use standard_tool_plugin::Select;
+use standard_tool_plugin::tool::select_tool::Selection;
 
 #[inline]
 pub fn add_features(entity: &mut Entity) {
@@ -19,6 +22,16 @@ pub fn add_features(entity: &mut Entity) {
 
                     (render.render)(entity, renderer)
                 });
+            }
+        }
+    );
+
+    entity.add_feature(
+        Select {
+            select: |entity: &Entity, selection: &Rectangle| {
+                let container: &ContainerEntity = entity.model_ref();
+
+                todo!()
             }
         }
     );
