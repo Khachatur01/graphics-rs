@@ -5,14 +5,8 @@ use core::entity::Id;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::Resize;
-use crate::Select;
 use crate::tool::Tool;
 use crate::traits::{AddEntity, GetEntities};
-
-pub enum Selection<'a> {
-    FullInclusion(&'a Rectangle),
-    Intersection(&'a Rectangle)
-}
 
 pub struct SelectTool {
     selected_elements: Vec<Box<dyn Id>>,

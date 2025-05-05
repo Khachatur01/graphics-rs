@@ -1,4 +1,3 @@
-use crate::tool::select_tool::Selection;
 use core::entity::Entity;
 use core_derive::Feature;
 use geometry::figure::point::Point;

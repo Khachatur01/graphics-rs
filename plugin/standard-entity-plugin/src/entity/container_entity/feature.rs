@@ -5,7 +5,6 @@ use geometry::figure::rectangle::Rectangle;
 use standard_rendering_plugin::Render;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_tool_plugin::Select;
-use standard_tool_plugin::tool::select_tool::Selection;
 
 #[inline]
 pub fn add_features(entity: &mut Entity) {
@@ -15,13 +14,13 @@ pub fn add_features(entity: &mut Entity) {
                 let container: &ContainerEntity = entity.model_ref();
 
                 /* query all render features and call render method */
-                container.children.iter().for_each(|entity| {
-                    let Some(render) = entity.query::<Render>() else {
+                for child in container.children.iter() {
+                    let Some(render) = child.query::<Render>() else {
                         return;
                     };
 
-                    (render.render)(entity, renderer)
-                });
+                    (render.render)(child, renderer)
+                }
             }
         }
     );
