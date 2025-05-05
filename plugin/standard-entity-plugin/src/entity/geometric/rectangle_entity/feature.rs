@@ -28,7 +28,6 @@ pub fn add_features(entity: &mut Entity) {
             },
         }
     );
-
     entity.add_feature(
         Render {
             render: |entity: &Entity, renderer: &mut dyn Renderer| {
