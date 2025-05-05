@@ -1,6 +1,5 @@
 mod feature;
 
-use crate::entity::geometric::rectangle_entity::feature::add_features;
 use core::entity::Entity;
 use core::entity::Id;
 use geometry::figure::rectangle::Rectangle;
@@ -24,8 +23,8 @@ impl RectangleEntity {
             }
         );
 
-	entity.add_feature(move_draw());
-	entity.add_feature(render());
+	entity.add_feature(Self::move_draw());
+	entity.add_feature(Self::render());
 
         entity
     }
