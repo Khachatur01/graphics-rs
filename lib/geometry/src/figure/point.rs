@@ -5,8 +5,8 @@ use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 #[derive(GetterMethods, Copy, Clone)]
 pub struct Point {
-    pub x: f64,
-    pub y: f64,
+    x: f64,
+    y: f64,
 }
 
 impl Point {
