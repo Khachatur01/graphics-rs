@@ -1,12 +1,14 @@
-mod feature;
-
-use crate::entity::geometric::polygon_entity::feature::add_features;
 use core::entity::Entity;
 use core::entity::Id;
-use geometry::figure::polygon::Polygon;
-use getter_methods::GetterMethods;
 use core_derive::Model;
+use geometry::figure::polygon::Polygon;
+use geometry::figure::rectangle::Rectangle;
+use getter_methods::GetterMethods;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
+use standard_rendering_plugin::Render;
+use standard_tool_plugin::{ClickDraw, Select};
+use core::Feature;
+use core::feature_set::FeatureSet;
 
 #[derive(Model, GetterMethods)]
 pub struct PolygonEntity {
@@ -15,24 +17,29 @@ pub struct PolygonEntity {
 }
 
 impl PolygonEntity {
-    pub fn new(id: impl Id + 'static, polygon: Polygon, style: ShapeStyle) -> Entity {
-        let mut entity = Entity::new(
+    pub fn with_standard_feature_set(id: impl Id + 'static, polygon: Polygon, style: ShapeStyle) -> Entity {
+        Entity::new(
             id,
             PolygonEntity {
                 polygon,
-                style,
-            }
-        );
+                style
+            },
+            Self::standard_feature_set()
+        )
+    }
 
-	entity.add_feature(Self::click_draw());
-	entity.add_feature(Self::render());
-	entity.add_feature(Self::select());
-
-        entity
+    pub fn standard_feature_set() -> FeatureSet {
+        FeatureSet::from(
+            [
+                Self::click_draw().boxed(),
+                Self::render().boxed(),
+                Self::select().boxed()
+            ]
+        )
     }
 
     pub fn click_draw() -> ClickDraw {
-	ClickDraw {
+        ClickDraw {
             mouse_down: |entity, current_point| {
                 let polygon: &mut PolygonEntity = entity.model_ref_mut();
 
@@ -44,24 +51,22 @@ impl PolygonEntity {
 
                 polygon.polygon.replace_last_vertex(current_point.clone());
             },
-            mouse_up: |_, _| {
-
-            },
+            mouse_up: |_, _| {},
         }
     }
 
     pub fn render() -> Render {
-	Render {
+        Render {
             render: |entity, renderer| {
                 let polygon: &PolygonEntity = entity.model_ref();
 
                 renderer.polygon(polygon.polygon(), &polygon.style);
-            }
+            },
         }
     }
 
     pub fn select() -> Select {
-	Select {
+        Select {
             select: |entity: &Entity, selection: &Rectangle| {
                 let polygon: &PolygonEntity = entity.model_ref();
 
@@ -70,7 +75,7 @@ impl PolygonEntity {
                 //     Selection::FullInclusion(rectangle) => polygon.polygon.is_inside_rectangle(rectangle),
                 //     Selection::Intersection(rectangle) => polygon.polygon.intersects_rectangle(rectangle) || polygon.polygon.is_inside_rectangle(rectangle),
                 // }
-            }
+            },
         }
     }
 }

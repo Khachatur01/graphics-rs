@@ -1,22 +1,24 @@
-use std::any::{Any, TypeId};
-use std::collections::HashMap;
 use std::fmt::Display;
 use crate::{Feature, Model};
+use crate::feature_set::FeatureSet;
 
 pub trait Id: Display {}
 
 pub struct Entity {
     id: Box<dyn Id>,
-    model: Box<dyn Any>,
-    features: HashMap<TypeId, Box<dyn Any>>,
+    model: Box<dyn Model>,
+    feature_set: FeatureSet,
 }
 
 impl Entity {
-    pub fn new(id: impl Id + 'static, model: impl Model + 'static) -> Self {
+    pub fn new<const N: usize>(id: impl Id + 'static,
+                               model: impl Model + 'static,
+                               feature_set: FeatureSet) -> Self {
+
         Self {
             id: Box::new(id),
             model: Box::new(model),
-            features: HashMap::new()
+            feature_set,
         }
     }
 
@@ -25,7 +27,7 @@ impl Entity {
     }
 
     pub fn add_feature<M: Feature + 'static>(&mut self, feature: M) {
-        self.features.insert(TypeId::of::<M>(), Box::new(feature));
+        self.feature_set.add_feature(feature);
     }
 
     pub fn model_ref<M: Model + 'static>(&self) -> &M {
@@ -39,11 +41,6 @@ impl Entity {
 
 impl Entity {
     pub fn query<B: Feature + 'static>(&self) -> Option<&B> {
-        let feature_type_id: TypeId = TypeId::of::<B>();
-
-        self
-            .features
-            .get(&feature_type_id)
-            .and_then(|feature| feature.downcast_ref::<B>())
+        self.feature_set.query::<B>()
     }
 }
