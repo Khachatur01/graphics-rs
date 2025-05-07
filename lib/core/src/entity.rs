@@ -11,9 +11,9 @@ pub struct Entity {
 }
 
 impl Entity {
-    pub fn new<const N: usize>(id: impl Id + 'static,
-                               model: impl Model + 'static,
-                               feature_set: FeatureSet) -> Self {
+    pub fn new(id: impl Id + 'static,
+               model: impl Model + 'static,
+               feature_set: FeatureSet) -> Self {
 
         Self {
             id: Box::new(id),

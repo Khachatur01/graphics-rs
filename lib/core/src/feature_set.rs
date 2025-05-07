@@ -17,6 +17,12 @@ impl FeatureSet {
         self.features.insert(TypeId::of::<M>(), Box::new(feature));
     }
 
+    pub fn extend(&mut self, extension: FeatureSet) -> &Self {
+        self.features.extend(extension.features);
+
+        self
+    }
+
     pub fn query<B: Feature + 'static>(&self) -> Option<&B> {
         let feature_type_id: TypeId = TypeId::of::<B>();
 
