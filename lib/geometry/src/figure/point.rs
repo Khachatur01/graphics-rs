@@ -1,7 +1,7 @@
 use getter_methods::GetterMethods;
 use impl_ops::impl_op_ex;
 use std::ops;
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{AddAssign, SubAssign};
 
 #[derive(GetterMethods, Copy, Clone)]
 pub struct Point {

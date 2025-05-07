@@ -1,6 +1,5 @@
 use crate::figure::point::Point;
 use getter_methods::GetterMethods;
-use crate::figure::rectangle::Rectangle;
 
 #[derive(GetterMethods)]
 pub struct Segment {

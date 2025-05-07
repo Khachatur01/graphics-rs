@@ -1,4 +1,4 @@
-use std::any::{Any, TypeId};
+use std::any::TypeId;
 use std::collections::HashMap;
 use crate::Feature;
 
@@ -29,7 +29,7 @@ impl FeatureSet {
         self
             .features
             .get(&feature_type_id)
-            .and_then(|feature| feature.downcast_ref::<B>())
+            .and_then(|feature| feature.as_any().downcast_ref::<B>())
     }
 }
 

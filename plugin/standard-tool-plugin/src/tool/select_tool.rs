@@ -11,15 +11,15 @@ use crate::traits::{AddEntity, GetEntities};
 pub struct SelectTool {
     selected_elements: Vec<Box<dyn Id>>,
     selection: Option<Rectangle>,
-    view_port: Box<dyn GetEntities>,
+    // view_port: Box<dyn GetEntities>,
 }
 
 impl SelectTool {
-    pub fn new(view_port: impl GetEntities + 'static) -> Self {
+    pub fn new(/*view_port: impl GetEntities + 'static*/) -> Self {
         Self {
             selected_elements: vec![],
             selection: None,
-            view_port: Box::new(view_port),
+            // view_port: Box::new(view_port),
         }
     }
 }

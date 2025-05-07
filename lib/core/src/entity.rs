@@ -31,11 +31,11 @@ impl Entity {
     }
 
     pub fn model_ref<M: Model + 'static>(&self) -> &M {
-        self.model.downcast_ref().expect("Can't downcast model to specified type reference!")
+        self.model.as_any().downcast_ref().expect("Can't downcast model to specified type reference!")
     }
 
     pub fn model_ref_mut<M: Model + 'static>(&mut self) -> &mut M {
-        self.model.downcast_mut().expect("Can't downcast model to specified type mutable reference!")
+        self.model.as_any_mut().downcast_mut().expect("Can't downcast model to specified type mutable reference!")
     }
 }
 

@@ -5,29 +5,19 @@ pub mod interactivity;
 pub mod container;
 pub mod feature_set;
 
-pub trait Model: Any {}
 
-impl dyn Model {
-    fn downcast_mut<T: Any>(&mut self) -> Option<&mut T> {
-        self.downcast_mut::<T>()
-    }
-    fn downcast_ref<T: Any>(&self) -> Option<&T> {
-        self.downcast_ref::<T>()
-    }
+pub trait AsAny: Any {
+    fn as_any(&self) -> &dyn Any;
+    fn as_any_mut(&mut self) -> &mut dyn Any;
 }
 
-pub trait Feature: Any {
+/* model trait */
+pub trait Model: AsAny {}
+
+/* feature trait */
+pub trait Feature: AsAny {
     fn boxed(self) -> Box<dyn Feature>
     where Self: Sized {
         Box::new(self)
-    }
-}
-
-impl dyn Feature {
-    fn downcast_mut<T: Any>(&mut self) -> Option<&mut T> {
-        self.downcast_mut::<T>()
-    }
-    fn downcast_ref<T: Any>(&self) -> Option<&T> {
-        self.downcast_ref::<T>()
     }
 }
