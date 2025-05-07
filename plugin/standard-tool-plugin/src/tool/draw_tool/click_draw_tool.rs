@@ -1,7 +1,6 @@
 mod render;
 
 use core::entity::Entity;
-use core::interactivity::Interactive;
 use geometry::figure::point::Point;
 use crate::ClickDraw;
 use crate::traits::AddEntity;
@@ -31,7 +30,7 @@ impl ClickDrawTool {
     }
 }
 
-impl Interactive for ClickDrawTool {
+impl Tool for ClickDrawTool {
     fn mouse_down(&mut self, point: &Point) {
         match &mut self.drawable {
             None => {
@@ -62,5 +61,3 @@ impl Interactive for ClickDrawTool {
 
     }
 }
-
-impl Tool for ClickDrawTool {}

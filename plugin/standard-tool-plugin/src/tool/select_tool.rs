@@ -1,6 +1,5 @@
 mod render;
 
-use core::interactivity::Interactive;
 use core::entity::Id;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
@@ -24,7 +23,7 @@ impl SelectTool {
     }
 }
 
-impl Interactive for SelectTool {
+impl Tool for SelectTool {
     fn mouse_down(&mut self, point: &Point) {
         self.selection = Some(
             Rectangle::zero_sized(point.clone())
@@ -64,5 +63,3 @@ impl Interactive for SelectTool {
         self.selection = None;
     }
 }
-
-impl Tool for SelectTool {}

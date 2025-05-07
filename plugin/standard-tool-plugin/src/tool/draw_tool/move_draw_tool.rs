@@ -1,5 +1,4 @@
 use core::entity::Entity;
-use core::interactivity::Interactive;
 use geometry::figure::point::Point;
 use crate::MoveDraw;
 use crate::traits::AddEntity;
@@ -35,7 +34,7 @@ impl MoveDrawTool {
     }
 }
 
-impl Interactive for MoveDrawTool {
+impl Tool for MoveDrawTool {
     fn mouse_down(&mut self, point: &Point) {
         let mut drawable: Entity = (self.build_drawable)();
         self.start.replace(point.clone());
@@ -71,5 +70,3 @@ impl Interactive for MoveDrawTool {
         self.end_drawing();
     }
 }
-
-impl Tool for MoveDrawTool {}
