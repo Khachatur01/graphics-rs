@@ -4,20 +4,18 @@ use core::entity::Entity;
 use geometry::figure::point::Point;
 use crate::ClickDraw;
 use crate::traits::AddEntity;
-use crate::tool::Tool;
+use crate::tool::{Interaction, Tool};
 
 pub struct ClickDrawTool {
     drawable: Option<Entity>,
     build_drawable: Box<dyn Fn() -> Entity>,
-    view_port: Box<dyn AddEntity>,
 }
 
 impl ClickDrawTool {
-    pub fn new(view_port: impl AddEntity + 'static, build_drawable: impl Fn() -> Entity + 'static) -> ClickDrawTool {
+    pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> ClickDrawTool {
         Self {
             build_drawable: Box::new(build_drawable),
             drawable: None,
-            view_port: Box::new(view_port),
         }
     }
 
@@ -26,38 +24,40 @@ impl ClickDrawTool {
             return;
         };
 
-        self.view_port.add_entity(drawable);
+        /* send event for element draw */
     }
 }
 
 impl Tool for ClickDrawTool {
-    fn mouse_down(&mut self, point: &Point) {
-        match &mut self.drawable {
-            None => {
-                let mut drawable: Entity = (self.build_drawable)();
+    fn interaction_event(&mut self, interaction: Interaction) {
+        match interaction {
+            Interaction::PointerDown(position, _) => {
+                match &mut self.drawable {
+                    None => {
+                        let mut drawable: Entity = (self.build_drawable)();
+
+                        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+                        (click_draw.mouse_down)(&mut drawable, &position);
+
+                        self.drawable = Some(drawable);
+                    }
+                    Some(drawable) => {
+                        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+                        (click_draw.mouse_down)(drawable, &position);
+                    }
+                }
+            }
+            Interaction::PointerMove(position, _) => {
+                let Some(drawable) = &mut self.drawable else {
+                    return;
+                };
 
                 let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
-                (click_draw.mouse_down)(&mut drawable, point);
+                (click_draw.mouse_move)(drawable, &position);
+            }
+            Interaction::PointerUp(_, _) => {}
 
-                self.drawable = Some(drawable);
-            }
-            Some(drawable) => {
-                let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
-                (click_draw.mouse_down)(drawable, point);
-            }
+            Interaction::KeyboardEvent(_) => {}
         }
-    }
-
-    fn mouse_move(&mut self, point: &Point) {
-        let Some(drawable) = &mut self.drawable else {
-            return;
-        };
-
-        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
-        (click_draw.mouse_move)(drawable, point);
-    }
-
-    fn mouse_up(&mut self, point: &Point) {
-
     }
 }

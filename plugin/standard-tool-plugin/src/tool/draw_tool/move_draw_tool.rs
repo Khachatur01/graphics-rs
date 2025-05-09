@@ -2,7 +2,7 @@ use core::entity::Entity;
 use geometry::figure::point::Point;
 use crate::MoveDraw;
 use crate::traits::AddEntity;
-use crate::tool::Tool;
+use crate::tool::{Interaction, Tool};
 
 mod render;
 
@@ -10,16 +10,14 @@ pub struct MoveDrawTool {
     start: Option<Point>,
     drawable: Option<Entity>,
     build_drawable: Box<dyn Fn() -> Entity>,
-    view_port: Box<dyn AddEntity>,
 }
 
 impl MoveDrawTool {
-    pub fn new(view_port: impl AddEntity + 'static, build_drawable: impl Fn() -> Entity + 'static) -> MoveDrawTool {
+    pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> MoveDrawTool {
         Self {
             start: None,
             drawable: None,
             build_drawable: Box::new(build_drawable),
-            view_port: Box::new(view_port),
         }
     }
 
@@ -30,43 +28,47 @@ impl MoveDrawTool {
             return;
         };
 
-        self.view_port.add_entity(drawable);
+        /* send event for element draw */
     }
 }
 
 impl Tool for MoveDrawTool {
-    fn mouse_down(&mut self, point: &Point) {
-        let mut drawable: Entity = (self.build_drawable)();
-        self.start.replace(point.clone());
+    fn interaction_event(&mut self, interaction: Interaction) {
+        match interaction {
+            Interaction::PointerDown(position, _) => {
+                let mut drawable: Entity = (self.build_drawable)();
+                self.start.replace(position.clone());
 
-        let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
-        (move_draw.mouse_down)(&mut drawable, point);
+                let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
+                (move_draw.mouse_down)(&mut drawable, &position);
 
-        self.drawable = Some(drawable);
-    }
+                self.drawable = Some(drawable);
+            }
+            Interaction::PointerMove(position, _) => {
+                let Some(drawable) = &mut self.drawable else {
+                    return;
+                };
 
-    fn mouse_move(&mut self, point: &Point) {
-        let Some(drawable) = &mut self.drawable else {
-            return;
-        };
+                let Some(start) = self.start else { return; };
 
-        let Some(start) = self.start else { return; };
+                let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
+                (move_draw.mouse_move)(drawable, &start, &position);
+            }
+            Interaction::PointerUp(position, _) => {
+                let Some(drawable) = &mut self.drawable else {
+                    return;
+                };
 
-        let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
-        (move_draw.mouse_move)(drawable, &start, point);
-    }
+                /* Take value from start point to make sure after mouse up action start point is None */
+                let Some(start) = self.start.take() else { return; };
 
-    fn mouse_up(&mut self, point: &Point) {
-        let Some(drawable) = &mut self.drawable else {
-            return;
-        };
+                let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
+                (move_draw.mouse_up)(drawable, &start, &position);
 
-        /* Take value from start point to make sure after mouse up action start point is None */
-        let Some(start) = self.start.take() else { return; };
+                self.end_drawing();
+            }
 
-        let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
-        (move_draw.mouse_up)(drawable, &start, point);
-
-        self.end_drawing();
+            Interaction::KeyboardEvent(_) => {}
+        }
     }
 }
