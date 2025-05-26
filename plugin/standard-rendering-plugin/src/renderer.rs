@@ -1,9 +1,9 @@
+use crate::style::shape_style::ShapeStyle;
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
-use crate::style::shape_style::ShapeStyle;
 
 pub trait Renderable {
     fn render(&self, renderer: &mut dyn Renderer);

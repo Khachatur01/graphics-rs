@@ -10,6 +10,10 @@ pub struct Ellipse {
 
 impl Ellipse {
     pub fn new(center: Point, x_radius: f64, y_radius: f64) -> Ellipse {
-        Ellipse { center, x_radius, y_radius }
+        Ellipse {
+            center,
+            x_radius,
+            y_radius,
+        }
     }
 }

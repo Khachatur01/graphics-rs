@@ -7,13 +7,13 @@ use crate::figure::path::command::vertical_line_to::VerticalLineTo;
 use crate::figure::point::Point;
 use crate::math::Drag;
 
-mod move_to;
-mod line_to;
-mod horizontal_line_to;
-mod vertical_line_to;
 mod arc_to;
-mod positioning;
 mod bezier_to;
+mod horizontal_line_to;
+mod line_to;
+mod move_to;
+mod positioning;
+mod vertical_line_to;
 
 pub enum Command {
     MoveTo(MoveTo),

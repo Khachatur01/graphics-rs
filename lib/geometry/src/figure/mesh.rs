@@ -7,7 +7,7 @@ pub mod edge;
 #[derive(GetterMethods)]
 pub struct Mesh {
     knots: Vec<Point>,
-    edges: Vec<Edge>
+    edges: Vec<Edge>,
 }
 
 impl Mesh {

@@ -1,9 +1,8 @@
 use geometry::figure::point::Point;
 use standard_rendering_plugin::renderer::Renderable;
 
-pub mod select_tool;
 pub mod draw_tool;
-
+pub mod select_tool;
 
 pub enum Key {
     Esc,

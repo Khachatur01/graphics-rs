@@ -1,20 +1,23 @@
-use std::fmt::Display;
-use crate::{Feature, Model};
 use crate::feature_set::FeatureSet;
+use crate::{Feature, Model};
+use std::fmt::Display;
+use dyn_clone::DynClone;
 
-pub trait Id: Display {}
+pub trait Identifier: Display + DynClone {}
+
 
 pub struct Entity {
-    id: Box<dyn Id>,
+    id: Box<dyn Identifier>,
     model: Box<dyn Model>,
     feature_set: FeatureSet,
 }
 
 impl Entity {
-    pub fn new(id: impl Id + 'static,
-               model: impl Model + 'static,
-               feature_set: FeatureSet) -> Self {
-
+    pub fn new(
+        id: impl Identifier + 'static,
+        model: impl Model + 'static,
+        feature_set: FeatureSet,
+    ) -> Self {
         Self {
             id: Box::new(id),
             model: Box::new(model),
@@ -22,7 +25,7 @@ impl Entity {
         }
     }
 
-    pub fn id(&self) -> &dyn Id {
+    pub fn id(&self) -> &dyn Identifier {
         self.id.as_ref()
     }
 
@@ -31,11 +34,17 @@ impl Entity {
     }
 
     pub fn model_ref<M: Model + 'static>(&self) -> &M {
-        self.model.as_any().downcast_ref().expect("Can't downcast model to specified type reference!")
+        self.model
+            .as_any()
+            .downcast_ref()
+            .expect("Can't downcast model to specified type reference!")
     }
 
     pub fn model_ref_mut<M: Model + 'static>(&mut self) -> &mut M {
-        self.model.as_any_mut().downcast_mut().expect("Can't downcast model to specified type mutable reference!")
+        self.model
+            .as_any_mut()
+            .downcast_mut()
+            .expect("Can't downcast model to specified type mutable reference!")
     }
 }
 

@@ -1,10 +1,10 @@
 mod render;
 
+use crate::tool::{Interaction, Tool};
+use crate::traits::AddEntity;
+use crate::ClickDraw;
 use core::entity::Entity;
 use geometry::figure::point::Point;
-use crate::ClickDraw;
-use crate::traits::AddEntity;
-use crate::tool::{Interaction, Tool};
 
 pub struct ClickDrawTool {
     drawable: Option<Entity>,
@@ -31,22 +31,22 @@ impl ClickDrawTool {
 impl Tool for ClickDrawTool {
     fn interaction_event(&mut self, interaction: Interaction) {
         match interaction {
-            Interaction::PointerDown(position, _) => {
-                match &mut self.drawable {
-                    None => {
-                        let mut drawable: Entity = (self.build_drawable)();
+            Interaction::PointerDown(position, _) => match &mut self.drawable {
+                None => {
+                    let mut drawable: Entity = (self.build_drawable)();
 
-                        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
-                        (click_draw.mouse_down)(&mut drawable, &position);
+                    let click_draw: &ClickDraw =
+                        drawable.query().expect("Failed to query ClickDraw");
+                    (click_draw.mouse_down)(&mut drawable, &position);
 
-                        self.drawable = Some(drawable);
-                    }
-                    Some(drawable) => {
-                        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
-                        (click_draw.mouse_down)(drawable, &position);
-                    }
+                    self.drawable = Some(drawable);
                 }
-            }
+                Some(drawable) => {
+                    let click_draw: &ClickDraw =
+                        drawable.query().expect("Failed to query ClickDraw");
+                    (click_draw.mouse_down)(drawable, &position);
+                }
+            },
             Interaction::PointerMove(position, _) => {
                 let Some(drawable) = &mut self.drawable else {
                     return;

@@ -8,5 +8,5 @@ pub struct BezierTo {
     reflected: bool,
 
     to_point: Point,
-    positioning: Positioning
+    positioning: Positioning,
 }

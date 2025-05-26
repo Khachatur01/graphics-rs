@@ -1,5 +1,7 @@
 use core::entity::Entity;
-use core::entity::Id;
+use core::entity::Identifier;
+use core::feature_set::FeatureSet;
+use core::Feature;
 use core_derive::Model;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
@@ -7,35 +9,32 @@ use getter_methods::GetterMethods;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::{ClickDraw, Select};
-use core::Feature;
-use core::feature_set::FeatureSet;
 
-#[derive(Model, GetterMethods)]
+#[derive(Model, Clone, GetterMethods)]
 pub struct PolygonEntity {
     polygon: Polygon,
     style: ShapeStyle,
 }
 
 impl PolygonEntity {
-    pub fn with_standard_feature_set(id: impl Id + 'static, polygon: Polygon, style: ShapeStyle) -> Entity {
+    pub fn with_standard_feature_set(
+        id: impl Identifier + 'static,
+        polygon: Polygon,
+        style: ShapeStyle,
+    ) -> Entity {
         Entity::new(
             id,
-            PolygonEntity {
-                polygon,
-                style
-            },
-            Self::standard_feature_set()
+            PolygonEntity { polygon, style },
+            Self::standard_feature_set(),
         )
     }
 
     pub fn standard_feature_set() -> FeatureSet {
-        FeatureSet::from(
-            [
-                Self::click_draw().boxed(),
-                Self::render().boxed(),
-                Self::select().boxed()
-            ]
-        )
+        FeatureSet::from([
+            Self::click_draw().boxed(),
+            Self::render().boxed(),
+            Self::select().boxed(),
+        ])
     }
 
     pub fn click_draw() -> ClickDraw {

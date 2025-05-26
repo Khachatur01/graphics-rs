@@ -1,16 +1,20 @@
-use crate::entity::{Entity, Id};
+use crate::entity::{Entity, Identifier};
 
-pub struct Container {
-    id: Box<dyn Id>,
+pub struct Container<Id> {
+    id: Id,
     entities: Vec<Entity>,
 }
 
-impl Container {
-    pub fn new(id: impl Id + 'static) -> Self {
+impl<Id: Identifier> Container<Id> {
+    pub fn new(id: Id) -> Self {
         Self {
-            id: Box::new(id),
+            id,
             entities: vec![],
         }
+    }
+
+    pub fn id(&self) -> &Id {
+        &self.id
     }
 
     pub fn add_entity(&mut self, entity: Entity) {

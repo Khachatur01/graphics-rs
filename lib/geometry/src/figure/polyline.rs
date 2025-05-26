@@ -3,7 +3,7 @@ use getter_methods::GetterMethods;
 
 #[derive(GetterMethods)]
 pub struct Polyline {
-    vertices: Vec<Point>
+    vertices: Vec<Point>,
 }
 
 impl Polyline {

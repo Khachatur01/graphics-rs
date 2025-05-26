@@ -1,8 +1,8 @@
+use crate::tool::{Interaction, Tool};
+use crate::traits::AddEntity;
+use crate::MoveDraw;
 use core::entity::Entity;
 use geometry::figure::point::Point;
-use crate::MoveDraw;
-use crate::traits::AddEntity;
-use crate::tool::{Interaction, Tool};
 
 mod render;
 
@@ -49,7 +49,9 @@ impl Tool for MoveDrawTool {
                     return;
                 };
 
-                let Some(start) = self.start else { return; };
+                let Some(start) = self.start else {
+                    return;
+                };
 
                 let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_move)(drawable, &start, &position);
@@ -60,7 +62,9 @@ impl Tool for MoveDrawTool {
                 };
 
                 /* Take value from start point to make sure after mouse up action start point is None */
-                let Some(start) = self.start.take() else { return; };
+                let Some(start) = self.start.take() else {
+                    return;
+                };
 
                 let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_up)(drawable, &start, &position);

@@ -1,7 +1,7 @@
 use crate::figure::point::Point;
+use crate::figure::segment::Segment;
 use crate::math::{Drag, Resize};
 use getter_methods::GetterMethods;
-use crate::figure::segment::Segment;
 
 #[derive(GetterMethods, Copy, Clone)]
 pub struct Rectangle {
@@ -12,11 +12,19 @@ pub struct Rectangle {
 
 impl Rectangle {
     pub fn new(top_left: Point, width: f64, height: f64) -> Self {
-        Self { top_left, width, height }
+        Self {
+            top_left,
+            width,
+            height,
+        }
     }
 
     pub fn zero_sized(top_left: Point) -> Self {
-        Self { top_left, width: 0.0, height: 0.0 }
+        Self {
+            top_left,
+            width: 0.0,
+            height: 0.0,
+        }
     }
 
     pub fn absolute_sized(&self) -> Self {
@@ -50,7 +58,6 @@ impl From<&Rectangle> for [Segment; 4] {
         ]
     }
 }
-
 
 impl Resize for Rectangle {
     fn resize(&mut self, new_width: f64, new_height: f64) {

@@ -1,5 +1,6 @@
 use crate::style::color::Color;
 
+#[derive(Clone)]
 pub struct TextStyle {
     pub font_color: Color,
     pub background_color: Color,

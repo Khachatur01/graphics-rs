@@ -1,5 +1,7 @@
 use core::entity::Entity;
-use core::entity::Id;
+use core::entity::Identifier;
+use core::feature_set::FeatureSet;
+use core::Feature;
 use core_derive::Model;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
@@ -9,34 +11,28 @@ use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::MoveDraw;
-use core::Feature;
-use core::feature_set::FeatureSet;
 
-#[derive(Model, GetterMethods)]
+#[derive(Model, Clone, GetterMethods)]
 pub struct RectangleEntity {
     rectangle: Rectangle,
     style: ShapeStyle,
 }
 
 impl RectangleEntity {
-    pub fn with_standard_feature_set(id: impl Id + 'static, rectangle: Rectangle, style: ShapeStyle) -> Entity {
+    pub fn with_standard_feature_set(
+        id: impl Identifier + 'static,
+        rectangle: Rectangle,
+        style: ShapeStyle,
+    ) -> Entity {
         Entity::new(
             id,
-            RectangleEntity {
-                rectangle,
-                style
-            },
-            Self::standard_feature_set()
+            RectangleEntity { rectangle, style },
+            Self::standard_feature_set(),
         )
     }
 
     pub fn standard_feature_set() -> FeatureSet {
-        FeatureSet::from(
-            [
-                Self::move_draw().boxed(),
-                Self::render().boxed()
-            ]
-        )
+        FeatureSet::from([Self::move_draw().boxed(), Self::render().boxed()])
     }
 
     pub fn move_draw() -> MoveDraw {

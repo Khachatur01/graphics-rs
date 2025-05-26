@@ -28,10 +28,10 @@ impl_op_ex!(+ |lhs: &Point, rhs: &Point| -> Point {
     }
 });
 
-impl_op_ex!(- |lhs: &Point, rhs: &Point| -> Point {
+impl_op_ex!(-|lhs: &Point, rhs: &Point| -> Point {
     Point {
         x: lhs.x - rhs.x,
-        y: lhs.y - rhs.y
+        y: lhs.y - rhs.y,
     }
 });
 

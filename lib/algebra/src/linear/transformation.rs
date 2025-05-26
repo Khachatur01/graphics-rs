@@ -27,9 +27,7 @@ pub struct Scale {
 }
 
 #[derive(GetterMethods, Copy, Clone)]
-pub struct Matrix {
-    /* todo */
-}
+pub struct Matrix {/* todo */}
 
 #[derive(Copy, Clone)]
 pub enum Transformation {

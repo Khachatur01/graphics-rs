@@ -1,17 +1,17 @@
 use crate::figure::point::Point;
-use getter_methods::GetterMethods;
 use crate::figure::rectangle::Rectangle;
 use crate::figure::segment::Segment;
+use getter_methods::GetterMethods;
 
-#[derive(GetterMethods)]
+#[derive(Clone, GetterMethods)]
 pub struct Polygon {
-    vertices: Vec<Point>
+    vertices: Vec<Point>,
 }
 
 impl Polygon {
     pub fn new(vertices: &[Point]) -> Polygon {
         Polygon {
-            vertices: vertices.to_vec()
+            vertices: vertices.to_vec(),
         }
     }
 
@@ -30,20 +30,20 @@ impl Polygon {
     }
 
     pub fn is_inside_rectangle(&self, rectangle: &Rectangle) -> bool {
-        let point_outside_rect = self
-            .vertices()
-            .iter()
-            .find(|vertex| {
-                vertex.x() < rectangle.top_left().x() || vertex.x() > rectangle.top_left().x() + rectangle.width() ||
-                vertex.y() < rectangle.top_left().y() || vertex.y() > rectangle.top_left().y() + rectangle.height()
-            });
+        let point_outside_rect = self.vertices().iter().find(|vertex| {
+            vertex.x() < rectangle.top_left().x()
+                || vertex.x() > rectangle.top_left().x() + rectangle.width()
+                || vertex.y() < rectangle.top_left().y()
+                || vertex.y() > rectangle.top_left().y() + rectangle.height()
+        });
 
         /* Polygon is inside rectangle if there is not any point which is outside the rectangle */
         point_outside_rect.is_none()
     }
 
     pub fn intersects_rectangle(&self, rectangle: &Rectangle) -> bool {
-        let polygon_segments = self.vertices
+        let polygon_segments = self
+            .vertices
             .windows(2)
             .map(|points| (points[0], points[1]))
             .map(|(start, end)| Segment::new(start.clone(), end.clone()))
