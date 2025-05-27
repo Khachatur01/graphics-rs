@@ -6,26 +6,26 @@ use core_derive::Model;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::{ClickDraw, Select};
 
-#[derive(Model, Serialize, Clone, GetterMethods)]
-pub struct PolygonEntity {
+#[derive(Model, Serialize, Deserialize, Clone, GetterMethods)]
+pub struct PolygonModel {
     polygon: Polygon,
     style: ShapeStyle,
 }
 
-impl PolygonEntity {
-    pub fn with_standard_feature_set(
+impl PolygonModel {
+    pub fn entity(
         id: impl EntityId + 'static,
         polygon: Polygon,
         style: ShapeStyle,
     ) -> Entity {
         Entity::new(
             id,
-            PolygonEntity { polygon, style },
+            PolygonModel { polygon, style },
             Self::standard_feature_set(),
         )
     }
@@ -41,13 +41,13 @@ impl PolygonEntity {
     pub fn click_draw() -> ClickDraw {
         ClickDraw {
             mouse_down: |entity, current_point| {
-                let polygon: &mut PolygonEntity = entity.model_ref_mut();
+                let polygon: &mut PolygonModel = entity.model_ref_mut();
 
                 polygon.polygon.add_vertex(current_point.clone());
                 polygon.polygon.add_vertex(current_point.clone());
             },
             mouse_move: |entity, current_point| {
-                let polygon: &mut PolygonEntity = entity.model_ref_mut();
+                let polygon: &mut PolygonModel = entity.model_ref_mut();
 
                 polygon.polygon.replace_last_vertex(current_point.clone());
             },
@@ -58,7 +58,7 @@ impl PolygonEntity {
     pub fn render() -> Render {
         Render {
             render: |entity, renderer| {
-                let polygon: &PolygonEntity = entity.model_ref();
+                let polygon: &PolygonModel = entity.model_ref();
 
                 renderer.polygon(polygon.polygon(), &polygon.style);
             },
@@ -68,7 +68,7 @@ impl PolygonEntity {
     pub fn select() -> Select {
         Select {
             select: |entity: &Entity, selection: &Rectangle| {
-                let polygon: &PolygonEntity = entity.model_ref();
+                let polygon: &PolygonModel = entity.model_ref();
 
                 false
                 // match *selection {

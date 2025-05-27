@@ -1,10 +1,10 @@
 use getter_methods::GetterMethods;
 use impl_ops::impl_op_ex;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::ops;
 use std::ops::{AddAssign, SubAssign};
 
-#[derive(GetterMethods, Serialize, Copy, Clone)]
+#[derive(GetterMethods, Serialize, Deserialize, Copy, Clone)]
 pub struct Point {
     pub x: f64,
     pub y: f64,

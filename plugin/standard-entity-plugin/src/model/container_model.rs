@@ -11,15 +11,15 @@ use standard_rendering_plugin::Render;
 use standard_tool_plugin::Select;
 
 #[derive(Model, Serialize)]
-pub struct ContainerEntity {
+pub struct ContainerModel {
     pub children: Vec<Entity>,
 }
 
-impl ContainerEntity {
-    pub fn with_standard_feature_set(id: impl EntityId + 'static) -> Entity {
+impl ContainerModel {
+    pub fn entity(id: impl EntityId + 'static) -> Entity {
         Entity::new(
             id,
-            ContainerEntity { children: vec![] },
+            ContainerModel { children: vec![] },
             Self::standard_feature_set(),
         )
     }

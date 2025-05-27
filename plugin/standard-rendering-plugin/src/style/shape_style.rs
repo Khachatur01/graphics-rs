@@ -1,7 +1,7 @@
 use crate::style::color::Color;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct ShapeStyle {
     pub fill_color: Color,
     pub stroke_color: Color,

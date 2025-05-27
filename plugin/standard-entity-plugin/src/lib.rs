@@ -1,7 +1,7 @@
 use core::entity::Entity;
 use core_derive::Feature;
 
-pub mod entity;
+pub mod model;
 
 #[derive(Feature)]
 pub struct AddChild {

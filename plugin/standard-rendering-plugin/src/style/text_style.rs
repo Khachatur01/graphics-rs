@@ -1,7 +1,7 @@
 use crate::style::color::Color;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct TextStyle {
     pub font_color: Color,
     pub background_color: Color,

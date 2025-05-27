@@ -2,9 +2,9 @@ use crate::figure::point::Point;
 use crate::figure::rectangle::Rectangle;
 use crate::figure::segment::Segment;
 use getter_methods::GetterMethods;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, GetterMethods)]
+#[derive(Clone, Serialize, Deserialize, GetterMethods)]
 pub struct Polygon {
     vertices: Vec<Point>,
 }

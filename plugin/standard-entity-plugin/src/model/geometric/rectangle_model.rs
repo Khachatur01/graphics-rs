@@ -7,27 +7,23 @@ use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::{Drag, Resize};
 use getter_methods::GetterMethods;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::MoveDraw;
 
-#[derive(Model, Serialize, Clone, GetterMethods)]
-pub struct RectangleEntity {
-    rectangle: Rectangle,
-    style: ShapeStyle,
+#[derive(Model, Serialize, Deserialize, Clone, GetterMethods)]
+pub struct RectangleModel {
+    pub rectangle: Rectangle,
+    pub style: ShapeStyle,
 }
 
-impl RectangleEntity {
-    pub fn with_standard_feature_set(
-        id: impl EntityId + 'static,
-        rectangle: Rectangle,
-        style: ShapeStyle,
-    ) -> Entity {
+impl RectangleModel {
+    pub fn entity(id: impl EntityId + 'static, rectangle: Rectangle, style: ShapeStyle) -> Entity {
         Entity::new(
             id,
-            RectangleEntity { rectangle, style },
+            RectangleModel { rectangle, style },
             Self::standard_feature_set(),
         )
     }

@@ -3,7 +3,6 @@ use crate::{EntityId, Feature, Model};
 use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 
-
 pub struct Entity {
     id: Box<dyn EntityId>,
     model: Box<dyn Model>,
