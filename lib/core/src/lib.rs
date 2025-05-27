@@ -1,9 +1,13 @@
-use std::any::Any;
+use dyn_clone::DynClone;
 use dyn_serde::Serialize;
+use std::any::Any;
+use std::fmt::Display;
 
 pub mod container;
 pub mod entity;
 pub mod feature_set;
+
+pub trait EntityId: Display + DynClone + AsSerialize {}
 
 pub trait AsAny: Any {
     fn as_any(&self) -> &dyn Any;

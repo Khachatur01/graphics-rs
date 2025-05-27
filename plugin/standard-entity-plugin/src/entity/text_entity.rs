@@ -1,6 +1,6 @@
+use core_derive::Model;
 use getter_methods::GetterMethods;
 use serde::Serialize;
-use core_derive::Model;
 use standard_rendering_plugin::style::text_style::TextStyle;
 
 #[derive(Model, Serialize, Clone, GetterMethods)]

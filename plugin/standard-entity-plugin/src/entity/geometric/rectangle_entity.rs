@@ -1,13 +1,13 @@
 use core::entity::Entity;
-use core::entity::Identifier;
 use core::feature_set::FeatureSet;
+use core::EntityId;
 use core::Feature;
 use core_derive::Model;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::{Drag, Resize};
 use getter_methods::GetterMethods;
-use serde::{Serialize};
+use serde::Serialize;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
@@ -21,7 +21,7 @@ pub struct RectangleEntity {
 
 impl RectangleEntity {
     pub fn with_standard_feature_set(
-        id: impl Identifier + 'static,
+        id: impl EntityId + 'static,
         rectangle: Rectangle,
         style: ShapeStyle,
     ) -> Entity {

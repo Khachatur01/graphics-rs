@@ -1,8 +1,8 @@
 use getter_methods::GetterMethods;
 use impl_ops::impl_op_ex;
+use serde::Serialize;
 use std::ops;
 use std::ops::{AddAssign, SubAssign};
-use serde::Serialize;
 
 #[derive(GetterMethods, Serialize, Copy, Clone)]
 pub struct Point {

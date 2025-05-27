@@ -1,5 +1,5 @@
-use serde::Serialize;
 use crate::style::color::Color;
+use serde::Serialize;
 
 #[derive(Clone, Serialize)]
 pub struct TextStyle {

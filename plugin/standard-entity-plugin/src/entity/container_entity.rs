@@ -1,11 +1,11 @@
-use serde::Serialize;
 use crate::AddChild;
 use core::entity::Entity;
-use core::entity::Identifier;
 use core::feature_set::FeatureSet;
+use core::EntityId;
 use core::Feature;
 use core_derive::Model;
 use geometry::figure::rectangle::Rectangle;
+use serde::Serialize;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::Select;
@@ -16,7 +16,7 @@ pub struct ContainerEntity {
 }
 
 impl ContainerEntity {
-    pub fn with_standard_feature_set(id: impl Identifier + 'static) -> Entity {
+    pub fn with_standard_feature_set(id: impl EntityId + 'static) -> Entity {
         Entity::new(
             id,
             ContainerEntity { children: vec![] },

@@ -1,15 +1,11 @@
 use crate::feature_set::FeatureSet;
-use crate::{AsSerialize, Feature, Model};
-use dyn_clone::DynClone;
-use std::fmt::Display;
-use serde::{Serialize, Serializer};
+use crate::{EntityId, Feature, Model};
 use serde::ser::SerializeStruct;
-
-pub trait Identifier: Display + DynClone + AsSerialize {}
+use serde::{Serialize, Serializer};
 
 
 pub struct Entity {
-    id: Box<dyn Identifier>,
+    id: Box<dyn EntityId>,
     model: Box<dyn Model>,
     feature_set: FeatureSet,
 }
@@ -28,7 +24,7 @@ impl Serialize for Entity {
 
 impl Entity {
     pub fn new(
-        id: impl Identifier + 'static,
+        id: impl EntityId + 'static,
         model: impl Model + 'static,
         feature_set: FeatureSet,
     ) -> Self {
@@ -39,7 +35,7 @@ impl Entity {
         }
     }
 
-    pub fn id(&self) -> &dyn Identifier {
+    pub fn id(&self) -> &dyn EntityId {
         self.id.as_ref()
     }
 

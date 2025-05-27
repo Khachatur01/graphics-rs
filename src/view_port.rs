@@ -1,27 +1,21 @@
-use crate::core::container::Container;
 use core::entity::Entity;
-use core::entity::Identifier;
 use geometry::figure::point::Point;
 use standard_rendering_plugin::renderer::{Renderable, Renderer};
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::tool::{Interaction, PointingDevice, Tool};
 use standard_tool_plugin::traits::AddEntity;
 
-pub struct ViewPort<Id> {
-    container: Container<Id>,
+pub struct ViewPort {
+    entities: Vec<Entity>,
     active_tool: Option<Box<dyn Tool>>,
 }
 
-impl<Id: Identifier> ViewPort<Id> {
-    pub fn new(id: Id) -> Self {
+impl ViewPort {
+    pub fn new() -> Self {
         Self {
-            container: Container::new(id),
+            entities: vec![],
             active_tool: None,
         }
-    }
-
-    pub fn id(&self) -> &Id {
-        self.container.id()
     }
 
     pub fn interaction_event(&mut self, interaction: Interaction) {
@@ -61,15 +55,15 @@ impl<Id: Identifier> ViewPort<Id> {
     }
 }
 
-impl<Id: Identifier> AddEntity for ViewPort<Id> {
+impl AddEntity for ViewPort {
     fn add_entity(&mut self, entity: Entity) {
-        self.container.add_entity(entity);
+        self.entities.push(entity);
     }
 }
 
-impl<Id: Identifier> Renderable for ViewPort<Id> {
+impl Renderable for ViewPort {
     fn render(&self, renderer: &mut dyn Renderer) {
-        for entity in self.container.entities() {
+        for entity in &self.entities {
             if let Some(render) = entity.query::<Render>() {
                 (render.render)(entity, renderer);
             }

@@ -1,11 +1,12 @@
-use crate::entity::{Entity, Identifier};
+use crate::entity::Entity;
+use crate::EntityId;
 
 pub struct Container<Id> {
     id: Id,
     entities: Vec<Entity>,
 }
 
-impl<Id: Identifier> Container<Id> {
+impl<Id: EntityId> Container<Id> {
     pub fn new(id: Id) -> Self {
         Self {
             id,

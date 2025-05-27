@@ -4,7 +4,6 @@ use crate::tool::{Interaction, Tool};
 use crate::traits::AddEntity;
 use crate::ClickDraw;
 use core::entity::Entity;
-use geometry::figure::point::Point;
 
 pub struct ClickDrawTool {
     drawable: Option<Entity>,

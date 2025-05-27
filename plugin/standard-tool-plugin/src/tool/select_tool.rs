@@ -1,14 +1,13 @@
 mod render;
 
 use crate::tool::{Interaction, Tool};
-use crate::traits::{AddEntity, GetEntities};
-use core::entity::Identifier;
+use core::EntityId;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::Resize;
 
 pub struct SelectTool {
-    selected_elements: Vec<Box<dyn Identifier>>,
+    selected_elements: Vec<Box<dyn EntityId>>,
     selection: Option<Rectangle>,
 }
 

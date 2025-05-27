@@ -1,6 +1,6 @@
 use core::entity::Entity;
-use core::entity::Identifier;
 use core::feature_set::FeatureSet;
+use core::EntityId;
 use core::Feature;
 use core_derive::Model;
 use geometry::figure::polygon::Polygon;
@@ -19,7 +19,7 @@ pub struct PolygonEntity {
 
 impl PolygonEntity {
     pub fn with_standard_feature_set(
-        id: impl Identifier + 'static,
+        id: impl EntityId + 'static,
         polygon: Polygon,
         style: ShapeStyle,
     ) -> Entity {
