@@ -19,18 +19,33 @@ fn impl_as_any_macro(ast: &DeriveInput) -> TokenStream {
 
 fn impl_feature_macro(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let gen = quote! {
-        impl core::Feature for #name {}
-    };
-    gen.into()
+    let generics = &ast.generics;
+
+    quote! {
+        impl #generics core::Feature for #name #generics {}
+    }.into()
 }
 
 fn impl_model_macro(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let gen = quote! {
-        impl core::Model for #name {}
-    };
-    gen.into()
+    let generics = &ast.generics;
+
+    quote! {
+        impl #generics core::Model for #name #generics {}
+    }.into()
+}
+
+fn impl_as_serialize_macro(ast: &DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let generics = &ast.generics;
+
+    quote! {
+        impl #generics core::AsSerialize for #name #generics {
+            fn as_serialize(&self) -> &dyn dyn_serde::Serialize {
+                self
+            }
+        }
+    }.into()
 }
 
 #[proc_macro_derive(Feature)]
@@ -48,5 +63,13 @@ pub fn model_derive(input: TokenStream) -> TokenStream {
 
     let mut output: TokenStream = impl_as_any_macro(&ast);
     output.extend(impl_model_macro(&ast));
+    output.extend(impl_as_serialize_macro(&ast));
     output
+}
+
+#[proc_macro_derive(AsSerialize)]
+pub fn as_serialize_derive(input: TokenStream) -> TokenStream {
+    let ast: DeriveInput = syn::parse(input).unwrap();
+
+    impl_as_serialize_macro(&ast)
 }

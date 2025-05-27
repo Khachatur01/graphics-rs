@@ -6,11 +6,12 @@ use core_derive::Model;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
+use serde::Serialize;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::{ClickDraw, Select};
 
-#[derive(Model, Clone, GetterMethods)]
+#[derive(Model, Serialize, Clone, GetterMethods)]
 pub struct PolygonEntity {
     polygon: Polygon,
     style: ShapeStyle,

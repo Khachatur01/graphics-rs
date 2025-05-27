@@ -7,4 +7,5 @@ edition = "2021"
 algebra = { path = "../algebra" }
 getter-methods = "1.1.0"
 impl_ops = "0.1.1"
+serde = { version = "1.0.219", features = ["derive"] }
 

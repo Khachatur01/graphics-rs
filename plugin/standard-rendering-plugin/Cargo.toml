@@ -7,3 +7,4 @@ edition = "2021"
 core = { path = "../../lib/core" }
 core-derive = { path = "../../lib/core-derive" }
 geometry = { path = "../../lib/geometry" }
+serde = { version = "1.0.219", features = ["derive"] }

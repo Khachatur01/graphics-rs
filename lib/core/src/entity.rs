@@ -1,15 +1,29 @@
 use crate::feature_set::FeatureSet;
-use crate::{Feature, Model};
-use std::fmt::Display;
+use crate::{AsSerialize, Feature, Model};
 use dyn_clone::DynClone;
+use std::fmt::Display;
+use serde::{Serialize, Serializer};
+use serde::ser::SerializeStruct;
 
-pub trait Identifier: Display + DynClone {}
+pub trait Identifier: Display + DynClone + AsSerialize {}
 
 
 pub struct Entity {
     id: Box<dyn Identifier>,
     model: Box<dyn Model>,
     feature_set: FeatureSet,
+}
+
+impl Serialize for Entity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer
+    {
+        let mut state = serializer.serialize_struct("Entity", 2)?;
+        state.serialize_field("id", &self.id.as_serialize())?;
+        state.serialize_field("model", &self.model.as_serialize())?;
+        state.end()
+    }
 }
 
 impl Entity {

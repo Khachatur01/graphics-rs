@@ -4,9 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+getter-methods = "1.1.0"
+
 core = { path = "../../lib/core" }
 core-derive = { path = "../../lib/core-derive" }
 geometry = { path = "../../lib/geometry" }
 standard-rendering-plugin = { path = "../standard-rendering-plugin" }
 standard-tool-plugin = { path = "../standard-tool-plugin" }
-getter-methods = "1.1.0"
+serde = { version = "1.0.219", features = ["derive"] }
+dyn_serde = "1.0.2"

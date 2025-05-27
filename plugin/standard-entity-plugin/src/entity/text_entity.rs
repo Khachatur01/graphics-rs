@@ -1,8 +1,9 @@
 use getter_methods::GetterMethods;
+use serde::Serialize;
 use core_derive::Model;
 use standard_rendering_plugin::style::text_style::TextStyle;
 
-#[derive(Model, Clone, GetterMethods)]
+#[derive(Model, Serialize, Clone, GetterMethods)]
 pub struct TextEntity {
     text: String,
     style: TextStyle,

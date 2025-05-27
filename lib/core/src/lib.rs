@@ -1,5 +1,5 @@
 use std::any::Any;
-use dyn_clone::DynClone;
+use dyn_serde::Serialize;
 
 pub mod container;
 pub mod entity;
@@ -10,14 +10,12 @@ pub trait AsAny: Any {
     fn as_any_mut(&mut self) -> &mut dyn Any;
 }
 
-pub trait Serialize {
-    fn serialize(&self) -> Box<dyn Any> {
-        Box::new(String::new())
-    }
+pub trait AsSerialize {
+    fn as_serialize(&self) -> &dyn Serialize;
 }
 
 /* model trait */
-pub trait Model: AsAny {}
+pub trait Model: AsAny + AsSerialize {}
 
 /* feature trait */
 pub trait Feature: AsAny {

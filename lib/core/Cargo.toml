@@ -5,4 +5,6 @@ edition = "2021"
 
 [dependencies]
 dyn-clone = "1.0.19"
+dyn_serde = "1.0.2"
 geometry = { path = "../geometry" }
+serde = { version = "1.0.219", features = ["derive"] }

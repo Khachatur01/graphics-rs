@@ -1,3 +1,4 @@
+use serde::Serialize;
 use crate::AddChild;
 use core::entity::Entity;
 use core::entity::Identifier;
@@ -9,7 +10,7 @@ use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::Select;
 
-#[derive(Model)]
+#[derive(Model, Serialize)]
 pub struct ContainerEntity {
     pub children: Vec<Entity>,
 }
@@ -34,7 +35,7 @@ impl ContainerEntity {
     pub fn render() -> Render {
         Render {
             render: |entity: &Entity, renderer: &mut dyn Renderer| {
-                let container: &ContainerEntity = entity.model_ref();
+                let container: &Self = entity.model_ref();
 
                 /* query all render features and call render method */
                 for child in container.children.iter() {
@@ -51,7 +52,7 @@ impl ContainerEntity {
     pub fn select() -> Select {
         Select {
             select: |entity: &Entity, selection: &Rectangle| {
-                let container: &ContainerEntity = entity.model_ref();
+                let container: &Self = entity.model_ref();
 
                 todo!()
             },
@@ -61,7 +62,7 @@ impl ContainerEntity {
     pub fn add_child() -> AddChild {
         AddChild {
             add_child: |entity: &mut Entity, child: Entity| {
-                let container: &mut ContainerEntity = entity.model_ref_mut();
+                let container: &mut Self = entity.model_ref_mut();
 
                 container.children.push(child);
             },

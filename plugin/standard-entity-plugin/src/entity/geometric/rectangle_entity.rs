@@ -7,12 +7,13 @@ use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::{Drag, Resize};
 use getter_methods::GetterMethods;
+use serde::{Serialize};
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::MoveDraw;
 
-#[derive(Model, Clone, GetterMethods)]
+#[derive(Model, Serialize, Clone, GetterMethods)]
 pub struct RectangleEntity {
     rectangle: Rectangle,
     style: ShapeStyle,
@@ -32,23 +33,26 @@ impl RectangleEntity {
     }
 
     pub fn standard_feature_set() -> FeatureSet {
-        FeatureSet::from([Self::move_draw().boxed(), Self::render().boxed()])
+        FeatureSet::from([
+            Self::move_draw().boxed(),
+            Self::render().boxed()
+        ])
     }
 
     pub fn move_draw() -> MoveDraw {
         MoveDraw {
-            mouse_down: |entity, current_point| {
-                let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+            mouse_down: |entity: &mut Entity, current_point| {
+                let rectangle: &mut Self = entity.model_ref_mut();
                 rectangle.rectangle.drag(current_point)
             },
-            mouse_move: |entity, start, current_point| {
-                let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+            mouse_move: |entity: &mut Entity, start, current_point| {
+                let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
                 rectangle.rectangle.resize(delta.x(), delta.y());
             },
-            mouse_up: |entity, start, current_point| {
-                let rectangle: &mut RectangleEntity = entity.model_ref_mut();
+            mouse_up: |entity: &mut Entity, start, current_point| {
+                let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
                 rectangle.rectangle.resize(delta.x(), delta.y());
@@ -59,7 +63,7 @@ impl RectangleEntity {
     pub fn render() -> Render {
         Render {
             render: |entity: &Entity, renderer: &mut dyn Renderer| {
-                let rectangle: &RectangleEntity = entity.model_ref();
+                let rectangle: &Self = entity.model_ref();
 
                 renderer.rectangle(rectangle.rectangle(), &rectangle.style);
             },

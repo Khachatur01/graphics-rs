@@ -2,8 +2,9 @@ use crate::figure::point::Point;
 use crate::figure::segment::Segment;
 use crate::math::{Drag, Resize};
 use getter_methods::GetterMethods;
+use serde::Serialize;
 
-#[derive(GetterMethods, Copy, Clone)]
+#[derive(GetterMethods, Serialize, Copy, Clone)]
 pub struct Rectangle {
     top_left: Point,
     width: f64,
