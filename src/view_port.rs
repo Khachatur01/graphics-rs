@@ -1,8 +1,7 @@
 use core::entity::Entity;
-use geometry::figure::point::Point;
 use standard_rendering_plugin::renderer::{Renderable, Renderer};
 use standard_rendering_plugin::Render;
-use standard_tool_plugin::tool::{Interaction, PointingDevice, Tool};
+use standard_tool_plugin::tool::{Interaction, Tool};
 use standard_tool_plugin::traits::AddEntity;
 
 pub struct ViewPort {
@@ -24,30 +23,6 @@ impl ViewPort {
         };
 
         active_tool.interaction_event(interaction);
-    }
-
-    pub fn mouse_down(&mut self, point: Point) {
-        let Some(active_tool) = &mut self.active_tool else {
-            return;
-        };
-
-        active_tool.interaction_event(Interaction::PointerDown(point, PointingDevice::Mouse));
-    }
-
-    pub fn mouse_move(&mut self, point: Point) {
-        let Some(active_tool) = &mut self.active_tool else {
-            return;
-        };
-
-        active_tool.interaction_event(Interaction::PointerMove(point, PointingDevice::Mouse));
-    }
-
-    pub fn mouse_up(&mut self, point: Point) {
-        let Some(active_tool) = &mut self.active_tool else {
-            return;
-        };
-
-        active_tool.interaction_event(Interaction::PointerUp(point, PointingDevice::Mouse));
     }
 
     pub fn activate_tool(&mut self, tool: impl Tool + 'static) {

@@ -34,15 +34,13 @@ impl Tool for ClickDrawTool {
                 None => {
                     let mut drawable: Entity = (self.build_drawable)();
 
-                    let click_draw: &ClickDraw =
-                        drawable.query().expect("Failed to query ClickDraw");
+                    let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
                     (click_draw.mouse_down)(&mut drawable, &position);
 
                     self.drawable = Some(drawable);
                 }
                 Some(drawable) => {
-                    let click_draw: &ClickDraw =
-                        drawable.query().expect("Failed to query ClickDraw");
+                    let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
                     (click_draw.mouse_down)(drawable, &position);
                 }
             },
