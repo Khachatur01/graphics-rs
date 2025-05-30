@@ -30,9 +30,4 @@ pub enum Interaction {
 
 pub trait Tool: Renderable {
     fn interaction_event(&mut self, interaction: Interaction);
-    // fn mouse_down(&mut self, point: &Point);
-    //
-    // fn mouse_move(&mut self, point: &Point);
-    //
-    // fn mouse_up(&mut self, point: &Point);
 }
