@@ -1,6 +1,5 @@
-use geometry::figure::point::Point;
-
 pub struct SVGCircle {
-    center: Point,
-    radius: f32,
+    pub cx: f64,
+    pub cy: f64,
+    pub r: f64,
 }

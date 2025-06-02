@@ -31,13 +31,13 @@ impl PolygonModel {
 
     pub fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
-            Self::click_draw().boxed(),
-            Self::render().boxed(),
-            Self::select().boxed(),
+            Self::feature_click_draw().boxed(),
+            Self::feature_render().boxed(),
+            Self::feature_select().boxed(),
         ])
     }
 
-    pub fn click_draw() -> ClickDraw {
+    pub fn feature_click_draw() -> ClickDraw {
         ClickDraw {
             mouse_down: |entity, current_point| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
@@ -58,7 +58,7 @@ impl PolygonModel {
         }
     }
 
-    pub fn render() -> Render {
+    pub fn feature_render() -> Render {
         Render {
             render: |entity, renderer| {
                 let polygon: &PolygonModel = entity.model_ref();
@@ -68,7 +68,7 @@ impl PolygonModel {
         }
     }
 
-    pub fn select() -> Select {
+    pub fn feature_select() -> Select {
         Select {
             select: |entity: &Entity, selection: &Rectangle| {
                 let polygon: &PolygonModel = entity.model_ref();

@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+serde = { version = "1.0.219", features = ["derive"] }
+
 entity-model-feature = { path = "../../lib/entity-model-feature" }
 entity-model-feature-derive = { path = "../../lib/entity-model-feature-derive" }
 geometry = { path = "../../lib/geometry" }
-serde = { version = "1.0.219", features = ["derive"] }
