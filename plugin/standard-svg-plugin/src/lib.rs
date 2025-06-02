@@ -5,8 +5,8 @@ use entity_model_feature_derive::Feature;
 use crate::svg_element::SVGElement;
 
 #[derive(Feature, Clone)]
-pub struct AsSVG {
-    as_svg: fn(entity: &Entity) -> SVGElement,
+pub struct ToSVG {
+    to_svg: fn(entity: &Entity) -> SVGElement,
 }
 
 #[derive(Feature, Clone)]

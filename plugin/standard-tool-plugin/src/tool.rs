@@ -25,6 +25,7 @@ pub enum Key {
 pub enum PointingDevice {
     Mouse,
     TouchPad,
+    Unknown,
 }
 
 pub enum Interaction {

@@ -16,6 +16,12 @@ impl Point {
     }
 }
 
+impl From<(f64, f64)> for Point {
+    fn from((x, y): (f64, f64)) -> Self {
+        Self { x, y }
+    }
+}
+
 impl Default for Point {
     fn default() -> Self {
         Point { x: 0.0, y: 0.0 }

@@ -17,8 +17,3 @@ members = [
 ]
 
 [dependencies]
-geometry = { path = "lib/geometry" }
-entity-model-feature = { path = "lib/entity-model-feature" }
-standard-rendering-plugin = { path = "plugin/standard-rendering-plugin" }
-standard-entity-plugin = { path = "plugin/standard-entity-plugin" }
-standard-tool-plugin = { path = "plugin/standard-tool-plugin" }

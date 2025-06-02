@@ -1,4 +1,4 @@
-use async_channel::{unbounded};
+use async_channel::unbounded;
 use futures::executor;
 
 pub struct EventHandler<E> {
@@ -19,11 +19,7 @@ impl<E> Default for EventHandler<E> {
 
 impl<E: Clone> EventHandler<E> {
     pub fn dispatch(&self, event: E) {
-        let send = self.sender.send(event);
-
-        executor::block_on(async move {
-            send.await.expect("Can't dispatch event");
-        });
+        executor::block_on(self.sender.send(event)).expect("Can't dispatch event");
     }
 
     pub fn receiver(&self) -> async_channel::Receiver<E> {
