@@ -2,6 +2,7 @@ use crate::Feature;
 use std::any::TypeId;
 use std::collections::HashMap;
 
+#[derive(Clone)]
 pub struct FeatureSet {
     features: HashMap<TypeId, Box<dyn Feature>>,
 }

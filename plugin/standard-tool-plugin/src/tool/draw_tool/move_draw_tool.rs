@@ -1,12 +1,22 @@
+use entity_model_feature::entity::Entity;
 use crate::tool::{Interaction, Tool};
-use crate::traits::AddEntity;
 use crate::MoveDraw;
-use core::entity::Entity;
+use event_handler::EventHandler;
 use geometry::figure::point::Point;
 
 mod render;
 
+#[derive(Default)]
+pub struct Hook {
+    pub pointer_down: EventHandler<Point>,
+    pub pointer_move: EventHandler<Point>,
+    pub pointer_up: EventHandler<Point>,
+    pub end_drawing: EventHandler<Entity>
+}
+
 pub struct MoveDrawTool {
+    pub hook: Hook,
+
     start: Option<Point>,
     drawable: Option<Entity>,
     build_drawable: Box<dyn Fn() -> Entity>,
@@ -18,22 +28,24 @@ impl MoveDrawTool {
             start: None,
             drawable: None,
             build_drawable: Box::new(build_drawable),
+
+            hook: Default::default(),
         }
     }
 
-    pub fn end_drawing(&mut self) {
+    fn end_drawing(&mut self) {
         self.start.take();
 
         let Some(drawable) = self.drawable.take() else {
             return;
         };
 
-        /* send event for element draw */
+        self.hook.end_drawing.dispatch(drawable);
     }
 }
 
 impl Tool for MoveDrawTool {
-    fn interaction_event(&mut self, interaction: Interaction) {
+    fn interact(&mut self, interaction: Interaction) {
         match interaction {
             Interaction::PointerDown(position, _) => {
                 let mut drawable: Entity = (self.build_drawable)();
@@ -41,6 +53,7 @@ impl Tool for MoveDrawTool {
 
                 let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_down)(&mut drawable, &position);
+                self.hook.pointer_down.dispatch(position);
 
                 self.drawable = Some(drawable);
             }
@@ -55,6 +68,7 @@ impl Tool for MoveDrawTool {
 
                 let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_move)(drawable, &start, &position);
+                self.hook.pointer_move.dispatch(position);
             }
             Interaction::PointerUp(position, _) => {
                 let Some(drawable) = &mut self.drawable else {
@@ -68,11 +82,13 @@ impl Tool for MoveDrawTool {
 
                 let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_up)(drawable, &start, &position);
+                self.hook.pointer_up.dispatch(position);
 
                 self.end_drawing();
             }
 
-            Interaction::KeyboardEvent(_) => {}
+            Interaction::KeyDown(_) => {}
+            Interaction::KeyUp(_) => {}
         }
     }
 }

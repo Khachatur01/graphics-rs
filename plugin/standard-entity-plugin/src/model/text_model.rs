@@ -1,9 +1,9 @@
-use crate::Entity;
-use core::feature_set::FeatureSet;
-use core::EntityId;
-use core_derive::Model;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
+use entity_model_feature::entity::Entity;
+use entity_model_feature::EntityId;
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature_derive::Model;
 use standard_rendering_plugin::style::text_style::TextStyle;
 
 #[derive(Model, Serialize, Deserialize, Clone, GetterMethods)]

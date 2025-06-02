@@ -5,7 +5,7 @@ use syn::DeriveInput;
 fn impl_as_any_macro(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let gen = quote! {
-        impl core::AsAny for #name {
+        impl entity_model_feature::AsAny for #name {
             fn as_any(&self) -> &dyn std::any::Any {
                 self
             }
@@ -22,7 +22,7 @@ fn impl_feature_macro(ast: &DeriveInput) -> TokenStream {
     let generics = &ast.generics;
 
     quote! {
-        impl #generics core::Feature for #name #generics {}
+        impl #generics entity_model_feature::Feature for #name #generics {}
     }.into()
 }
 
@@ -31,7 +31,7 @@ fn impl_model_macro(ast: &DeriveInput) -> TokenStream {
     let generics = &ast.generics;
 
     quote! {
-        impl #generics core::Model for #name #generics {}
+        impl #generics entity_model_feature::Model for #name #generics {}
     }.into()
 }
 
@@ -40,7 +40,7 @@ fn impl_as_serialize_macro(ast: &DeriveInput) -> TokenStream {
     let generics = &ast.generics;
 
     quote! {
-        impl #generics core::AsSerialize for #name #generics {
+        impl #generics entity_model_feature::AsSerialize for #name #generics {
             fn as_serialize(&self) -> &dyn dyn_serde::Serialize {
                 self
             }

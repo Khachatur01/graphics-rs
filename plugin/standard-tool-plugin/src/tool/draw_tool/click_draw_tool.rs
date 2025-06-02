@@ -1,11 +1,22 @@
 mod render;
 
-use crate::tool::{Interaction, Tool};
-use crate::traits::AddEntity;
+use entity_model_feature::entity::Entity;
+use event_handler::EventHandler;
+use geometry::figure::point::Point;
+use crate::tool::{Interaction, Key, Tool};
 use crate::ClickDraw;
-use core::entity::Entity;
+
+#[derive(Default)]
+pub struct Hook {
+    pub pointer_down: EventHandler<Point>,
+    pub pointer_move: EventHandler<Point>,
+    pub pointer_up: EventHandler<Point>,
+    pub end_drawing: EventHandler<Entity>
+}
 
 pub struct ClickDrawTool {
+    pub hook: Hook,
+
     drawable: Option<Entity>,
     build_drawable: Box<dyn Fn() -> Entity>,
 }
@@ -13,22 +24,26 @@ pub struct ClickDrawTool {
 impl ClickDrawTool {
     pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> ClickDrawTool {
         Self {
+            hook: Default::default(),
             build_drawable: Box::new(build_drawable),
             drawable: None,
         }
     }
 
     pub fn end_drawing(&mut self) {
-        let Some(drawable) = self.drawable.take() else {
+        let Some(mut drawable) = self.drawable.take() else {
             return;
         };
 
-        /* send event for element draw */
+        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+        (click_draw.finish)(&mut drawable);
+
+        self.hook.end_drawing.dispatch(drawable);
     }
 }
 
 impl Tool for ClickDrawTool {
-    fn interaction_event(&mut self, interaction: Interaction) {
+    fn interact(&mut self, interaction: Interaction) {
         match interaction {
             Interaction::PointerDown(position, _) => match &mut self.drawable {
                 None => {
@@ -36,6 +51,7 @@ impl Tool for ClickDrawTool {
 
                     let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
                     (click_draw.mouse_down)(&mut drawable, &position);
+                    self.hook.pointer_down.dispatch(position);
 
                     self.drawable = Some(drawable);
                 }
@@ -51,10 +67,17 @@ impl Tool for ClickDrawTool {
 
                 let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
                 (click_draw.mouse_move)(drawable, &position);
+                self.hook.pointer_move.dispatch(position);
             }
-            Interaction::PointerUp(_, _) => {}
+            Interaction::PointerUp(position, _) => {
+                self.hook.pointer_up.dispatch(position);
+            }
 
-            Interaction::KeyboardEvent(_) => {}
+            Interaction::KeyDown(Key::Esc) => {
+                self.end_drawing()
+            }
+            Interaction::KeyDown(_) => {}
+            Interaction::KeyUp(_) => {}
         }
     }
 }

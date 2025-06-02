@@ -1,13 +1,12 @@
-use core::entity::Entity;
-use core::feature_set::FeatureSet;
-use core::EntityId;
-use core::Feature;
-use core_derive::Model;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::{Drag, Resize};
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
+use entity_model_feature::entity::Entity;
+use entity_model_feature::{EntityId, Feature};
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature_derive::Model;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
@@ -53,6 +52,7 @@ impl RectangleModel {
                 let delta: Point = current_point - start;
                 rectangle.rectangle.resize(delta.x(), delta.y());
             },
+            finish: |entity: &mut Entity| {},
         }
     }
 

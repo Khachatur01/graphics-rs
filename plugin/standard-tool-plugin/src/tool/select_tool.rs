@@ -1,7 +1,7 @@
 mod render;
 
+use entity_model_feature::EntityId;
 use crate::tool::{Interaction, Tool};
-use core::EntityId;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::Resize;
@@ -21,7 +21,7 @@ impl SelectTool {
 }
 
 impl Tool for SelectTool {
-    fn interaction_event(&mut self, interaction: Interaction) {
+    fn interact(&mut self, interaction: Interaction) {
         match interaction {
             Interaction::PointerDown(position, _) => {
                 self.selection = Some(Rectangle::zero_sized(position));
@@ -39,7 +39,8 @@ impl Tool for SelectTool {
             Interaction::PointerUp(_, _) => {
                 self.selection = None;
             }
-            Interaction::KeyboardEvent(_) => {}
+            Interaction::KeyDown(_) => {}
+            Interaction::KeyUp(_) => {}
         }
     }
 }

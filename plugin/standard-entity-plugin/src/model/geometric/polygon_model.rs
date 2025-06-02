@@ -1,12 +1,11 @@
-use core::entity::Entity;
-use core::feature_set::FeatureSet;
-use core::EntityId;
-use core::Feature;
-use core_derive::Model;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
+use entity_model_feature::entity::Entity;
+use entity_model_feature::{EntityId, Feature};
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature_derive::Model;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::{ClickDraw, Select};
@@ -52,6 +51,10 @@ impl PolygonModel {
                 polygon.polygon.replace_last_vertex(current_point.clone());
             },
             mouse_up: |_, _| {},
+            finish: |entity: &mut Entity| {
+                let polygon: &mut PolygonModel = entity.model_ref_mut();
+                polygon.polygon.remove_last_vertex();
+            },
         }
     }
 

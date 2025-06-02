@@ -10,15 +10,15 @@ members = [
     # layer 1
     "lib/geometry",
     # layer 2
-    "lib/core",
+    "lib/entity-model-feature",
     "plugin/standard-rendering-plugin",
     "plugin/standard-entity-plugin",
-    "plugin/standard-tool-plugin", "lib/core-derive",
+    "plugin/standard-tool-plugin", "lib/entity-model-feature-derive", "plugin/standard-svg-plugin", "lib/event-handler",
 ]
 
 [dependencies]
 geometry = { path = "lib/geometry" }
-core = { path = "lib/core" }
+entity-model-feature = { path = "lib/entity-model-feature" }
 standard-rendering-plugin = { path = "plugin/standard-rendering-plugin" }
 standard-entity-plugin = { path = "plugin/standard-entity-plugin" }
 standard-tool-plugin = { path = "plugin/standard-tool-plugin" }

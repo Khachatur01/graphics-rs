@@ -5,7 +5,14 @@ pub mod draw_tool;
 pub mod select_tool;
 
 pub enum Key {
+    Enter,
+    Backspace,
+    Delete,
     Esc,
+    ArrowUp,
+    ArrowDown,
+    ArrowLeft,
+    ArrowRight,
     Ctrl,
     Alt,
     Shift,
@@ -25,9 +32,10 @@ pub enum Interaction {
     PointerMove(Point, PointingDevice),
     PointerUp(Point, PointingDevice),
 
-    KeyboardEvent(Key),
+    KeyDown(Key),
+    KeyUp(Key),
 }
 
 pub trait Tool: Renderable {
-    fn interaction_event(&mut self, interaction: Interaction);
+    fn interact(&mut self, interaction: Interaction);
 }

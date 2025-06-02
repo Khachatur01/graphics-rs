@@ -1,16 +1,15 @@
 use crate::AddChild;
-use core::entity::Entity;
-use core::feature_set::FeatureSet;
-use core::EntityId;
-use core::Feature;
-use core_derive::Model;
 use geometry::figure::rectangle::Rectangle;
 use serde::Serialize;
+use entity_model_feature::entity::Entity;
+use entity_model_feature::{EntityId, Feature};
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature_derive::Model;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::Select;
 
-#[derive(Model, Serialize)]
+#[derive(Model, Clone, Serialize)]
 pub struct ContainerModel {
     pub children: Vec<Entity>,
 }

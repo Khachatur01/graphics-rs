@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 geometry = { path = "../../lib/geometry" }
-core = { path = "../../lib/core" }
-core-derive = { path = "../../lib/core-derive" }
+entity-model-feature = { path = "../../lib/entity-model-feature" }
+entity-model-feature-derive = { path = "../../lib/entity-model-feature-derive" }
+event-handler = { path = "../../lib/event-handler" }
 standard-rendering-plugin = { path = "../standard-rendering-plugin" }

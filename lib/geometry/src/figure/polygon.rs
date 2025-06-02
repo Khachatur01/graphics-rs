@@ -30,6 +30,10 @@ impl Polygon {
         self.vertices[length - 1] = vertex;
     }
 
+    pub fn remove_last_vertex(&mut self) {
+        self.vertices.pop();
+    }
+
     pub fn is_inside_rectangle(&self, rectangle: &Rectangle) -> bool {
         let point_outside_rect = self.vertices().iter().find(|vertex| {
             vertex.x() < rectangle.top_left().x()
