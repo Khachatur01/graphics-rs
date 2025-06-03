@@ -1,42 +1,43 @@
+use crate::entity_id::EntityId;
 use crate::feature_set::FeatureSet;
-use crate::{EntityId, Feature, Model};
+use crate::{Feature, Model};
 use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 
 #[derive(Clone)]
-pub struct Entity {
-    id: Box<dyn EntityId>,
+pub struct Entity<Id: EntityId> {
+    id: Id,
     model: Box<dyn Model>,
     feature_set: FeatureSet,
 }
 
-impl Serialize for Entity {
+impl<Id: EntityId> Serialize for Entity<Id> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer
     {
         let mut state = serializer.serialize_struct("Entity", 2)?;
-        state.serialize_field("id", &self.id.as_serialize())?;
+        state.serialize_field("id", &self.id)?;
         state.serialize_field("model", &self.model.as_serialize())?;
         state.end()
     }
 }
 
-impl Entity {
+impl<Id: EntityId> Entity<Id> {
     pub fn new(
-        id: impl EntityId + 'static,
+        id: Id,
         model: impl Model + 'static,
         feature_set: FeatureSet,
     ) -> Self {
         Self {
-            id: Box::new(id),
+            id,
             model: Box::new(model),
             feature_set,
         }
     }
 
-    pub fn id(&self) -> &dyn EntityId {
-        self.id.as_ref()
+    pub fn id(&self) -> &Id {
+        &self.id
     }
 
     pub fn add_feature<M: Feature + 'static>(&mut self, feature: M) {
@@ -58,7 +59,7 @@ impl Entity {
     }
 }
 
-impl Entity {
+impl<Id: EntityId> Entity<Id> {
     pub fn query<B: Feature + 'static>(&self) -> Option<&B> {
         self.feature_set.query::<B>()
     }

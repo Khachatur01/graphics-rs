@@ -1,11 +1,12 @@
+use entity_model_feature::entity::Entity;
+use entity_model_feature::entity_id::EntityId;
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature::Feature;
+use entity_model_feature_derive::Model;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
-use entity_model_feature::entity::Entity;
-use entity_model_feature::{EntityId, Feature};
-use entity_model_feature::feature_set::FeatureSet;
-use entity_model_feature_derive::Model;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::{ClickDraw, Select};
@@ -17,27 +18,27 @@ pub struct PolygonModel {
 }
 
 impl PolygonModel {
-    pub fn entity(
-        id: impl EntityId + 'static,
+    pub fn entity<Id: EntityId>(
+        id: Id,
         polygon: Polygon,
         style: ShapeStyle,
-    ) -> Entity {
+    ) -> Entity<Id> {
         Entity::new(
             id,
             PolygonModel { polygon, style },
-            Self::standard_feature_set(),
+            Self::standard_feature_set::<Id>(),
         )
     }
 
-    pub fn standard_feature_set() -> FeatureSet {
+    pub fn standard_feature_set<Id: EntityId>() -> FeatureSet {
         FeatureSet::from([
-            Self::feature_click_draw().boxed(),
-            Self::feature_render().boxed(),
-            Self::feature_select().boxed(),
+            Self::feature_click_draw::<Id>().boxed(),
+            Self::feature_render::<Id>().boxed(),
+            Self::feature_select::<Id>().boxed(),
         ])
     }
 
-    pub fn feature_click_draw() -> ClickDraw {
+    pub fn feature_click_draw<Id: EntityId>() -> ClickDraw<Id> {
         ClickDraw {
             mouse_down: |entity, current_point| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
@@ -51,14 +52,14 @@ impl PolygonModel {
                 polygon.polygon.replace_last_vertex(current_point.clone());
             },
             mouse_up: |_, _| {},
-            finish: |entity: &mut Entity| {
+            finish: |entity| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
                 polygon.polygon.remove_last_vertex();
             },
         }
     }
 
-    pub fn feature_render() -> Render {
+    pub fn feature_render<Id: EntityId>() -> Render<Id> {
         Render {
             render: |entity, renderer| {
                 let polygon: &PolygonModel = entity.model_ref();
@@ -68,9 +69,9 @@ impl PolygonModel {
         }
     }
 
-    pub fn feature_select() -> Select {
+    pub fn feature_select<Id: EntityId>() -> Select<Id> {
         Select {
-            select: |entity: &Entity, selection: &Rectangle| {
+            select: |entity, selection: &Rectangle| {
                 let polygon: &PolygonModel = entity.model_ref();
 
                 false

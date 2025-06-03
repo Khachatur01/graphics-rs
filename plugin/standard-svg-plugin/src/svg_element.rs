@@ -1,4 +1,4 @@
-use crate::styles::SVGStyle;
+use crate::property_map::PropertyMap;
 use crate::svg_element::svg_circle::SVGCircle;
 use crate::svg_element::svg_line::SVGLine;
 use crate::svg_element::svg_rectangle::SVGRectangle;
@@ -7,40 +7,61 @@ pub mod svg_circle;
 pub mod svg_line;
 pub mod svg_rectangle;
 
-pub trait SVGElement1 {
-    fn set_property(&mut self, key: &'static str, value: &'static str);
-    fn unset_property(&mut self, key: &'static str);
-}
-
 pub struct SVGElement {
-    svg_type: SVGType,
-    style: SVGStyle,
+    svg: SVG,
+    attributes: PropertyMap,
+    css: PropertyMap,
 }
 
 impl SVGElement {
-    pub fn new(svg_type: SVGType, style: SVGStyle) -> Self {
+    pub fn new(svg_type: SVG, attributes: PropertyMap, css: PropertyMap) -> Self {
         Self {
-            svg_type,
-            style
+            svg: svg_type,
+            attributes,
+            css
         }
     }
 
-    pub fn circle(svg_circle: SVGCircle, style: SVGStyle) -> SVGElement {
-        Self {
-            svg_type: SVGType::Circle(svg_circle),
-            style
-        }
+    pub fn svg(&self) -> &SVG {
+        &self.svg
     }
 
-    pub fn rectangle(svg_rectangle: SVGRectangle, style: SVGStyle) -> SVGElement {
-        Self {
-            svg_type: SVGType::Rectangle(svg_rectangle),
-            style
-        }
+    pub fn attributes(&self) -> &PropertyMap {
+        &self.attributes
+    }
+
+    pub fn attributes_mut(&mut self) -> &mut PropertyMap {
+        &mut self.attributes
+    }
+
+    pub fn css(&self) -> &PropertyMap {
+        &self.css
+    }
+
+    pub fn css_mut(&mut self) -> &mut PropertyMap {
+        &mut self.css
+    }
+
+    pub fn circle(svg_circle: SVGCircle, attributes: PropertyMap, css: PropertyMap) -> SVGElement {
+        Self::new(
+            SVG::Circle(svg_circle),
+            attributes,
+            css
+        )
+    }
+
+    pub fn rectangle(svg_rectangle: SVGRectangle, attributes: PropertyMap, css: PropertyMap) -> SVGElement {
+        Self::new(
+            SVG::Rectangle(svg_rectangle),
+            attributes,
+            css
+        )
     }
 }
 
-pub enum SVGType {
+pub enum SVG {
+    SVG,
+    Group,
     Circle(SVGCircle),
     Ellipse,
     Line(SVGLine),
@@ -51,5 +72,4 @@ pub enum SVGType {
     Image,
     Path,
     ForeignObject,
-    Group,
 }

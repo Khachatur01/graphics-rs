@@ -6,14 +6,7 @@ use std::fmt::Display;
 pub mod container;
 pub mod entity;
 pub mod feature_set;
-
-pub trait EntityId: Display + AsSerialize + DynClone {}
-
-impl Clone for Box<dyn EntityId> {
-    fn clone(&self) -> Self {
-        dyn_clone::clone_box(self.as_ref())
-    }
-}
+pub mod entity_id;
 
 pub trait AsAny: Any {
     fn as_any(&self) -> &dyn Any;

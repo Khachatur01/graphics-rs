@@ -1,27 +1,29 @@
 mod render;
 
-use entity_model_feature::entity::Entity;
-use event_handler::{make_event_handler, EventChannel, Receiver};
-use geometry::figure::point::Point;
 use crate::tool::{Interaction, Key, Tool};
 use crate::ClickDraw;
+use entity_model_feature::entity::Entity;
+use entity_model_feature::entity_id::EntityId;
+use event_handler::{make_event_handler, EventChannel, Receiver};
+use geometry::figure::point::Point;
 
 make_event_handler!(
+    EventHandler<Id: EntityId>,
     pointer_down: Point,
     pointer_move: Point,
     pointer_up: Point,
-    end_drawing: Entity
+    end_drawing: Entity<Id>
 );
 
-pub struct ClickDrawTool {
-    pub event: EventHandler,
+pub struct ClickDrawTool<Id: EntityId> {
+    pub event: EventHandler<Id>,
 
-    drawable: Option<Entity>,
-    build_drawable: Box<dyn Fn() -> Entity>,
+    drawable: Option<Entity<Id>>,
+    build_drawable: Box<dyn Fn() -> Entity<Id>>,
 }
 
-impl ClickDrawTool {
-    pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> ClickDrawTool {
+impl<Id: EntityId> ClickDrawTool<Id> {
+    pub fn new(build_drawable: impl Fn() -> Entity<Id> + 'static) -> ClickDrawTool<Id> {
         Self {
             event: Default::default(),
             build_drawable: Box::new(build_drawable),
@@ -34,28 +36,28 @@ impl ClickDrawTool {
             return;
         };
 
-        let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+        let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
         (click_draw.finish)(&mut drawable);
 
         self.event.end_drawing.dispatch(drawable);
     }
 }
 
-impl Tool for ClickDrawTool {
+impl<Id: EntityId> Tool for ClickDrawTool<Id> {
     fn interact(&mut self, interaction: Interaction) {
         match interaction {
             Interaction::PointerDown(position, _) => match &mut self.drawable {
                 None => {
-                    let mut drawable: Entity = (self.build_drawable)();
+                    let mut drawable: Entity<Id> = (self.build_drawable)();
 
-                    let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+                    let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
                     (click_draw.mouse_down)(&mut drawable, &position);
                     self.event.pointer_down.dispatch(position);
 
                     self.drawable = Some(drawable);
                 }
                 Some(drawable) => {
-                    let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+                    let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
                     (click_draw.mouse_down)(drawable, &position);
                 }
             },
@@ -64,7 +66,7 @@ impl Tool for ClickDrawTool {
                     return;
                 };
 
-                let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
+                let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
                 (click_draw.mouse_move)(drawable, &position);
                 self.event.pointer_move.dispatch(position);
             }

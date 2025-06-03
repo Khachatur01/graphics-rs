@@ -1,4 +1,6 @@
 use crate::style::shape_style::ShapeStyle;
+use entity_model_feature::entity::Entity;
+use entity_model_feature::entity_id::EntityId;
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
 use geometry::figure::polygon::Polygon;
@@ -16,4 +18,10 @@ pub trait Renderer {
     fn rectangle(&mut self, rectangle: &Rectangle, style: &ShapeStyle);
     fn circle(&mut self, circle: &Circle, style: &ShapeStyle);
     fn ellipse(&mut self, ellipse: &Ellipse, style: &ShapeStyle);
+}
+
+pub trait IncrementalRenderer<Id: EntityId> {
+    fn remove(&mut self, id: &str);
+    fn add(&mut self, entity: &Entity<Id>);
+    fn modify(&mut self, entity: &Entity<Id>);
 }

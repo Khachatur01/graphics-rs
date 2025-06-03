@@ -1,24 +1,25 @@
 use crate::AddChild;
+use entity_model_feature::entity::Entity;
+use entity_model_feature::entity_id::EntityId;
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature::Feature;
+use entity_model_feature_derive::Model;
 use geometry::figure::rectangle::Rectangle;
 use serde::Serialize;
-use entity_model_feature::entity::Entity;
-use entity_model_feature::{EntityId, Feature};
-use entity_model_feature::feature_set::FeatureSet;
-use entity_model_feature_derive::Model;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::Select;
 
 #[derive(Model, Clone, Serialize)]
-pub struct ContainerModel {
-    pub children: Vec<Entity>,
+pub struct ContainerModel<Id: EntityId> {
+    pub children: Vec<Entity<Id>>,
 }
 
-impl ContainerModel {
-    pub fn entity(id: impl EntityId + 'static) -> Entity {
+impl<Id: EntityId> ContainerModel<Id> {
+    pub fn entity(id: Id) -> Entity<Id> {
         Entity::new(
             id,
-            ContainerModel { children: vec![] },
+            ContainerModel::<Id> { children: vec![] },
             Self::standard_feature_set(),
         )
     }
@@ -31,14 +32,14 @@ impl ContainerModel {
         ])
     }
 
-    pub fn render() -> Render {
+    pub fn render() -> Render<Id> {
         Render {
-            render: |entity: &Entity, renderer: &mut dyn Renderer| {
+            render: |entity, renderer: &mut dyn Renderer| {
                 let container: &Self = entity.model_ref();
 
                 /* query all render features and call render method */
                 for child in container.children.iter() {
-                    let Some(render) = child.query::<Render>() else {
+                    let Some(render) = child.query::<Render<Id>>() else {
                         return;
                     };
 
@@ -48,9 +49,9 @@ impl ContainerModel {
         }
     }
 
-    pub fn select() -> Select {
+    pub fn select() -> Select<Id> {
         Select {
-            select: |entity: &Entity, selection: &Rectangle| {
+            select: |entity, selection: &Rectangle| {
                 let container: &Self = entity.model_ref();
 
                 todo!()
@@ -58,9 +59,9 @@ impl ContainerModel {
         }
     }
 
-    pub fn add_child() -> AddChild {
+    pub fn add_child() -> AddChild<Id> {
         AddChild {
-            add_child: |entity: &mut Entity, child: Entity| {
+            add_child: |entity, child| {
                 let container: &mut Self = entity.model_ref_mut();
 
                 container.children.push(child);

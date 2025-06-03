@@ -1,16 +1,17 @@
+use entity_model_feature::entity::Entity;
+use entity_model_feature::entity_id::EntityId;
+use entity_model_feature::feature_set::FeatureSet;
+use entity_model_feature::Feature;
+use entity_model_feature_derive::Model;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::{Drag, Resize};
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
-use entity_model_feature::entity::Entity;
-use entity_model_feature::{EntityId, Feature};
-use entity_model_feature::feature_set::FeatureSet;
-use entity_model_feature_derive::Model;
 use standard_rendering_plugin::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
-use standard_svg_plugin::styles::SVGStyle;
+use standard_svg_plugin::property_map::PropertyMap;
 use standard_svg_plugin::svg_element::svg_rectangle::SVGRectangle;
 use standard_svg_plugin::svg_element::SVGElement;
 use standard_svg_plugin::ToSVG;
@@ -23,47 +24,47 @@ pub struct RectangleModel {
 }
 
 impl RectangleModel {
-    pub fn entity(id: impl EntityId + 'static, rectangle: Rectangle, style: ShapeStyle) -> Entity {
+    pub fn entity<Id: EntityId>(id: Id, rectangle: Rectangle, style: ShapeStyle) -> Entity<Id> {
         Entity::new(
             id,
             RectangleModel { rectangle, style },
-            Self::standard_feature_set(),
+            Self::standard_feature_set::<Id>(),
         )
     }
 
-    pub fn standard_feature_set() -> FeatureSet {
+    pub fn standard_feature_set<Id: EntityId>() -> FeatureSet {
         FeatureSet::from([
-            Self::feature_move_draw().boxed(),
-            Self::feature_to_svg().boxed(),
-            Self::feature_render().boxed()
+            Self::feature_move_draw::<Id>().boxed(),
+            Self::feature_to_svg::<Id>().boxed(),
+            Self::feature_render::<Id>().boxed()
         ])
     }
 
-    pub fn feature_move_draw() -> MoveDraw {
+    pub fn feature_move_draw<Id: EntityId>() -> MoveDraw<Id> {
         MoveDraw {
-            mouse_down: |entity: &mut Entity, current_point| {
+            mouse_down: |entity, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
                 rectangle.rectangle.drag(current_point)
             },
-            mouse_move: |entity: &mut Entity, start, current_point| {
+            mouse_move: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
                 rectangle.rectangle.resize(delta.x(), delta.y());
             },
-            mouse_up: |entity: &mut Entity, start, current_point| {
+            mouse_up: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
                 rectangle.rectangle.resize(delta.x(), delta.y());
             },
-            finish: |entity: &mut Entity| {},
+            finish: |entity| {},
         }
     }
 
-    pub fn feature_to_svg() -> ToSVG {
+    pub fn feature_to_svg<Id: EntityId>() -> ToSVG<Id> {
         ToSVG {
-            to_svg: |entity: &Entity| -> SVGElement {
+            to_svg: |entity| -> SVGElement {
                 let rectangle: &Self = entity.model_ref();
 
                 SVGElement::rectangle(
@@ -73,7 +74,10 @@ impl RectangleModel {
                         width: rectangle.rectangle.width(),
                         height: rectangle.rectangle.height(),
                     },
-                    SVGStyle::from([
+                    PropertyMap::from([
+                        /* todo */
+                    ]),
+                    PropertyMap::from([
                         /* todo */
                     ])
                 )
@@ -81,9 +85,9 @@ impl RectangleModel {
         }
     }
 
-    pub fn feature_render() -> Render {
+    pub fn feature_render<Id: EntityId>() -> Render<Id> {
         Render {
-            render: |entity: &Entity, renderer: &mut dyn Renderer| {
+            render: |entity, renderer: &mut dyn Renderer| {
                 let rectangle: &Self = entity.model_ref();
 
                 renderer.rectangle(rectangle.rectangle(), &rectangle.style);

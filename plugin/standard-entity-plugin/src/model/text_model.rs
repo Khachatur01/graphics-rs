@@ -1,9 +1,9 @@
-use getter_methods::GetterMethods;
-use serde::{Deserialize, Serialize};
 use entity_model_feature::entity::Entity;
-use entity_model_feature::EntityId;
+use entity_model_feature::entity_id::EntityId;
 use entity_model_feature::feature_set::FeatureSet;
 use entity_model_feature_derive::Model;
+use getter_methods::GetterMethods;
+use serde::{Deserialize, Serialize};
 use standard_rendering_plugin::style::text_style::TextStyle;
 
 #[derive(Model, Serialize, Deserialize, Clone, GetterMethods)]
@@ -13,7 +13,7 @@ pub struct TextModel {
 }
 
 impl TextModel {
-    pub fn entity(id: impl EntityId + 'static, text: &str, style: TextStyle) -> Entity {
+    pub fn entity<Id: EntityId>(id: Id, text: &str, style: TextStyle) -> Entity<Id> {
         Entity::new(
             id,
             TextModel { text: text.to_string(), style },

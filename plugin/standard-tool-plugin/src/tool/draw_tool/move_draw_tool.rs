@@ -1,28 +1,30 @@
-use entity_model_feature::entity::Entity;
 use crate::tool::{Interaction, Tool};
 use crate::MoveDraw;
+use entity_model_feature::entity::Entity;
+use entity_model_feature::entity_id::EntityId;
 use event_handler::{make_event_handler, EventChannel, Receiver};
 use geometry::figure::point::Point;
 
 mod render;
 
 make_event_handler!(
+    EventHandler<Id: EntityId>,
     pointer_down: Point,
     pointer_move: Point,
     pointer_up: Point,
-    end_drawing: Entity
+    end_drawing: Entity<Id>
 );
 
-pub struct MoveDrawTool {
-    pub event: EventHandler,
+pub struct MoveDrawTool<Id: EntityId> {
+    pub event: EventHandler<Id>,
 
     start: Option<Point>,
-    drawable: Option<Entity>,
-    build_drawable: Box<dyn Fn() -> Entity>,
+    drawable: Option<Entity<Id>>,
+    build_drawable: Box<dyn Fn() -> Entity<Id>>,
 }
 
-impl MoveDrawTool {
-    pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> MoveDrawTool {
+impl<Id: EntityId> MoveDrawTool<Id> {
+    pub fn new(build_drawable: impl Fn() -> Entity<Id> + 'static) -> MoveDrawTool<Id> {
         Self {
             start: None,
             drawable: None,
@@ -43,14 +45,14 @@ impl MoveDrawTool {
     }
 }
 
-impl Tool for MoveDrawTool {
+impl<Id: EntityId> Tool for MoveDrawTool<Id> {
     fn interact(&mut self, interaction: Interaction) {
         match interaction {
             Interaction::PointerDown(position, _) => {
-                let mut drawable: Entity = (self.build_drawable)();
+                let mut drawable: Entity<Id> = (self.build_drawable)();
                 self.start.replace(position.clone());
 
-                let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
+                let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_down)(&mut drawable, &position);
                 self.event.pointer_down.dispatch(position);
 
@@ -65,7 +67,7 @@ impl Tool for MoveDrawTool {
                     return;
                 };
 
-                let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
+                let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_move)(drawable, &start, &position);
                 self.event.pointer_move.dispatch(position);
             }
@@ -79,7 +81,7 @@ impl Tool for MoveDrawTool {
                     return;
                 };
 
-                let move_draw: &MoveDraw = drawable.query().expect("Failed to query MoveDraw");
+                let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
                 (move_draw.mouse_up)(drawable, &start, &position);
                 self.event.pointer_up.dispatch(position);
 

@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-pub struct SVGStyle(HashMap<&'static str, &'static str>);
+pub struct PropertyMap(HashMap<&'static str, &'static str>);
 
-impl SVGStyle {
+impl PropertyMap {
     pub fn set(&mut self, style: &'static str, value: &'static str) {
         self.0.insert(style, value);
     }
@@ -12,13 +12,13 @@ impl SVGStyle {
     }
 }
 
-impl Default for SVGStyle {
+impl Default for PropertyMap {
     fn default() -> Self {
         Self(HashMap::new())
     }
 }
 
-impl Iterator for SVGStyle {
+impl Iterator for &PropertyMap {
     type Item = (&'static str, &'static str);
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -26,7 +26,7 @@ impl Iterator for SVGStyle {
     }
 }
 
-impl<const N: usize> From<[(&'static str, &'static str); N]> for SVGStyle {
+impl<const N: usize> From<[(&'static str, &'static str); N]> for PropertyMap {
     fn from(value: [(&'static str, &'static str); N]) -> Self {
         Self(HashMap::from(value))
     }

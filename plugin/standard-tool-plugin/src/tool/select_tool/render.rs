@@ -1,9 +1,10 @@
 use crate::tool::select_tool::SelectTool;
+use entity_model_feature::entity_id::EntityId;
 use standard_rendering_plugin::renderer::{Renderable, Renderer};
 use standard_rendering_plugin::style::color::Color;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 
-impl Renderable for SelectTool {
+impl<Id: EntityId> Renderable for SelectTool<Id> {
     fn render(&self, renderer: &mut dyn Renderer) {
         let Some(selection) = self.selection else {
             return;

@@ -1,17 +1,17 @@
 mod render;
 
-use entity_model_feature::EntityId;
 use crate::tool::{Interaction, Tool};
+use entity_model_feature::entity_id::EntityId;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
 use geometry::math::Resize;
 
-pub struct SelectTool {
-    selected_elements: Vec<Box<dyn EntityId>>,
+pub struct SelectTool<Id: EntityId> {
+    selected_elements: Vec<Id>,
     selection: Option<Rectangle>,
 }
 
-impl SelectTool {
+impl<Id: EntityId> SelectTool<Id> {
     pub fn new() -> Self {
         Self {
             selected_elements: vec![],
@@ -20,7 +20,7 @@ impl SelectTool {
     }
 }
 
-impl Tool for SelectTool {
+impl<Id: EntityId> Tool for SelectTool<Id> {
     fn interact(&mut self, interaction: Interaction) {
         match interaction {
             Interaction::PointerDown(position, _) => {

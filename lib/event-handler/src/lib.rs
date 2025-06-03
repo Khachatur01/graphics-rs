@@ -30,20 +30,28 @@ impl<E: Clone> EventChannel<E> {
     }
 }
 
+
 #[macro_export]
 macro_rules! make_event_handler {
-    ($($element: ident: $ty: ty),*) => {
-        #[derive(Default)]
-        pub struct EventHandler {
+    ($name:ident $(<$($generic_param:ident $(: $generic_bound:path)*),*>)*, $($element:ident: $ty:ty),*) => {
+        pub struct $name $(< $($generic_param $(: $generic_bound)*),* >)* {
             $($element: EventChannel<$ty>),*
         }
 
-        impl EventHandler {
+        impl $(< $($generic_param $(: $generic_bound)*),* >)* $name $(< $($generic_param),* >)* {
             $(
                 pub fn $element(&self) -> Receiver<$ty> {
                     self.$element.receiver()
                 }
             )*
+        }
+
+        impl $(< $($generic_param $(: $generic_bound)*),* >)* Default for $name $(< $($generic_param),* >)* {
+            fn default() -> Self {
+                Self {
+                    $($element: Default::default()),*
+                }
+            }
         }
     }
 }
