@@ -1,21 +1,20 @@
 mod render;
 
 use entity_model_feature::entity::Entity;
-use event_handler::EventHandler;
+use event_handler::{make_event_handler, EventChannel, Receiver};
 use geometry::figure::point::Point;
 use crate::tool::{Interaction, Key, Tool};
 use crate::ClickDraw;
 
-#[derive(Default)]
-pub struct Hook {
-    pub pointer_down: EventHandler<Point>,
-    pub pointer_move: EventHandler<Point>,
-    pub pointer_up: EventHandler<Point>,
-    pub end_drawing: EventHandler<Entity>
-}
+make_event_handler!(
+    pointer_down: Point,
+    pointer_move: Point,
+    pointer_up: Point,
+    end_drawing: Entity
+);
 
 pub struct ClickDrawTool {
-    pub hook: Hook,
+    pub event: EventHandler,
 
     drawable: Option<Entity>,
     build_drawable: Box<dyn Fn() -> Entity>,
@@ -24,7 +23,7 @@ pub struct ClickDrawTool {
 impl ClickDrawTool {
     pub fn new(build_drawable: impl Fn() -> Entity + 'static) -> ClickDrawTool {
         Self {
-            hook: Default::default(),
+            event: Default::default(),
             build_drawable: Box::new(build_drawable),
             drawable: None,
         }
@@ -38,7 +37,7 @@ impl ClickDrawTool {
         let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
         (click_draw.finish)(&mut drawable);
 
-        self.hook.end_drawing.dispatch(drawable);
+        self.event.end_drawing.dispatch(drawable);
     }
 }
 
@@ -51,7 +50,7 @@ impl Tool for ClickDrawTool {
 
                     let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
                     (click_draw.mouse_down)(&mut drawable, &position);
-                    self.hook.pointer_down.dispatch(position);
+                    self.event.pointer_down.dispatch(position);
 
                     self.drawable = Some(drawable);
                 }
@@ -67,10 +66,10 @@ impl Tool for ClickDrawTool {
 
                 let click_draw: &ClickDraw = drawable.query().expect("Failed to query ClickDraw");
                 (click_draw.mouse_move)(drawable, &position);
-                self.hook.pointer_move.dispatch(position);
+                self.event.pointer_move.dispatch(position);
             }
             Interaction::PointerUp(position, _) => {
-                self.hook.pointer_up.dispatch(position);
+                self.event.pointer_up.dispatch(position);
             }
 
             Interaction::KeyDown(Key::Esc) => {
