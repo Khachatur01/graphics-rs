@@ -82,7 +82,7 @@ impl<Id: EntityId> Tool for MoveDrawTool<Id> {
                 };
 
                 let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
-                (move_draw.pointer_end)(drawable, &start, &position);
+                (move_draw.pointer_up)(drawable, &start, &position);
                 self.event.pointer_up.dispatch(position);
 
                 self.end_drawing();

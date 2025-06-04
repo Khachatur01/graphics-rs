@@ -5,7 +5,6 @@ use entity_model_feature::Feature;
 use entity_model_feature_derive::Model;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
-use geometry::math::{Drag, Resize};
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
 use standard_rendering_plugin::renderer::Renderer;
@@ -44,19 +43,19 @@ impl RectangleModel {
         MoveDraw {
             pointer_down: |entity, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
-                rectangle.rectangle.drag(current_point)
+                rectangle.rectangle.set_top_left(*current_point)
             },
             pointer_move: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
-                rectangle.rectangle.resize(delta.x(), delta.y());
+                rectangle.rectangle.set_size(delta.x(), delta.y());
             },
-            pointer_end: |entity, start, current_point| {
+            pointer_up: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
-                rectangle.rectangle.resize(delta.x(), delta.y());
+                rectangle.rectangle.set_size(delta.x(), delta.y());
             },
             finish: |entity| {},
         }

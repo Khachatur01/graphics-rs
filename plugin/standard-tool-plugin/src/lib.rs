@@ -11,7 +11,7 @@ pub mod traits;
 pub struct MoveDraw<Id: EntityId> {
     pub pointer_down: fn(entity: &mut Entity<Id>, current_point: &Point),
     pub pointer_move: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
-    pub pointer_end: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
+    pub pointer_up: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
     pub finish: fn(entity: &mut Entity<Id>),
 }
 
@@ -19,7 +19,7 @@ pub struct MoveDraw<Id: EntityId> {
 pub struct ClickDraw<Id: EntityId> {
     pub pointer_down: fn(entity: &mut Entity<Id>, current_point: &Point),
     pub pointer_move: fn(entity: &mut Entity<Id>, current_point: &Point),
-    pub pointer_end: fn(entity: &mut Entity<Id>, current_point: &Point),
+    pub pointer_up: fn(entity: &mut Entity<Id>, current_point: &Point),
     pub finish: fn(entity: &mut Entity<Id>),
 }
 

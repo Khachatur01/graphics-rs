@@ -13,6 +13,12 @@ pub struct Rotation {
 }
 
 #[derive(GetterMethods, Copy, Clone)]
+pub struct Translation {
+    by_x: f64,
+    by_y: f64,
+}
+
+#[derive(GetterMethods, Copy, Clone)]
 pub struct Skew {
     x_angle: f64,
     y_angle: f64,
@@ -32,6 +38,7 @@ pub struct Matrix {/* todo */}
 #[derive(Copy, Clone)]
 pub enum Transformation {
     Rotation(Rotation),
+    Translation(Translation),
     Skew(Skew),
     Scale(Scale),
     Matrix(Matrix),

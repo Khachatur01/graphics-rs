@@ -7,3 +7,4 @@ pub mod polygon;
 pub mod polyline;
 pub mod rectangle;
 pub mod segment;
+pub mod triangle;

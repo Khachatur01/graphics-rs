@@ -1,6 +1,5 @@
 use crate::figure::point::Point;
 use crate::figure::segment::Segment;
-use crate::math::{Drag, Resize};
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
 
@@ -42,14 +41,23 @@ impl Rectangle {
 
         rectangle_clone
     }
+
+    pub fn set_top_left(&mut self, point: Point) {
+        self.top_left = point;
+    }
+
+    pub fn set_size(&mut self, width: f64, height: f64) {
+        self.width = width;
+        self.height = height;
+    }
 }
 
 impl From<&Rectangle> for [Segment; 4] {
     fn from(rectangle: &Rectangle) -> [Segment; 4] {
         let top_left = rectangle.top_left;
-        let top_right = top_left + Point::new(rectangle.width, 0.0);
-        let bottom_right = top_right + Point::new(0.0, rectangle.height);
-        let bottom_left = bottom_right - Point::new(rectangle.width, 0.0);
+        let top_right = top_left + Point::new_2d(rectangle.width, 0.0);
+        let bottom_right = top_right + Point::new_2d(0.0, rectangle.height);
+        let bottom_left = bottom_right - Point::new_2d(rectangle.width, 0.0);
 
         [
             Segment::new(top_left, top_right),
@@ -57,18 +65,5 @@ impl From<&Rectangle> for [Segment; 4] {
             Segment::new(bottom_right, bottom_left),
             Segment::new(bottom_left, top_left),
         ]
-    }
-}
-
-impl Resize for Rectangle {
-    fn resize(&mut self, new_width: f64, new_height: f64) {
-        self.width = new_width;
-        self.height = new_height;
-    }
-}
-
-impl Drag for Rectangle {
-    fn drag(&mut self, delta: &Point) {
-        self.top_left += delta;
     }
 }

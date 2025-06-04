@@ -1,6 +1,4 @@
 use crate::figure::path::command::Command;
-use crate::figure::point::Point;
-use crate::math::Drag;
 use getter_methods::GetterMethods;
 
 pub mod command;
@@ -37,23 +35,5 @@ impl Path {
         self.commands.remove(index);
 
         Ok(())
-    }
-
-    pub fn drag_command(&mut self, index: usize, delta: &Point) -> Result<(), ()> {
-        if index > self.commands.len() {
-            return Err(());
-        }
-
-        self.commands[index].drag(delta);
-
-        Ok(())
-    }
-}
-
-impl Drag for Path {
-    fn drag(&mut self, delta: &Point) {
-        for command in self.commands.iter_mut() {
-            command.drag(delta);
-        }
     }
 }

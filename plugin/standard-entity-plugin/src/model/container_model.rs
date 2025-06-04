@@ -26,13 +26,13 @@ impl<Id: EntityId> ContainerModel<Id> {
 
     pub fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
-            Self::render().boxed(),
-            Self::select().boxed(),
-            Self::add_child().boxed(),
+            Self::feature_render().boxed(),
+            Self::feature_select().boxed(),
+            Self::feature_add_child().boxed(),
         ])
     }
 
-    pub fn render() -> Render<Id> {
+    pub fn feature_render() -> Render<Id> {
         Render {
             render: |entity, renderer: &mut dyn Renderer| {
                 let container: &Self = entity.model_ref();
@@ -49,7 +49,7 @@ impl<Id: EntityId> ContainerModel<Id> {
         }
     }
 
-    pub fn select() -> Select<Id> {
+    pub fn feature_select() -> Select<Id> {
         Select {
             select: |entity, selection: &Rectangle| {
                 let container: &Self = entity.model_ref();
@@ -59,7 +59,7 @@ impl<Id: EntityId> ContainerModel<Id> {
         }
     }
 
-    pub fn add_child() -> AddChild<Id> {
+    pub fn feature_add_child() -> AddChild<Id> {
         AddChild {
             add_child: |entity, child| {
                 let container: &mut Self = entity.model_ref_mut();

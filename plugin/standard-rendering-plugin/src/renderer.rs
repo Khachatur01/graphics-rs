@@ -18,6 +18,8 @@ pub trait Renderer {
     fn rectangle(&mut self, rectangle: &Rectangle, style: &ShapeStyle);
     fn circle(&mut self, circle: &Circle, style: &ShapeStyle);
     fn ellipse(&mut self, ellipse: &Ellipse, style: &ShapeStyle);
+    // fn triangles_3d(&mut self, triangle: &[(Triangle, SurfaceStyle)]);
+    // fn triangles_3d(&mut self, triangle: &[(Triangle, SurfaceStyle)], camera: &Camera, light: &Light);
 }
 
 pub trait IncrementalRenderer<Id: EntityId> {

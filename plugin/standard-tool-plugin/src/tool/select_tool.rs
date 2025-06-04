@@ -4,7 +4,6 @@ use crate::tool::{Interaction, Tool};
 use entity_model_feature::entity_id::EntityId;
 use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
-use geometry::math::Resize;
 
 pub struct SelectTool<Id: EntityId> {
     selected_elements: Vec<Id>,
@@ -32,7 +31,7 @@ impl<Id: EntityId> Tool for SelectTool<Id> {
                 };
 
                 let delta: Point = position - selection.top_left();
-                selection.resize(delta.x(), delta.y());
+                selection.set_size(delta.x(), delta.y());
 
                 self.selected_elements.clear();
             }

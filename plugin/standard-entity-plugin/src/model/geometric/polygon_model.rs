@@ -51,7 +51,7 @@ impl PolygonModel {
 
                 polygon.polygon.replace_last_vertex(current_point.clone());
             },
-            pointer_end: |_, _| {},
+            pointer_up: |_, _| {},
             finish: |entity| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
                 polygon.polygon.remove_last_vertex();
