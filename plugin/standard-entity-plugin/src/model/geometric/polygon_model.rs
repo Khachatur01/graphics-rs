@@ -40,18 +40,18 @@ impl PolygonModel {
 
     pub fn feature_click_draw<Id: EntityId>() -> ClickDraw<Id> {
         ClickDraw {
-            mouse_down: |entity, current_point| {
+            pointer_down: |entity, current_point| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
 
                 polygon.polygon.add_vertex(current_point.clone());
                 polygon.polygon.add_vertex(current_point.clone());
             },
-            mouse_move: |entity, current_point| {
+            pointer_move: |entity, current_point| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
 
                 polygon.polygon.replace_last_vertex(current_point.clone());
             },
-            mouse_up: |_, _| {},
+            pointer_end: |_, _| {},
             finish: |entity| {
                 let polygon: &mut PolygonModel = entity.model_ref_mut();
                 polygon.polygon.remove_last_vertex();

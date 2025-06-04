@@ -9,17 +9,17 @@ pub mod traits;
 
 #[derive(Feature, Clone)]
 pub struct MoveDraw<Id: EntityId> {
-    pub mouse_down: fn(entity: &mut Entity<Id>, current_point: &Point),
-    pub mouse_move: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
-    pub mouse_up: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
+    pub pointer_down: fn(entity: &mut Entity<Id>, current_point: &Point),
+    pub pointer_move: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
+    pub pointer_end: fn(entity: &mut Entity<Id>, start: &Point, current_point: &Point),
     pub finish: fn(entity: &mut Entity<Id>),
 }
 
 #[derive(Feature, Clone)]
 pub struct ClickDraw<Id: EntityId> {
-    pub mouse_down: fn(entity: &mut Entity<Id>, current_point: &Point),
-    pub mouse_move: fn(entity: &mut Entity<Id>, current_point: &Point),
-    pub mouse_up: fn(entity: &mut Entity<Id>, current_point: &Point),
+    pub pointer_down: fn(entity: &mut Entity<Id>, current_point: &Point),
+    pub pointer_move: fn(entity: &mut Entity<Id>, current_point: &Point),
+    pub pointer_end: fn(entity: &mut Entity<Id>, current_point: &Point),
     pub finish: fn(entity: &mut Entity<Id>),
 }
 

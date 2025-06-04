@@ -51,14 +51,14 @@ impl<Id: EntityId> Tool for ClickDrawTool<Id> {
                     let mut drawable: Entity<Id> = (self.build_drawable)();
 
                     let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
-                    (click_draw.mouse_down)(&mut drawable, &position);
+                    (click_draw.pointer_down)(&mut drawable, &position);
                     self.event.pointer_down.dispatch(position);
 
                     self.drawable = Some(drawable);
                 }
                 Some(drawable) => {
                     let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
-                    (click_draw.mouse_down)(drawable, &position);
+                    (click_draw.pointer_down)(drawable, &position);
                 }
             },
             Interaction::PointerMove(position, _) => {
@@ -67,7 +67,7 @@ impl<Id: EntityId> Tool for ClickDrawTool<Id> {
                 };
 
                 let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
-                (click_draw.mouse_move)(drawable, &position);
+                (click_draw.pointer_move)(drawable, &position);
                 self.event.pointer_move.dispatch(position);
             }
             Interaction::PointerUp(position, _) => {

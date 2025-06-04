@@ -42,17 +42,17 @@ impl RectangleModel {
 
     pub fn feature_move_draw<Id: EntityId>() -> MoveDraw<Id> {
         MoveDraw {
-            mouse_down: |entity, current_point| {
+            pointer_down: |entity, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
                 rectangle.rectangle.drag(current_point)
             },
-            mouse_move: |entity, start, current_point| {
+            pointer_move: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;
                 rectangle.rectangle.resize(delta.x(), delta.y());
             },
-            mouse_up: |entity, start, current_point| {
+            pointer_end: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point = current_point - start;

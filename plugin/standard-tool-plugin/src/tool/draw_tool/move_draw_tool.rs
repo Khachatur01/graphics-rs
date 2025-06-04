@@ -53,7 +53,7 @@ impl<Id: EntityId> Tool for MoveDrawTool<Id> {
                 self.start.replace(position.clone());
 
                 let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
-                (move_draw.mouse_down)(&mut drawable, &position);
+                (move_draw.pointer_down)(&mut drawable, &position);
                 self.event.pointer_down.dispatch(position);
 
                 self.drawable = Some(drawable);
@@ -68,7 +68,7 @@ impl<Id: EntityId> Tool for MoveDrawTool<Id> {
                 };
 
                 let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
-                (move_draw.mouse_move)(drawable, &start, &position);
+                (move_draw.pointer_move)(drawable, &start, &position);
                 self.event.pointer_move.dispatch(position);
             }
             Interaction::PointerUp(position, _) => {
@@ -82,7 +82,7 @@ impl<Id: EntityId> Tool for MoveDrawTool<Id> {
                 };
 
                 let move_draw: &MoveDraw<Id> = drawable.query().expect("Failed to query MoveDraw");
-                (move_draw.mouse_up)(drawable, &start, &position);
+                (move_draw.pointer_end)(drawable, &start, &position);
                 self.event.pointer_up.dispatch(position);
 
                 self.end_drawing();
