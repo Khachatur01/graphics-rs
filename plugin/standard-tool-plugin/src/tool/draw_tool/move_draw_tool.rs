@@ -2,7 +2,7 @@ use crate::tool::{Interaction, Tool};
 use crate::MoveDraw;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
-use event_handler::{make_event_handler, EventChannel, Receiver};
+use event_handler::{make_event_handler};
 use geometry::point::point_2d::Point2D;
 
 mod render;
@@ -26,11 +26,11 @@ pub struct MoveDrawTool<Id: EntityId> {
 impl<Id: EntityId> MoveDrawTool<Id> {
     pub fn new(build_drawable: impl Fn() -> Entity<Id> + 'static) -> MoveDrawTool<Id> {
         Self {
+            event: Default::default(),
+
             start: None,
             drawable: None,
             build_drawable: Box::new(build_drawable),
-
-            event: Default::default(),
         }
     }
 

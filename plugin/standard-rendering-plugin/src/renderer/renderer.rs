@@ -6,6 +6,7 @@ use crate::renderer::renderer::light::Light;
 use crate::style::shape_style::ShapeStyle;
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
+use geometry::figure::path::Path;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
 use geometry::figure::segment::Segment;
@@ -16,6 +17,7 @@ use geometry::point::point_3d::Point3D;
 pub trait Renderer {
     fn clear(&mut self);
 
+    fn path(&mut self, path: &Path, style: &ShapeStyle);
     fn segment_2d(&mut self, segment: &Segment<Point2D>, style: &ShapeStyle);
     fn polygon_2d(&mut self, polygon: &Polygon<Point2D>, style: &ShapeStyle);
     fn triangle_2d(&mut self, polygon: &Triangle<Point2D>, style: &ShapeStyle);

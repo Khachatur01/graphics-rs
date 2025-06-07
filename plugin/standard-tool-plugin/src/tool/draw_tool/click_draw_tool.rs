@@ -4,7 +4,7 @@ use crate::tool::{Interaction, Key, Tool};
 use crate::ClickDraw;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
-use event_handler::{make_event_handler, EventChannel, Receiver};
+use event_handler::make_event_handler;
 use geometry::point::point_2d::Point2D;
 
 make_event_handler!(

@@ -2,10 +2,21 @@ mod render;
 
 use crate::tool::{Interaction, Tool};
 use entity_model_feature::entity_id::EntityId;
+use event_handler::make_event_handler;
 use geometry::figure::rectangle::Rectangle;
 use geometry::point::point_2d::Point2D;
 
+
+make_event_handler!(
+    EventHandler,
+    pointer_down: Point2D,
+    pointer_move: Point2D,
+    pointer_up: Point2D
+);
+
 pub struct SelectTool<Id: EntityId> {
+    pub event: EventHandler,
+
     selected_elements: Vec<Id>,
     selection: Option<Rectangle>,
 }
@@ -13,6 +24,8 @@ pub struct SelectTool<Id: EntityId> {
 impl<Id: EntityId> SelectTool<Id> {
     pub fn new() -> Self {
         Self {
+            event: Default::default(),
+
             selected_elements: vec![],
             selection: None,
         }

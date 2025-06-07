@@ -1,8 +1,9 @@
 use crate::figure::path::command::positioning::Positioning;
 use crate::point::point_2d::Point2D;
 use getter_methods::GetterMethods;
+use serde::{Deserialize, Serialize};
 
-#[derive(GetterMethods)]
+#[derive(Serialize, Deserialize, Clone, GetterMethods)]
 pub struct ArcTo {
     rx: f64,
     ry: f64,

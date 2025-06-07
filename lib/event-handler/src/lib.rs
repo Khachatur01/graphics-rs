@@ -34,6 +34,9 @@ impl<E: Clone> EventChannel<E> {
 #[macro_export]
 macro_rules! make_event_handler {
     ($name:ident $(<$($generic_param:ident $(: $generic_bound:path)*),*>)*, $($element:ident: $ty:ty),*) => {
+        use event_handler::Receiver;
+        use event_handler::EventChannel;
+
         pub struct $name $(< $($generic_param $(: $generic_bound)*),* >)* {
             $($element: EventChannel<$ty>),*,
         }
