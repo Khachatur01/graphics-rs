@@ -1,17 +1,17 @@
-use crate::figure::point::Point;
 use crate::figure::segment::Segment;
+use crate::point::point_2d::Point2D;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
 
 #[derive(GetterMethods, Serialize, Deserialize, Copy, Clone)]
 pub struct Rectangle {
-    top_left: Point,
+    top_left: Point2D,
     width: f64,
     height: f64,
 }
 
 impl Rectangle {
-    pub fn new(top_left: Point, width: f64, height: f64) -> Self {
+    pub fn new(top_left: Point2D, width: f64, height: f64) -> Self {
         Self {
             top_left,
             width,
@@ -19,7 +19,7 @@ impl Rectangle {
         }
     }
 
-    pub fn zero_sized(top_left: Point) -> Self {
+    pub fn zero_sized(top_left: Point2D) -> Self {
         Self {
             top_left,
             width: 0.0,
@@ -42,7 +42,7 @@ impl Rectangle {
         rectangle_clone
     }
 
-    pub fn set_top_left(&mut self, point: Point) {
+    pub fn set_top_left(&mut self, point: Point2D) {
         self.top_left = point;
     }
 
@@ -52,12 +52,12 @@ impl Rectangle {
     }
 }
 
-impl From<&Rectangle> for [Segment; 4] {
-    fn from(rectangle: &Rectangle) -> [Segment; 4] {
+impl From<&Rectangle> for [Segment<Point2D>; 4] {
+    fn from(rectangle: &Rectangle) -> [Segment<Point2D>; 4] {
         let top_left = rectangle.top_left;
-        let top_right = top_left + Point::new_2d(rectangle.width, 0.0);
-        let bottom_right = top_right + Point::new_2d(0.0, rectangle.height);
-        let bottom_left = bottom_right - Point::new_2d(rectangle.width, 0.0);
+        let top_right = top_left + Point2D::new(rectangle.width, 0.0);
+        let bottom_right = top_right + Point2D::new(0.0, rectangle.height);
+        let bottom_left = bottom_right - Point2D::new(rectangle.width, 0.0);
 
         [
             Segment::new(top_left, top_right),

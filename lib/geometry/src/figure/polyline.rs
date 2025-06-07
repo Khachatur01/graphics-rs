@@ -1,13 +1,12 @@
-use crate::figure::point::Point;
 use getter_methods::GetterMethods;
 
 #[derive(GetterMethods)]
-pub struct Polyline {
-    vertices: Vec<Point>,
+pub struct Polyline<P> {
+    vertices: Vec<P>,
 }
 
-impl Polyline {
-    pub fn new(vertices: Vec<Point>) -> Self {
+impl<P> Polyline<P> {
+    pub fn new(vertices: Vec<P>) -> Self {
         Self { vertices }
     }
 }

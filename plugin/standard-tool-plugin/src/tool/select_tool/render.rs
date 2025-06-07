@@ -1,6 +1,7 @@
 use crate::tool::select_tool::SelectTool;
 use entity_model_feature::entity_id::EntityId;
-use standard_rendering_plugin::renderer::{Renderable, Renderer};
+use standard_rendering_plugin::renderable::Renderable;
+use standard_rendering_plugin::renderer::renderer::Renderer;
 use standard_rendering_plugin::style::color::Color;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 

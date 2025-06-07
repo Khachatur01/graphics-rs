@@ -1,10 +1,11 @@
-pub mod renderer;
+pub mod renderable;
 pub mod style;
+pub mod renderer;
 
-use crate::renderer::Renderer;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use entity_model_feature_derive::Feature;
+use renderer::renderer::Renderer;
 
 #[derive(Feature, Clone)]
 pub struct Render<Id: EntityId> {

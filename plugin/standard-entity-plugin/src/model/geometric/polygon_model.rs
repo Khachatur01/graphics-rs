@@ -5,6 +5,7 @@ use entity_model_feature::Feature;
 use entity_model_feature_derive::Model;
 use geometry::figure::polygon::Polygon;
 use geometry::figure::rectangle::Rectangle;
+use geometry::point::point_2d::Point2D;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
@@ -13,14 +14,14 @@ use standard_tool_plugin::{ClickDraw, Select};
 
 #[derive(Model, Serialize, Deserialize, Clone, GetterMethods)]
 pub struct PolygonModel {
-    polygon: Polygon,
+    polygon: Polygon<Point2D>,
     style: ShapeStyle,
 }
 
 impl PolygonModel {
     pub fn entity<Id: EntityId>(
         id: Id,
-        polygon: Polygon,
+        polygon: Polygon<Point2D>,
         style: ShapeStyle,
     ) -> Entity<Id> {
         Entity::new(
@@ -64,7 +65,7 @@ impl PolygonModel {
             render: |entity, renderer| {
                 let polygon: &PolygonModel = entity.model_ref();
 
-                renderer.polygon(polygon.polygon(), &polygon.style);
+                renderer.polygon_2d(polygon.polygon(), &polygon.style);
             },
         }
     }

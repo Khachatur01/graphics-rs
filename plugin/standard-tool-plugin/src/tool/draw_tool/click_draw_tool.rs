@@ -5,13 +5,13 @@ use crate::ClickDraw;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use event_handler::{make_event_handler, EventChannel, Receiver};
-use geometry::figure::point::Point;
+use geometry::point::point_2d::Point2D;
 
 make_event_handler!(
     EventHandler<Id: EntityId>,
-    pointer_down: Point,
-    pointer_move: Point,
-    pointer_up: Point,
+    pointer_down: Point2D,
+    pointer_move: Point2D,
+    pointer_up: Point2D,
     end_drawing: Entity<Id>
 );
 

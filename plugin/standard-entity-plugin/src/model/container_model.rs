@@ -6,7 +6,7 @@ use entity_model_feature::Feature;
 use entity_model_feature_derive::Model;
 use geometry::figure::rectangle::Rectangle;
 use serde::Serialize;
-use standard_rendering_plugin::renderer::Renderer;
+use standard_rendering_plugin::renderer::renderer::Renderer;
 use standard_rendering_plugin::Render;
 use standard_tool_plugin::Select;
 
@@ -26,13 +26,13 @@ impl<Id: EntityId> ContainerModel<Id> {
 
     pub fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
-            Self::feature_render().boxed(),
+            Self::feature_render_2d().boxed(),
             Self::feature_select().boxed(),
             Self::feature_add_child().boxed(),
         ])
     }
 
-    pub fn feature_render() -> Render<Id> {
+    pub fn feature_render_2d() -> Render<Id> {
         Render {
             render: |entity, renderer: &mut dyn Renderer| {
                 let container: &Self = entity.model_ref();

@@ -1,6 +1,7 @@
 use crate::tool::draw_tool::click_draw_tool::ClickDrawTool;
 use entity_model_feature::entity_id::EntityId;
-use standard_rendering_plugin::renderer::{Renderable, Renderer};
+use standard_rendering_plugin::renderable::Renderable;
+use standard_rendering_plugin::renderer::renderer::Renderer;
 use standard_rendering_plugin::Render;
 
 impl<Id: EntityId> Renderable for ClickDrawTool<Id> {

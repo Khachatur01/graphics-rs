@@ -3,22 +3,22 @@ use crate::MoveDraw;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use event_handler::{make_event_handler, EventChannel, Receiver};
-use geometry::figure::point::Point;
+use geometry::point::point_2d::Point2D;
 
 mod render;
 
 make_event_handler!(
     EventHandler<Id: EntityId>,
-    pointer_down: Point,
-    pointer_move: Point,
-    pointer_up: Point,
+    pointer_down: Point2D,
+    pointer_move: Point2D,
+    pointer_up: Point2D,
     end_drawing: Entity<Id>
 );
 
 pub struct MoveDrawTool<Id: EntityId> {
     pub event: EventHandler<Id>,
 
-    start: Option<Point>,
+    start: Option<Point2D>,
     drawable: Option<Entity<Id>>,
     build_drawable: Box<dyn Fn() -> Entity<Id>>,
 }

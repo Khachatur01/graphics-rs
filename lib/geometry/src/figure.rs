@@ -2,7 +2,6 @@ pub mod circle;
 pub mod ellipse;
 pub mod mesh;
 pub mod path;
-pub mod point;
 pub mod polygon;
 pub mod polyline;
 pub mod rectangle;

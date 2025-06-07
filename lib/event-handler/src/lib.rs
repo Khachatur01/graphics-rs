@@ -35,7 +35,7 @@ impl<E: Clone> EventChannel<E> {
 macro_rules! make_event_handler {
     ($name:ident $(<$($generic_param:ident $(: $generic_bound:path)*),*>)*, $($element:ident: $ty:ty),*) => {
         pub struct $name $(< $($generic_param $(: $generic_bound)*),* >)* {
-            $($element: EventChannel<$ty>),*
+            $($element: EventChannel<$ty>),*,
         }
 
         impl $(< $($generic_param $(: $generic_bound)*),* >)* $name $(< $($generic_param),* >)* {
@@ -49,7 +49,7 @@ macro_rules! make_event_handler {
         impl $(< $($generic_param $(: $generic_bound)*),* >)* Default for $name $(< $($generic_param),* >)* {
             fn default() -> Self {
                 Self {
-                    $($element: Default::default()),*
+                    $($element: Default::default()),*,
                 }
             }
         }

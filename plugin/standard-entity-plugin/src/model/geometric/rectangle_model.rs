@@ -3,11 +3,11 @@ use entity_model_feature::entity_id::EntityId;
 use entity_model_feature::feature_set::FeatureSet;
 use entity_model_feature::Feature;
 use entity_model_feature_derive::Model;
-use geometry::figure::point::Point;
 use geometry::figure::rectangle::Rectangle;
+use geometry::point::point_2d::Point2D;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
-use standard_rendering_plugin::renderer::Renderer;
+use standard_rendering_plugin::renderer::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
 use standard_svg_plugin::property_map::PropertyMap;
@@ -48,13 +48,13 @@ impl RectangleModel {
             pointer_move: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
-                let delta: Point = current_point - start;
+                let delta: Point2D = current_point - start;
                 rectangle.rectangle.set_size(delta.x(), delta.y());
             },
             pointer_up: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
-                let delta: Point = current_point - start;
+                let delta: Point2D = current_point - start;
                 rectangle.rectangle.set_size(delta.x(), delta.y());
             },
             finish: |entity| {},

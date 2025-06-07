@@ -1,5 +1,5 @@
-use geometry::figure::point::Point;
-use standard_rendering_plugin::renderer::Renderable;
+use geometry::point::point_2d::Point2D;
+use standard_rendering_plugin::renderable::Renderable;
 
 pub mod draw_tool;
 pub mod select_tool;
@@ -29,9 +29,9 @@ pub enum PointingDevice {
 }
 
 pub enum Interaction {
-    PointerDown(Point, PointingDevice),
-    PointerMove(Point, PointingDevice),
-    PointerUp(Point, PointingDevice),
+    PointerDown(Point2D, PointingDevice),
+    PointerMove(Point2D, PointingDevice),
+    PointerUp(Point2D, PointingDevice),
 
     KeyDown(Key),
     KeyUp(Key),

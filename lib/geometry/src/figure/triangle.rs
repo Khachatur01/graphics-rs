@@ -1,9 +1,8 @@
 use getter_methods::GetterMethods;
-use crate::figure::point::Point;
 
 #[derive(GetterMethods)]
-pub struct Triangle {
-    p0: Point,
-    p1: Point,
-    p2: Point,
+pub struct Triangle<P> {
+    p0: P,
+    p1: P,
+    p2: P,
 }
