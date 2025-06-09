@@ -26,13 +26,13 @@ impl<Id: EntityId> ContainerModel<Id> {
 
     pub fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
-            Self::feature_render_2d().boxed(),
+            Self::feature_render().boxed(),
             Self::feature_select().boxed(),
             Self::feature_add_child().boxed(),
         ])
     }
 
-    pub fn feature_render_2d() -> Render<Id> {
+    pub fn feature_render() -> Render<Id> {
         Render {
             render: |entity, renderer: &mut dyn Renderer| {
                 let container: &Self = entity.model_ref();

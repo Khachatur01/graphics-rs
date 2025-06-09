@@ -52,6 +52,6 @@ impl Path {
                 }
             })
             .collect::<Vec<String>>()
-            .join(", ")
+            .join(" ")
     }
 }
