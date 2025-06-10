@@ -10,8 +10,10 @@ pub struct Path {
 }
 
 impl Path {
-    pub fn new(commands: Vec<Command>) -> Self {
-        Self { commands }
+    pub fn new(commands: &[Command]) -> Self {
+        Self {
+            commands: commands.to_vec(),
+        }
     }
 
     pub fn push_command(&mut self, command: Command) {

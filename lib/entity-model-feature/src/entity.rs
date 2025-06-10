@@ -44,6 +44,10 @@ impl<Id: EntityId> Entity<Id> {
         self.feature_set.add_feature(feature);
     }
 
+    pub fn add_feature_set(&mut self, feature_set: FeatureSet) {
+        self.feature_set.extend(feature_set);
+    }
+
     pub fn model_ref<M: Model + 'static>(&self) -> &M {
         self.model
             .as_any()

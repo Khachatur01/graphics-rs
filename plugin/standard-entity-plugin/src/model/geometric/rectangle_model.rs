@@ -1,3 +1,4 @@
+use crate::entity_model::{DefaultEntity, StandardFeatureSet};
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use entity_model_feature::feature_set::FeatureSet;
@@ -22,23 +23,30 @@ pub struct RectangleModel {
     pub style: ShapeStyle,
 }
 
-impl RectangleModel {
-    pub fn entity<Id: EntityId>(id: Id, rectangle: Rectangle, style: ShapeStyle) -> Entity<Id> {
+impl<Id: EntityId> DefaultEntity<Id> for RectangleModel {
+    fn default_entity(id: Id) -> Entity<Id> {
         Entity::new(
             id,
-            RectangleModel { rectangle, style },
-            Self::standard_feature_set::<Id>(),
+            RectangleModel {
+                rectangle: Rectangle::zero_sized(Point2D::default()),
+                style: ShapeStyle::default()
+            },
+            FeatureSet::empty(),
         )
     }
+}
 
-    pub fn standard_feature_set<Id: EntityId>() -> FeatureSet {
+impl<Id: EntityId> StandardFeatureSet<Id> for RectangleModel {
+    fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
             Self::feature_move_draw::<Id>().boxed(),
             Self::feature_to_svg::<Id>().boxed(),
             Self::feature_render::<Id>().boxed()
         ])
     }
+}
 
+impl RectangleModel {
     pub fn feature_move_draw<Id: EntityId>() -> MoveDraw<Id> {
         MoveDraw {
             pointer_down: |entity, current_point| {

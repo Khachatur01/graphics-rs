@@ -1,3 +1,4 @@
+use crate::entity_model::{DefaultEntity, StandardFeatureSet};
 use crate::AddChild;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
@@ -15,23 +16,27 @@ pub struct ContainerModel<Id: EntityId> {
     pub children: Vec<Entity<Id>>,
 }
 
-impl<Id: EntityId> ContainerModel<Id> {
-    pub fn entity(id: Id) -> Entity<Id> {
+impl<Id: EntityId> DefaultEntity<Id> for ContainerModel<Id> {
+    fn default_entity(id: Id) -> Entity<Id> {
         Entity::new(
             id,
             ContainerModel::<Id> { children: vec![] },
-            Self::standard_feature_set(),
+            FeatureSet::empty(),
         )
     }
+}
 
-    pub fn standard_feature_set() -> FeatureSet {
+impl<Id: EntityId> StandardFeatureSet<Id> for ContainerModel<Id> {
+    fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
             Self::feature_render().boxed(),
             Self::feature_select().boxed(),
             Self::feature_add_child().boxed(),
         ])
     }
+}
 
+impl<Id: EntityId> ContainerModel<Id> {
     pub fn feature_render() -> Render<Id> {
         Render {
             render: |entity, renderer: &mut dyn Renderer| {

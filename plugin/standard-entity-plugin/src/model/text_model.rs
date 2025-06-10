@@ -1,3 +1,4 @@
+use crate::entity_model::{DefaultEntity, StandardFeatureSet};
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use entity_model_feature::feature_set::FeatureSet;
@@ -10,6 +11,25 @@ use standard_rendering_plugin::style::text_style::TextStyle;
 pub struct TextModel {
     text: String,
     style: TextStyle,
+}
+
+impl<Id: EntityId> DefaultEntity<Id> for TextModel {
+    fn default_entity(id: Id) -> Entity<Id> {
+        Entity::new(
+            id,
+            TextModel {
+                text: String::new(),
+                style: TextStyle::default(),
+            },
+            FeatureSet::empty(),
+        )
+    }
+}
+
+impl<Id: EntityId> StandardFeatureSet<Id> for TextModel {
+    fn standard_feature_set() -> FeatureSet {
+        FeatureSet::from([])
+    }
 }
 
 impl TextModel {

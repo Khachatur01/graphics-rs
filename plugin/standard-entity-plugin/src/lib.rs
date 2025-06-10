@@ -3,6 +3,7 @@ use entity_model_feature::entity_id::EntityId;
 use entity_model_feature_derive::Feature;
 
 pub mod model;
+pub mod entity_model;
 
 #[derive(Feature, Clone)]
 pub struct AddChild<Id: EntityId> {

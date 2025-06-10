@@ -1,3 +1,4 @@
+use crate::entity_model::{DefaultEntity, StandardFeatureSet};
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use entity_model_feature::feature_set::FeatureSet;
@@ -18,27 +19,30 @@ pub struct PolygonModel {
     style: ShapeStyle,
 }
 
-impl PolygonModel {
-    pub fn entity<Id: EntityId>(
-        id: Id,
-        polygon: Polygon<Point2D>,
-        style: ShapeStyle,
-    ) -> Entity<Id> {
+impl<Id: EntityId> DefaultEntity<Id> for PolygonModel {
+    fn default_entity(id: Id) -> Entity<Id> {
         Entity::new(
             id,
-            PolygonModel { polygon, style },
-            Self::standard_feature_set::<Id>(),
+            PolygonModel {
+                polygon: Polygon::new(&[]),
+                style: ShapeStyle::default(),
+            },
+            FeatureSet::empty(),
         )
     }
+}
 
-    pub fn standard_feature_set<Id: EntityId>() -> FeatureSet {
+impl<Id: EntityId> StandardFeatureSet<Id> for PolygonModel {
+    fn standard_feature_set() -> FeatureSet {
         FeatureSet::from([
             Self::feature_click_draw::<Id>().boxed(),
             Self::feature_render::<Id>().boxed(),
             Self::feature_select::<Id>().boxed(),
         ])
     }
+}
 
+impl PolygonModel {
     pub fn feature_click_draw<Id: EntityId>() -> ClickDraw<Id> {
         ClickDraw {
             pointer_down: |entity, current_point| {

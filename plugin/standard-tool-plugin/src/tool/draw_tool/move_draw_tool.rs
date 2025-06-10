@@ -2,7 +2,7 @@ use crate::tool::{Interaction, Tool};
 use crate::MoveDraw;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
-use event_handler::{make_event_handler};
+use event_handler::make_event_handler;
 use geometry::point::point_2d::Point2D;
 
 mod render;
