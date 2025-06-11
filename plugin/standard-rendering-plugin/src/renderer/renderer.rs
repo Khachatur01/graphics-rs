@@ -1,10 +1,10 @@
 pub mod camera;
 pub mod light;
 
-use algebra::linear::matrix::Matrix;
 use crate::renderer::renderer::camera::Camera;
 use crate::renderer::renderer::light::Light;
 use crate::style::shape_style::ShapeStyle;
+use algebra::linear::matrix::Matrix;
 use geometry::figure::circle::Circle;
 use geometry::figure::ellipse::Ellipse;
 use geometry::figure::path::Path;

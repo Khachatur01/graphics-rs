@@ -12,7 +12,7 @@ impl<Id: EntityId> Renderable for SelectTool<Id> {
         };
 
         let stroke_color: Color =
-            if selection.width() < 0.0 {
+            if selection.width < 0.0 {
                 Color(0, 128, 0, 255)
             } else {
                 Color(21, 69, 255, 255)

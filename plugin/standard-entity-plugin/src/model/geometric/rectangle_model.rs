@@ -62,13 +62,13 @@ impl RectangleModel {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point2D = current_point - start;
-                rectangle.rectangle.set_size(delta.x(), delta.y());
+                rectangle.rectangle.set_size(delta.x, delta.y);
             },
             pointer_up: |entity, start, current_point| {
                 let rectangle: &mut Self = entity.model_ref_mut();
 
                 let delta: Point2D = current_point - start;
-                rectangle.rectangle.set_size(delta.x(), delta.y());
+                rectangle.rectangle.set_size(delta.x, delta.y);
             },
             finish: |entity| {},
         }
@@ -91,10 +91,10 @@ impl RectangleModel {
 
                 SVGElement::new(
                     SVG::Rectangle(SVGRectangle {
-                        x: rectangle.rectangle.top_left().x,
-                        y: rectangle.rectangle.top_left().y,
-                        width: rectangle.rectangle.width(),
-                        height: rectangle.rectangle.height(),
+                        x: rectangle.rectangle.top_left.x,
+                        y: rectangle.rectangle.top_left.y,
+                        width: rectangle.rectangle.width,
+                        height: rectangle.rectangle.height,
                     }),
                     rectangle.transformations.compose(),
                     PropertyMap::from([

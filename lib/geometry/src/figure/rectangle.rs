@@ -1,13 +1,12 @@
 use crate::figure::segment::Segment;
 use crate::point::point_2d::Point2D;
-use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
 
-#[derive(GetterMethods, Serialize, Deserialize, Copy, Clone)]
+#[derive(Serialize, Deserialize, Copy, Clone)]
 pub struct Rectangle {
-    top_left: Point2D,
-    width: f64,
-    height: f64,
+    pub top_left: Point2D,
+    pub width: f64,
+    pub height: f64,
 }
 
 impl Rectangle {

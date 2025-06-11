@@ -39,10 +39,10 @@ impl<P: Point> Polygon<P> {
 impl Polygon<Point2D> {
     pub fn is_inside_rectangle(&self, rectangle: &Rectangle) -> bool {
         let point_outside_rect = self.vertices().iter().find(|vertex|
-            vertex.x() < rectangle.top_left().x() ||
-            vertex.x() > rectangle.top_left().x() + rectangle.width() ||
-            vertex.y() < rectangle.top_left().y() ||
-            vertex.y() > rectangle.top_left().y() + rectangle.height()
+            vertex.x() < rectangle.top_left.x ||
+            vertex.x() > rectangle.top_left.x + rectangle.width ||
+            vertex.y() < rectangle.top_left.y ||
+            vertex.y() > rectangle.top_left.y + rectangle.height
         );
 
         /* Polygon is inside rectangle if there is not any point which is outside the rectangle */

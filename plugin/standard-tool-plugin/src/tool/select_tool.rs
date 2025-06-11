@@ -44,8 +44,8 @@ impl<Id: EntityId> Tool for SelectTool<Id> {
                     return;
                 };
 
-                let delta: Point2D = position - selection.top_left();
-                selection.set_size(delta.x(), delta.y());
+                let delta: Point2D = position - selection.top_left;
+                selection.set_size(delta.x, delta.y);
 
                 self.selected_elements.clear();
             }
