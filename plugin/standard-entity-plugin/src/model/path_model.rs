@@ -82,7 +82,7 @@ impl PathModel {
             render: |entity, renderer| {
                 let free_hand: &PathModel = entity.model_ref();
 
-                renderer.path(&free_hand.path, &free_hand.style);
+                renderer.path(&free_hand.path, &free_hand.style, None);
             },
         }
     }

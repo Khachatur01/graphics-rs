@@ -1,4 +1,4 @@
 pub mod transformation;
-mod vector;
-mod matrix;
+pub mod vector;
+pub mod matrix;
 mod array;

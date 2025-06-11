@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 serde = { version = "1.0.219", features = ["derive"] }
 
+algebra = { path = "../../lib/algebra" }
 entity-model-feature = { path = "../../lib/entity-model-feature" }
 entity-model-feature-derive = { path = "../../lib/entity-model-feature-derive" }
 geometry = { path = "../../lib/geometry" }

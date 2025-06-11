@@ -10,7 +10,6 @@ algebra = { path = "../../lib/algebra" }
 geometry = { path = "../../lib/geometry" }
 entity-model-feature = { path = "../../lib/entity-model-feature" }
 entity-model-feature-derive = { path = "../../lib/entity-model-feature-derive" }
-standard-feature-plugin = { path = "../../plugin/standard-feature-plugin" }
 standard-svg-plugin = { path = "../../plugin/standard-svg-plugin" }
 standard-rendering-plugin = { path = "../standard-rendering-plugin" }
 standard-tool-plugin = { path = "../standard-tool-plugin" }

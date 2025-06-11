@@ -29,6 +29,7 @@ impl<Id: EntityId> Renderable for SelectTool<Id> {
                 },
                 ..Default::default()
             },
+            None
         )
     }
 }

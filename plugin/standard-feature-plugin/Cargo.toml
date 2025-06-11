@@ -1,9 +1,0 @@
-[package]
-name = "standard-feature-plugin"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-algebra = { path = "../../lib/algebra" }
-entity-model-feature = { path = "../../lib/entity-model-feature" }
-entity-model-feature-derive = { path = "../../lib/entity-model-feature-derive" }

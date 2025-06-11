@@ -69,7 +69,7 @@ impl PolygonModel {
             render: |entity, renderer| {
                 let polygon: &PolygonModel = entity.model_ref();
 
-                renderer.polygon_2d(polygon.polygon(), &polygon.style);
+                renderer.polygon_2d(polygon.polygon(), &polygon.style, None);
             },
         }
     }

@@ -2,6 +2,7 @@ use crate::linear::matrix::{AsMatrix3, Matrix};
 use crate::linear::vector::Vector;
 use serde::{Deserialize, Serialize};
 
+/* fixme */
 #[derive(Copy, Clone, Serialize, Deserialize)]
 pub struct Rotation<const N: usize> {
     angle: f64,
