@@ -12,7 +12,7 @@ make_event_handler!(
     pointer_down: Point2D,
     pointer_move: Point2D,
     pointer_up: Point2D,
-    end_drawing: Entity<Id>
+    finish_drawing: Entity<Id>
 );
 
 pub struct MoveDrawTool<Id: EntityId> {
@@ -34,14 +34,14 @@ impl<Id: EntityId> MoveDrawTool<Id> {
         }
     }
 
-    fn end_drawing(&mut self) {
+    fn finish_drawing(&mut self) {
         self.start.take();
 
         let Some(drawable) = self.drawable.take() else {
             return;
         };
 
-        self.event.end_drawing.dispatch(drawable);
+        self.event.finish_drawing.dispatch(drawable);
     }
 }
 
@@ -85,7 +85,7 @@ impl<Id: EntityId> Tool for MoveDrawTool<Id> {
                 (move_draw.pointer_up)(drawable, &start, &position);
                 self.event.pointer_up.dispatch(position);
 
-                self.end_drawing();
+                self.finish_drawing();
             }
 
             Interaction::KeyDown(_) => {}

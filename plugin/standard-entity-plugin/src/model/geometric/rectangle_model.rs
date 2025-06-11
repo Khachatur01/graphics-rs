@@ -1,4 +1,5 @@
 use crate::entity_model::{DefaultEntity, StandardFeatureSet};
+use algebra::linear::transformation::Transformation;
 use entity_model_feature::entity::Entity;
 use entity_model_feature::entity_id::EntityId;
 use entity_model_feature::feature_set::FeatureSet;
@@ -8,6 +9,7 @@ use geometry::figure::rectangle::Rectangle;
 use geometry::point::point_2d::Point2D;
 use getter_methods::GetterMethods;
 use serde::{Deserialize, Serialize};
+use standard_feature_plugin::Transform;
 use standard_rendering_plugin::renderer::renderer::Renderer;
 use standard_rendering_plugin::style::shape_style::ShapeStyle;
 use standard_rendering_plugin::Render;
@@ -21,6 +23,8 @@ use standard_tool_plugin::MoveDraw;
 pub struct RectangleModel {
     pub rectangle: Rectangle,
     pub style: ShapeStyle,
+
+    pub transformations: Vec<Transformation>
 }
 
 impl<Id: EntityId> DefaultEntity<Id> for RectangleModel {
@@ -29,7 +33,8 @@ impl<Id: EntityId> DefaultEntity<Id> for RectangleModel {
             id,
             RectangleModel {
                 rectangle: Rectangle::zero_sized(Point2D::default()),
-                style: ShapeStyle::default()
+                style: ShapeStyle::default(),
+                transformations: vec![]
             },
             FeatureSet::empty(),
         )
@@ -66,6 +71,14 @@ impl RectangleModel {
                 rectangle.rectangle.set_size(delta.x(), delta.y());
             },
             finish: |entity| {},
+        }
+    }
+
+    pub fn feature_transform<Id: EntityId>() -> Transform<Id> {
+        Transform {
+            transform: |entity, transformation| {
+                
+            }
         }
     }
 

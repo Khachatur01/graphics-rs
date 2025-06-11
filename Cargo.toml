@@ -13,7 +13,7 @@ members = [
     "lib/entity-model-feature",
     "plugin/standard-rendering-plugin",
     "plugin/standard-entity-plugin",
-    "plugin/standard-tool-plugin", "lib/entity-model-feature-derive", "plugin/standard-svg-plugin", "lib/event-handler",
+    "plugin/standard-tool-plugin", "lib/entity-model-feature-derive", "plugin/standard-svg-plugin", "lib/event-handler", "plugin/standard-feature-plugin",
 ]
 
 [dependencies]

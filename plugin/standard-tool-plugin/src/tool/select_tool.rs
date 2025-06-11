@@ -1,3 +1,4 @@
+pub mod selection;
 mod render;
 
 use crate::tool::{Interaction, Tool};

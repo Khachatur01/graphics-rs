@@ -1,12 +1,9 @@
 [package]
-name = "standard-tool-plugin"
+name = "standard-feature-plugin"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 algebra = { path = "../../lib/algebra" }
-geometry = { path = "../../lib/geometry" }
 entity-model-feature = { path = "../../lib/entity-model-feature" }
 entity-model-feature-derive = { path = "../../lib/entity-model-feature-derive" }
-event-handler = { path = "../../lib/event-handler" }
-standard-rendering-plugin = { path = "../standard-rendering-plugin" }

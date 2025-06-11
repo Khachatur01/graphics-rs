@@ -1,45 +1,27 @@
-use getter_methods::GetterMethods;
+use crate::linear::matrix::Matrix;
+use crate::linear::transformation::rotation::Rotation;
+use crate::linear::transformation::scale::Scale;
+use crate::linear::transformation::skew::Skew;
+use crate::linear::transformation::translation::Translation;
+use serde::{Deserialize, Serialize};
 
-#[derive(GetterMethods, Copy, Clone)]
-pub struct ReferencePoint {
-    x: f64,
-    y: f64,
-}
+pub mod translation;
+pub mod rotation;
+pub mod skew;
+pub mod scale;
 
-#[derive(GetterMethods, Copy, Clone)]
-pub struct Rotation {
-    angle: f64,
-    reference_point: ReferencePoint,
-}
 
-#[derive(GetterMethods, Copy, Clone)]
-pub struct Translation {
-    by_x: f64,
-    by_y: f64,
-}
-
-#[derive(GetterMethods, Copy, Clone)]
-pub struct Skew {
-    x_angle: f64,
-    y_angle: f64,
-    reference_point: ReferencePoint,
-}
-
-#[derive(GetterMethods, Copy, Clone)]
-pub struct Scale {
-    by_x: f64,
-    by_y: f64,
-    reference_point: ReferencePoint,
-}
-
-#[derive(GetterMethods, Copy, Clone)]
-pub struct Matrix {/* todo */}
-
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Serialize, Deserialize)]
 pub enum Transformation {
-    Rotation(Rotation),
-    Translation(Translation),
-    Skew(Skew),
-    Scale(Scale),
-    Matrix(Matrix),
+    Matrix3D(Matrix<3>),
+
+    Translation2D(Translation<2>),
+    Rotation2D(Rotation<2>),
+    Skew2D(Skew<2>),
+    Scale2D(Scale<2>),
+
+    Translation3D(Translation<3>),
+    Rotation3D(Rotation<3>),
+    Skew3D(Skew<3>),
+    Scale3D(Scale<3>),
 }

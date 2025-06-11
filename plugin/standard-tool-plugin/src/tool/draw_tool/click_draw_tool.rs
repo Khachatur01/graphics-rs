@@ -12,7 +12,7 @@ make_event_handler!(
     pointer_down: Point2D,
     pointer_move: Point2D,
     pointer_up: Point2D,
-    end_drawing: Entity<Id>
+    finish_drawing: Entity<Id>
 );
 
 pub struct ClickDrawTool<Id: EntityId> {
@@ -31,7 +31,7 @@ impl<Id: EntityId> ClickDrawTool<Id> {
         }
     }
 
-    pub fn end_drawing(&mut self) {
+    pub fn finish_drawing(&mut self) {
         let Some(mut drawable) = self.drawable.take() else {
             return;
         };
@@ -39,7 +39,7 @@ impl<Id: EntityId> ClickDrawTool<Id> {
         let click_draw: &ClickDraw<Id> = drawable.query().expect("Failed to query ClickDraw");
         (click_draw.finish)(&mut drawable);
 
-        self.event.end_drawing.dispatch(drawable);
+        self.event.finish_drawing.dispatch(drawable);
     }
 }
 
@@ -75,7 +75,7 @@ impl<Id: EntityId> Tool for ClickDrawTool<Id> {
             }
 
             Interaction::KeyDown(Key::Esc) => {
-                self.end_drawing()
+                self.finish_drawing()
             }
             Interaction::KeyDown(_) => {}
             Interaction::KeyUp(_) => {}
