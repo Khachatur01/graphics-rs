@@ -1,0 +1,17 @@
+[package]
+name = "graphics-rs"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+members = [
+    "id-derive",
+    "algebra",
+    "geometry",
+    "parametric"
+]
+
+[dependencies]
+algebra = { path = "algebra" }
+geometry = { path = "geometry" }
+parametric = { path = "parametric" }
