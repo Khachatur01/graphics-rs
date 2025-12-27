@@ -1,17 +1,15 @@
 use crate::figure::path::command::positioning::Positioning;
-use crate::point::point_2d::Point2D;
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, GetterMethods)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct ArcTo {
-    rx: f64,
-    ry: f64,
+    radius: Vector<2>,
 
     x_axis_rotation: u8,
     large_arc_flag: bool,
     sweep_flag: bool,
 
-    to_point: Point2D,
+    to_point: Vector<2>,
     positioning: Positioning,
 }

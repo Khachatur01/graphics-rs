@@ -1,15 +1,14 @@
-use crate::point::point_2d::Point2D;
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 
-#[derive(GetterMethods)]
+#[derive(Clone)]
 pub struct Ellipse {
-    center: Point2D,
+    center: Vector<2>,
     x_radius: f64,
     y_radius: f64,
 }
 
 impl Ellipse {
-    pub fn new(center: Point2D, x_radius: f64, y_radius: f64) -> Ellipse {
+    pub fn new(center: Vector<2>, x_radius: f64, y_radius: f64) -> Ellipse {
         Ellipse {
             center,
             x_radius,

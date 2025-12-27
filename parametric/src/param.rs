@@ -1,24 +1,31 @@
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-#[derive(PartialEq, Clone, Debug)]
-pub enum Expression {
-    Name(Variable),
-    Value(ExpressionValue),
-}
 
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 pub struct Variable(String);
+impl Variable {
+    pub fn new(name: &str) -> Variable {
+        /* todo: check if valid variable name */
+        Variable(name.to_string())
+    }
+}
+
+#[derive(PartialEq, Clone, Debug)]
+pub enum Expression {
+    Variable(Variable),
+    Value(ExpressionValue),
+}
 
 #[derive(PartialEq, Clone, Debug)]
 pub enum ExpressionValue {
     RealNumber(f64),
     IntegerNumber(i64),
     NaturalNumber(u64),
-    PlusOperator(Box<Expression>, Box<Expression>),
-    MinusOperator(Box<Expression>, Box<Expression>),
-    DivideOperator(Box<Expression>, Box<Expression>),
-    MultiplyOperator(Box<Expression>, Box<Expression>),
+    PlusOperator(Vec<Expression>),
+    MinusOperator(Vec<Expression>),
+    DivideOperator(Vec<Expression>),
+    MultiplyOperator(Vec<Expression>),
     Sin(Box<Expression>),
     Cos(Box<Expression>),
     Tan(Box<Expression>),
@@ -34,7 +41,7 @@ pub struct ParamSet {
 }
 
 impl ParamSet {
-    pub fn insert_parameter(&mut self, name: Variable, parameter: ExpressionValue) {
-        self.parameters.insert(name, parameter);
+    pub fn insert_parameter(&mut self, variable: Variable, parameter: ExpressionValue) {
+        self.parameters.insert(variable, parameter);
     }
 }

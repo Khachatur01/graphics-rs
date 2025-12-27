@@ -1,8 +1,8 @@
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 
-#[derive(GetterMethods)]
-pub struct Triangle<P> {
-    p0: P,
-    p1: P,
-    p2: P,
+#[derive(Clone)]
+pub struct Triangle<const D: usize> {
+    p0: Vector<D>,
+    p1: Vector<D>,
+    p2: Vector<D>,
 }

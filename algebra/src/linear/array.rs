@@ -6,7 +6,13 @@ use std::ops::{Index, IndexMut};
 
 #[derive(Copy, Clone)]
 pub struct Array<V, const N: usize> {
-    pub values: [V; N]
+    values: [V; N]
+}
+
+impl<V, const N: usize> Array<V, N> {
+    pub fn new(values: [V; N]) -> Self {
+        Self { values }
+    }
 }
 
 impl<V, const N: usize> Index<usize> for Array<V, N> {

@@ -1,10 +1,9 @@
 use crate::figure::path::command::positioning::Positioning;
-use crate::point::point_2d::Point2D;
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, GetterMethods)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct LineTo {
-    pub to_point: Point2D,
+    pub to_point: Vector<2>,
     pub positioning: Positioning,
 }

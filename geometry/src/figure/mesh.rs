@@ -1,16 +1,16 @@
 use crate::figure::mesh::edge::Edge;
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 
 pub mod edge;
 
-#[derive(GetterMethods)]
-pub struct Mesh<P> {
-    knots: Vec<P>,
+#[derive(Clone)]
+pub struct Mesh<const D: usize> {
+    knots: Vector<D>,
     edges: Vec<Edge>,
 }
 
-impl<P> Mesh<P> {
-    pub fn new(knots: Vec<P>, edges: Vec<Edge>) -> Mesh<P> {
+impl<const D: usize> Mesh<D> {
+    pub fn new(knots: Vector<D>, edges: Vec<Edge>) -> Mesh<D> {
         Mesh { knots, edges }
     }
 }

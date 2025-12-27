@@ -1,7 +1,6 @@
 use crate::figure::path::command::Command as PathCommand;
-use getter_methods::GetterMethods;
 
-#[derive(GetterMethods)]
+#[derive(Clone)]
 pub struct Edge {
     start_point_index: u8,
     end_point_index: u8,

@@ -1,13 +1,13 @@
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 
-#[derive(GetterMethods)]
-pub struct Segment<P> {
-    start: P,
-    end: P,
+#[derive(Clone)]
+pub struct Segment<const D: usize> {
+    start: Vector<D>,
+    end: Vector<D>,
 }
 
-impl<P> Segment<P> {
-    pub fn new(start: P, end: P) -> Self {
+impl<const D: usize> Segment<D> {
+    pub fn new(start: Vector<D>, end: Vector<D>) -> Self {
         Self { start, end }
     }
 

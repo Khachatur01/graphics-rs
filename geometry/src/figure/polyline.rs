@@ -1,12 +1,12 @@
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 
-#[derive(GetterMethods)]
-pub struct Polyline<P> {
-    vertices: Vec<P>,
+#[derive(Clone)]
+pub struct Polyline<const D: usize> {
+    vertices: Vec<Vector<D>>,
 }
 
-impl<P> Polyline<P> {
-    pub fn new(vertices: Vec<P>) -> Self {
-        Self { vertices }
+impl<const D: usize> Polyline<D> {
+    pub fn new(vertices: &[Vector<D>]) -> Self {
+        Self { vertices: vertices.to_vec() }
     }
 }

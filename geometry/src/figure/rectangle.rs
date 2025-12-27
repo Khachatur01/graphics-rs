@@ -1,16 +1,15 @@
 use crate::figure::segment::Segment;
-use crate::point::point_2d::Point2D;
-use serde::{Deserialize, Serialize};
+use algebra::linear::vector::Vector;
 
-#[derive(Serialize, Deserialize, Copy, Clone)]
+#[derive(Clone)]
 pub struct Rectangle {
-    pub top_left: Point2D,
+    pub top_left: Vector<2>,
     pub width: f64,
     pub height: f64,
 }
 
 impl Rectangle {
-    pub fn new(top_left: Point2D, width: f64, height: f64) -> Self {
+    pub fn new(top_left: Vector<2>, width: f64, height: f64) -> Self {
         Self {
             top_left,
             width,
@@ -18,7 +17,7 @@ impl Rectangle {
         }
     }
 
-    pub fn zero_sized(top_left: Point2D) -> Self {
+    pub fn zero_sized(top_left: Vector<2>) -> Self {
         Self {
             top_left,
             width: 0.0,
@@ -27,21 +26,23 @@ impl Rectangle {
     }
 
     pub fn absolute_sized(&self) -> Self {
-        let mut rectangle_clone: Rectangle = self.clone();
+        // let mut rectangle_clone: Rectangle = self.clone();
+        //
+        // if rectangle_clone.width < 0.0 {
+        //     rectangle_clone.width *= -1.0;
+        //     rectangle_clone.top_left.x() -= rectangle_clone.width;
+        // }
+        // if rectangle_clone.height < 0.0 {
+        //     rectangle_clone.height *= -1.0;
+        //     rectangle_clone.top_left.y() -= rectangle_clone.height;
+        // }
+        //
+        // rectangle_clone
 
-        if rectangle_clone.width < 0.0 {
-            rectangle_clone.width *= -1.0;
-            rectangle_clone.top_left.x -= rectangle_clone.width;
-        }
-        if rectangle_clone.height < 0.0 {
-            rectangle_clone.height *= -1.0;
-            rectangle_clone.top_left.y -= rectangle_clone.height;
-        }
-
-        rectangle_clone
+        todo!()
     }
 
-    pub fn set_top_left(&mut self, point: Point2D) {
+    pub fn set_top_left(&mut self, point: Vector<2>) {
         self.top_left = point;
     }
 
@@ -51,18 +52,19 @@ impl Rectangle {
     }
 }
 
-impl From<&Rectangle> for [Segment<Point2D>; 4] {
-    fn from(rectangle: &Rectangle) -> [Segment<Point2D>; 4] {
-        let top_left = rectangle.top_left;
-        let top_right = top_left + Point2D::new(rectangle.width, 0.0);
-        let bottom_right = top_right + Point2D::new(0.0, rectangle.height);
-        let bottom_left = bottom_right - Point2D::new(rectangle.width, 0.0);
-
-        [
-            Segment::new(top_left, top_right),
-            Segment::new(top_right, bottom_right),
-            Segment::new(bottom_right, bottom_left),
-            Segment::new(bottom_left, top_left),
-        ]
+impl From<&Rectangle> for [Segment<2>; 4] {
+    fn from(rectangle: &Rectangle) -> [Segment<2>; 4] {
+        // let top_left = rectangle.top_left;
+        // let top_right = top_left + Vector::<2>::new(rectangle.width, 0.0);
+        // let bottom_right = top_right + Vector::<2>::new(0.0, rectangle.height);
+        // let bottom_left = bottom_right - Vector::<2>::new(rectangle.width, 0.0);
+        //
+        // [
+        //     Segment::new(top_left, top_right),
+        //     Segment::new(top_right, bottom_right),
+        //     Segment::new(bottom_right, bottom_left),
+        //     Segment::new(bottom_left, top_left),
+        // ]
+        todo!()
     }
 }

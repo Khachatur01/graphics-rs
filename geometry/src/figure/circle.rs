@@ -1,14 +1,13 @@
-use crate::point::point_2d::Point2D;
-use getter_methods::GetterMethods;
+use algebra::linear::vector::Vector;
 
-#[derive(GetterMethods, Copy, Clone)]
+#[derive(Clone)]
 pub struct Circle {
-    center: Point2D,
+    center: Vector<2>,
     radius: f64,
 }
 
 impl Circle {
-    pub fn new(center: Point2D, radius: f64) -> Circle {
+    pub fn new(center: Vector<2>, radius: f64) -> Circle {
         Circle { center, radius }
     }
 }
