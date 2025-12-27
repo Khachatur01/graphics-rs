@@ -1,6 +1,7 @@
 use crate::feature::Feature;
 use crate::param::ParamSet;
 use crate::sketch::{Sketch, SketchId};
+use model::Model;
 use std::collections::HashMap;
 
 pub struct Model3D {
@@ -31,15 +32,8 @@ impl Model3D {
     }
 }
 
-
-
-#[derive(Debug)]
-pub enum ModelConversionError {}
-
-pub trait ModelInto<T> {
-    fn try_into(&self) -> Result<Vec<T>, ModelConversionError>;
-}
-
-pub trait ModelFrom<T> {
-    fn try_from(inputs: &[T]) -> Result<Model3D, ModelConversionError>;
+impl Model for Model3D {
+    fn logical_type_id(&self) -> Option<&'static str> {
+        todo!()
+    }
 }

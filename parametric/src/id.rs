@@ -1,8 +1,9 @@
+use serde::{Deserialize, Serialize};
 use std::sync::atomic::AtomicUsize;
 
 static PARAM_ID: AtomicUsize = AtomicUsize::new(0);
 
-#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug)]
+#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Id(usize);
 
 impl Id {

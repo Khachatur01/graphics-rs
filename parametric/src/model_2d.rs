@@ -1,5 +1,6 @@
 use crate::param::ParamSet;
 use crate::sketch::Sketch;
+use model::Model;
 
 pub struct Model2D {
     pub param_set: ParamSet,
@@ -20,14 +21,8 @@ impl Model2D {
     }
 }
 
-
-#[derive(Debug)]
-pub enum ModelConversionError {}
-
-pub trait ModelInto<T> {
-    fn try_into(&self) -> Result<Vec<T>, ModelConversionError>;
-}
-
-pub trait ModelFrom<T> {
-    fn try_from(inputs: &[T]) -> Result<Model2D, ModelConversionError>;
+impl Model for Model2D {
+    fn logical_type_id(&self) -> Option<&'static str> {
+        todo!()
+    }
 }

@@ -9,9 +9,10 @@ members = [
     "algebra",
     "geometry",
     "parametric"
-]
+, "model"]
 
 [dependencies]
 algebra = { path = "algebra" }
 geometry = { path = "geometry" }
 parametric = { path = "parametric" }
+serde = { version = "1.0.228", features = ["derive"] }

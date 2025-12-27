@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 id-derive = { path = "../id-derive" }
+model = { path = "../model" }
+serde = { version = "1.0.228", features = ["derive"] }

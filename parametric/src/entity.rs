@@ -1,6 +1,7 @@
 use crate::id::Id;
 use crate::param::Expression;
 use id_derive::GenerateId;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Clone, Default)]
@@ -45,27 +46,27 @@ impl EntitySet {
 }
 
 
-#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId)]
+#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId, Serialize, Deserialize)]
 pub struct PointId(Id);
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 pub struct PointEntity {
     pub x: Expression,
     pub y: Expression,
 }
 
 
-#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId)]
+#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId, Serialize, Deserialize)]
 pub struct SegmentId(Id);
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 pub struct SegmentEntity {
     pub start: PointId,
     pub end: PointId,
 }
 
 
-#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId)]
+#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId, Serialize, Deserialize)]
 pub struct RectangleId(Id);
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 pub struct RectangleEntity {
     pub top_left: PointId,
     pub width: Expression,
@@ -73,18 +74,18 @@ pub struct RectangleEntity {
 }
 
 
-#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId)]
+#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId, Serialize, Deserialize)]
 pub struct CircleId(Id);
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 pub struct CircleEntity {
     pub center: PointId,
     pub radius: Expression,
 }
 
 
-#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId)]
+#[derive(Eq, PartialEq, Hash, Clone, Copy, Debug, GenerateId, Serialize, Deserialize)]
 pub struct MeshId(Id);
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 pub struct MeshEntity {
     pub edges: Vec<SegmentId>,
 }
